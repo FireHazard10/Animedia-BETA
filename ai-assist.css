@@ -1,0 +1,539 @@
+/* Floating Button */
+.float-btn {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 2px solid #ff8a65;
+  cursor: grab;
+  color: whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 600;
+  user-select: none;
+  z-index: 1000;
+  transition: background 0.3s;
+}
+.float-btn:active {
+  cursor: grabbing;
+}
+
+/* Radial Menu Items */
+.menu-item {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  cursor: pointer;
+  opacity: 0;
+  transform: translate(0, 0);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 999;
+}
+
+.handy-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: #ff8a65;
+  border: none;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+.handy-btn:hover {
+  transform: scale(1.1) rotate(8deg);
+  background: #ff8a65;
+  color: white;
+}
+
+/* Search popup */
+.search-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  border-top: 2px solid #ff8a65;
+}
+
+.search-popup .Exit {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  color: white;
+  background-color: rgb(235, 25, 25);
+  color: whitesmoke;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 12px;
+  border-radius: 7%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.search-form {
+  position: absolute;
+  width: 50vw;
+  background: #fff8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  z-index: 999;
+  border-top: 2px solid #ff8a65;
+}
+
+.search-form input {
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  width: 95%;
+}
+
+.search-form button {
+  background-color: #f5c518;
+  border: none;
+  margin-left: 10px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#suggestionsList {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 5px;
+}
+
+#suggestionsList li {
+  padding: 5px;
+  cursor: pointer;
+}
+
+#suggestionsList li:hover {
+  background-color: #f0f0f0;
+}
+
+/* --- Popup (Modal) --- */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none; /* hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  width: 300px;
+
+  animation: fadeIn 0.3s ease;
+}
+
+.popup h2 {
+  background: linear-gradient(135deg, #ffc371, #ff8a65);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.popup p {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.close-btn {
+  margin-top: 20px;
+  background: linear-gradient(135deg, #ffc371, #ff8a65);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.close-btn:hover {
+  background: white;
+  color: #ff8a65;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:root {
+  --bg: rgba(255, 255, 255, 0.06);
+  --corex-radius: 12px;
+  --accent: #ff8a65;
+  --glow: rgba(255, 138, 101, 0.35);
+  --text: #fff;
+  --muted: rgba(255, 255, 255, 0.6);
+}
+
+/* Theme variations */
+.theme-neon {
+  --accent: #00f5ff;
+  --glow: rgba(0, 245, 255, 0.25);
+}
+.theme-glass {
+  --accent: #7aa2ff;
+  --glow: rgba(122, 162, 255, 0.12);
+  --bg: rgba(255, 255, 255, 0.04);
+}
+.theme-anime {
+  --accent: #ff5edb;
+  --glow: rgba(255, 94, 219, 0.2);
+}
+.theme-orange {
+  --accent: #ff8a65;
+  --glow: rgba(255, 138, 101, 0.35);
+}
+
+.corex {
+  width: 360px;
+  max-width: 96%;
+  border-bottom: 3px solid var(--accent);
+  /*overflow: hidden;*/
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+  background: linear-gradient(180deg, #071026 0%, #0b1220 100%);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--corex-radius);
+}
+.corex:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 40px var(--glow);
+}
+
+.postex {
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.45));
+}
+
+.postex img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.28, 1);
+}
+.postex:hover img {
+  transform: scale(1.06);
+}
+
+/* if video is active, show it on top */
+.postex video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #000;
+}
+
+.infx {
+  padding: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.song-title {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 8px;
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.progress-wrap {
+  margin-top: 12px;
+}
+
+.time-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 99px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #ffd89b);
+  transition: width 0.08s linear;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.left-controls,
+.right-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  color: var(--text);
+  padding: 8px;
+  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s;
+  border-bottom: 3px solid var(--accent);
+}
+.icon-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 18px var(--glow);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.play-btn {
+  width: 66px;
+  height: 66px;
+  border-radius: 12px;
+  font-size: 18px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 3px solid var(--accent);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 22px var(--glow);
+  display: grid;
+  place-items: center;
+}
+.play-btn i {
+  font-size: 20px;
+}
+
+/* volume + slider */
+.vol-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 50px;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: transparent;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: -4px;
+  box-shadow: 0 0 10px var(--glow);
+}
+
+/* settings menu */
+.settings {
+  position: relative;
+}
+.settings-panel {
+  position: absolute;
+  right: 0;
+  top: 46px;
+  background: rgba(2, 6, 23, 0.9);
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  min-width: 200px;
+  z-index: 40;
+  display: none;
+}
+.settings-panel.open {
+  display: block;
+}
+
+.settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.theme-picker {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.theme-swatch {
+  width: 28px;
+  height: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+/* small helpers */
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+.flex {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* responsive */
+@media (max-width: 420px) {
+  .corex {
+    width: 100%;
+  }
+  .play-btn {
+    width: 58px;
+    height: 58px;
+  }
+
+  /* On small screens, maybe keep it centered for better visibility */
+  .music-pop {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.45);
+    justify-content: center;
+    align-items: center;
+  }
+  .music-close-btn {
+    top: 10px;
+    right: 10px;
+    transform: none; /* Reset close button position */
+  }
+}
+/* 🛑 MODIFICATION: MUSIC POPUP TO TOP-RIGHT DOCK */
+.music-pop {
+  position: fixed; /* Use fixed positioning */
+  top: 20px; /* Pushes it from the top */
+  right: 20px; /* Pushes it from the right */
+  width: auto; /* Allow corex to define width */
+  height: auto; /* Allow corex to define height */
+  background: transparent; /* Remove overlay background */
+  display: none;
+  justify-content: flex-end; /* Align corex right */
+  align-items: flex-start; /* Align corex top */
+  backdrop-filter: none; /* Remove backdrop blur */
+  z-index: 9999;
+  animation: popIn 0.3s ease-out; /* Keep the popIn effect */
+}
+/* Ensure the corex is the only element taking space inside the pop container */
+.music-pop > .corex {
+  margin: 0;
+}
+
+.music-close-btn {
+  position: absolute;
+  top: 0; /* Adjust relative to music-pop */
+  right: 0;
+  padding: 0.2rem 0.5rem; /* Made padding smaller */
+  border-radius: 10px;
+  font-weight: 600;
+  color: white;
+  background-color: rgb(235, 25, 25);
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 12px;
+  border-radius: 7%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10000; /* Ensure it's above the corex */
+  cursor: pointer;
+  border: none;
+  transform: translate(50%, -50%); /* Move button to the corner of the corex */
+}
+@keyframes popIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

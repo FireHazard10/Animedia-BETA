@@ -1,0 +1,122 @@
+.top-10 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  width: 99vw;
+  background: #f4f4f4;
+  box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+  position: relative; /* allow absolute positioning inside */
+}
+
+.txtle h2 {
+  position: absolute;
+  top: 7px; /* distance from top */
+  left: 30px; /* distance from left */
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+  border-left: 4px solid #ff8a65;
+}
+.slider-box {
+  position: relative;
+  width: 90%;
+  max-width: 1400px;
+  overflow: hidden;
+}
+
+.pics {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.trendz {
+  position: relative;
+  background: #ffe4c4;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  width: 200px;
+  height: 300px;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.illustrations {
+  width: 100%;
+  height: 100%;
+}
+
+.illustrations img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inx {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 50px;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.inx h3 {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  margin: 0;
+  font-size: 16px;
+  color: white;
+  letter-spacing: 1.5px;
+}
+
+.inx p {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  color: #f472b6;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.slide-nav {
+  margin-top: 15px;
+}
+
+.slide-nav button {
+  background: rgba(248, 229, 229, 0.6);
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: background 0.3s;
+  margin: 0 5px;
+}
+
+.slide-nav button:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: black;
+}
+
+#backward {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+#forward {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-right: 10px;
+  padding-left: 10px;
+}

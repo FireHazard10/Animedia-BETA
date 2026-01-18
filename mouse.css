@@ -1,0 +1,86 @@
+/* --- Custom cursor elements --- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* important: don't block clicks */
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+  z-index: 9999;
+}
+
+/* small center dot */
+.cursor-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff8a65, #ffc371);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 12px rgba(17, 17, 17, 0.08);
+  transition: background 200ms ease, transform 150ms ease;
+}
+
+/* outer ring that can animate / trail */
+.cursor-ring {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #ff8a65;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 300ms cubic-bezier(0.2, 0.9, 0.3, 1), opacity 300ms ease;
+  opacity: 0.95;
+  display: block;
+  mix-blend-mode: normal;
+  background: rgba(255, 255, 255, 0); /* transparent center */
+}
+
+/* hover state when over interactive elements */
+.cursor-dot.hover {
+  transform: translate(-50%, -50%) scale(1.6);
+  background: #ffffff; /* example color */
+}
+
+.cursor-ring.hover {
+  transform: translate(-50%, -50%) scale(1.45);
+  border-color: rgba(255, 255, 255, 0.9);
+  opacity: 0.98;
+}
+
+/* special style for clickable elements if desired */
+a,
+button,
+.interactive {
+  cursor: pointer; /* indicates interactive for native fallback and accessibility */
+}
+
+/* content for demo */
+.demo {
+  max-width: 800px;
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  margin-top: 24px;
+}
+
+.card {
+  padding: 18px;
+  border-radius: 12px;
+  background: #f3f4f6;
+}
+
+/* Accessibility: reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ring,
+  .cursor-dot {
+    transition: none !important;
+  }
+}
+
+/* Hide custom cursor on touch devices (we'll detect in JS too) */
+.no-cursor .cursor-dot,
+.no-cursor .cursor-ring {
+  display: none;
+}

@@ -1,0 +1,191 @@
+:root {
+  --bg: #0f1724;
+  --panel: rgba(255, 255, 255, 0.03);
+  --muted: rgba(255, 255, 255, 0.65);
+  --accent: #ffc371;
+  --accent-2: #ff8a65;
+  --border: #ffffff08;
+  --card-radius: 12px;
+}
+
+/* MAIN CONTAINER */
+.rankings {
+  width: 100%;
+  background: var(--panel);
+  border-radius: var(--card-radius);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+/* HEADER */
+.rankings-header {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.rankings-header h1 {
+  margin: 0;
+  font-size: 16px;
+}
+.rankings-header .small {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* LIST */
+.rank-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.rank-row {
+  display: grid;
+  grid-template-columns: 30px 45px 1fr 52px; /* ← Same tiny size you gave */
+  padding: 7px 9px; /* ← Same small padding */
+  gap: 6px; /* ← Same small gap */
+  border-bottom: 2px solid #f59e0b;
+  align-items: center;
+}
+
+/* RANK NUMBER */
+.rank-num {
+  font-size: 22px; /* your original 26px was too large for the compact look */
+  font-weight: 700;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* THUMBNAIL */
+.thumb {
+  width: 45px; /* ← Your exact value */
+  height: 64px; /* perfect ratio for 45px */
+  background: #152033;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* DETAILS */
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px; /* very small */
+}
+
+.title {
+  font-size: 13px; /* ← your exact size */
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.year {
+  font-size: 11px; /* small */
+  color: var(--muted);
+}
+
+/* TAGS */
+.tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 10px; /* ← your small tag size */
+  padding: 2px 5px; /* smaller to match tiny layout */
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+}
+
+/* RIGHT COLUMN */
+.right-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+/* SCORE */
+.score {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 8px; /* smaller */
+  font-size: 12px; /* compact */
+  font-weight: 700;
+  border-radius: 2px;
+  border-bottom: 3px solid #f59e0b;
+  color: var(--muted);
+  min-width: 52px; /* matches column */
+  text-align: center;
+}
+
+/* BUTTONS */
+.btns {
+  display: flex;
+  gap: 6px;
+}
+
+.btn {
+  padding: 5px 8px; /* small compact buttons */
+  font-size: 11px; /* small */
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #042027;
+  border: none;
+  font-weight: 700;
+}
+.btn.primary:hover {
+  background: #fff;
+  color: #f59e0b;
+}
+
+/* RESPONSIVE */
+@media (max-width: 420px) {
+  .rank-row {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    padding: 6px 7px;
+  }
+
+  .thumb {
+    width: 40px;
+    height: 56px;
+  }
+
+  .title {
+    font-size: 12px;
+  }
+}
+
+/* FOOTER */
+.rank-footer {
+  padding: 14px;
+}
+.view-all {
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+}
