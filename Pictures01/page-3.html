@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+   
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+          
+          body {
+            font-family: Arial, sans-serif;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            background: #fff8f0;
+          }
+          
+          /*header {
+            background-color: #ffc371;
+            display: flex;
+            position: relative;
+            text-align: center;
+            align-items: center;
+            justify-content: space-around;
+            width: 100%;
+            padding: 20px;
+            font-weight: 500;
+            box-shadow: 0 0 8px rgba(233, 30, 99, 0.6);
+          }
+          h1 {
+            font-family: "M PLUS Rounded 1c", sans-serif;
+            font-size: 35px;
+            color: #191819;
+            text-shadow: 3px 3px #ffe4e1;
+            position: relative;
+          }
+          
+          .ainav a {
+            text-decoration: none;
+            color: #2c2c2c;
+            font-size: 1.1em;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+          }
+          
+          .ainav a:hover {
+            background-color: #ffedd5;
+            color: #111;
+          }
+          
+          
+          
+          @media (max-width: 768px) {
+            header {
+              flex-direction: column;
+              text-align: center;
+            }
+          
+            .ainav {
+              flex-direction: row;
+              flex-wrap: wrap;
+              justify-content: center;
+              margin-top: 10px;
+            }
+          
+            .ainav a {
+              font-size: 1em;
+              padding: 6px 10px;
+            }
+          }
+          
+          .profile-container {
+            right: 40px;
+            position: absolute;
+            display: inline-block;
+            text-align: center;
+            padding: 0;
+          }
+          
+          /* Profile icon styling */
+          /*.profile-icon {
+            background: url(Pictures/Animated\ Character\ Design_\ Tips\ for\ Creating\ Engaging\ Characters.jfif)
+              no-repeat center center/cover;
+            border-radius: 50px;
+            border: 2px #f5c518 solid;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: transform 0.3s;
+          }
+          .profile-icon:hover {
+            transform: scale(1.1);
+          }
+          
+          /* Profile details styling */
+          /*.profile-details {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-75%);
+            width: 160px;
+            padding: 10px;
+            background-color: #ffe4c4;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            font-size: 0.9rem;
+            z-index: 1;
+          }
+          
+          /* Profile details styling on hover */
+          .profile-container:hover .profile-details {
+            opacity: 1;
+            visibility: visible;
+          }
+          
+          /* Username styling */
+          .username {
+            margin: 0;
+            font-weight: bold;
+            color: #333;
+          }
+          
+          /* Profile and logout link styling */
+          .profile-link,
+          .logout-link {
+            display: block;
+            margin-top: 8px;
+            color: #fff8f0;
+            text-decoration: none;
+            transition: color 0.3s;
+          }
+          .profile-link:hover,
+          .logout-link:hover {
+            color: #3f4c57;
+          }
+          
+          /* Responsive styling for smaller screens */
+          @media (max-width: 600px) {
+            .profile-icon {
+              width: 40px;
+              height: 40px;
+            }
+            .profile-details {
+              width: 140px;
+              font-size: 0.8rem;
+            }
+          }
+          
+          #suggestionsList {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 5px;
+          }
+          
+          #suggestionsList li {
+            padding: 5px;
+            cursor: pointer;
+          }
+          
+          #suggestionsList li:hover {
+            background-color: #f0f0f0;
+          }
+          
+          h2 {
+            position: relative;
+            text-align: center;
+          }
+          .movie-container {
+            transform: translateX(50px);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            padding: 20px;
+          }
+          
+          .movie-card {
+            background: #ffe4c4;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            text-align: center;
+            color: #2c2c2c;
+            width: 150px;
+          }
+          
+          .poster {
+            width: 100%;
+            height: 220px;
+          }
+          .poster img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+          }
+          
+          .details {
+            padding: 10px;
+          }
+          
+          .details h3 {
+            margin: 0;
+            font-size: 14px;
+          }
+          
+          .details p {
+            font-size: 12px;
+            color: #b0b0b0;
+          }
+          
+          .movie-container .movie-card .details a {
+            text-decoration: none;
+            color: #fff;
+          }
+          
+          .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+          }
+          
+          .movie-item {
+            background-color: #282828;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+          }
+          
+          .movie-item img {
+            width: 100%;
+            border-radius: 8px;
+          }
+          
+          .navi a {
+            border-radius: 3px;
+            background-color: #ffe4c4;
+            justify-content: space-around;
+            display: inline-block;
+            margin-right: 15px;
+            transform: translateX(150px);
+            list-style: none;
+            padding: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            color: #2c2c2c;
+            font-size: 1.2em;
+          }
+          
+          .navi a:hover {
+            background-color: #ff8a65;
+          }
+          
+          
+          .tail {
+            background-color: #ffc371;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 25px;
+            max-width: 1800px;
+            margin: 0 auto; /* centers the content */
+            padding: 40px 20px;
+            color: #2c2c2c;
+            text-align: left;
+          }
+          
+          .tail a {
+            color: #2c2c2c;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+          }
+          
+          .tail a:hover {
+            color: #ffffff;
+          }
+          
+          @media (max-width: 1150px) {
+  .movie-container {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    padding: 10px;
+    transform: none;
+  }
+          }
+          @media (max-width: 1024px) {
+            header {
+              flex-direction: column;
+              align-items: center;
+              padding: 10px;
+              text-align: center;
+            }
+          
+            .ainav {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              margin-top: 10px;
+            }
+          
+            .ainav a {
+              margin: 5px;
+              font-size: 1em;
+            }
+          
+            .profile-container {
+              position: static;
+              margin-top: 10px;
+            }
+          
+        }
+          
+          @media (max-width: 768px) {
+            .movie-container {
+              grid-template-columns:repeat(2, 1fr);
+              padding: 10px;
+              transform: none;
+            }
+          
+            .poster {
+              height: 180px;
+            }
+          
+            .poster img {
+              height: 180px;
+            }
+          
+            .details h3 {
+              font-size: 13px;
+            }
+          
+            .details p {
+              font-size: 11px;
+            }
+          
+            .tail {
+              grid-template-columns: 1fr 1fr;
+              gap: 15px;
+              padding: 20px;
+            }
+          
+            .navi {
+              text-align: center;
+              transform: none;
+            }
+          
+            .navi a {
+              font-size: 1em;
+              margin: 5px;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            
+          
+            .tail {
+              grid-template-columns: 1fr;
+              padding: 15px;
+              font-size: 14px;
+            }
+          
+            .tail a {
+              font-size: 14px;
+            }
+          }
+          
+          .search-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100vw;
+            background: #fff8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            z-index: 999;
+            border-top: 2px solid #ffc371;
+          }
+          
+          .search-dropdown.show {
+            display: block;
+          }
+          
+          .search-form input {
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            outline: none;
+            width: 95%;
+          }
+          
+          .search-form button {
+            background-color: #f5c518;
+            border: none;
+            margin-left: 10px;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+          }
+
+          .bottom-nav {
+            width: 100%;
+            background: transparent;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            color: #2c2c2c;
+        }
+        
+        .nav-button {
+            background: #ffc371;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .nav-button:disabled {
+            background: #ffc371;
+            cursor: not-allowed;
+        }
+        @media (max-width: 600px) {
+          .movie-container {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .poster img {
+            height: 180px;
+          }
+          h1 {
+            font-size: 1.5rem;
+          }
+        }
+    </style>
+
+</head>
+<body>
+         <header
+      class="relative bg-gradient-to-b from-black/90 to-transparent"
+      x-data="{ open: false }"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-6">
+          <!-- Logo -->
+          <div class="text-2xl font-bold text-pink-500 tracking-wide">
+            Ani<span class="text-white">Media</span>
+          </div>
+
+          <!-- Desktop Nav -->
+          <nav class="hidden md:flex space-x-6 text-white/90 font-medium">
+            <a href="#" class="hover:text-pink-400 transition">Home</a>
+            <a href="#" class="hover:text-pink-400 transition">Series</a>
+            <a href="#" class="hover:text-pink-400 transition">Movies</a>
+            <a href="#" class="hover:text-pink-400 transition">Genres</a>
+          </nav>
+
+          <!-- CTA Button (Desktop) -->
+          <div class="hidden md:block">
+            <a
+              href="#"
+              class="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl shadow-md transition"
+            >
+              Join Now
+            </a>
+          </div>
+
+          <!-- Hamburger Icon (Mobile) -->
+          <div class="md:hidden">
+            <button @click="open = !open" class="text-white focus:outline-none">
+              <svg
+                x-show="!open"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-7 w-7"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <svg
+                x-show="open"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-7 w-7"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div
+          x-show="open"
+          class="md:hidden flex flex-col gap-4 mt-2 text-white/90 font-medium"
+        >
+          <a href="#" class="hover:text-pink-400 transition">Home</a>
+          <a href="#" class="hover:text-pink-400 transition">Series</a>
+          <a href="#" class="hover:text-pink-400 transition">Movies</a>
+          <a href="#" class="hover:text-pink-400 transition">Genres</a>
+          <a
+            href="#"
+            class="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl w-fit mt-2 transition"
+          >
+            Join Now
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Section -->
+      
+
+      <!-- Optional Background Image -->
+      <div
+        class="absolute inset-0 -z-10 bg-cover bg-center opacity-20"
+        style="background-image: url('https://yourimageurl.com/anime-bg.jpg')"
+      ></div>
+    </header>
+    <section class="grid">
+        <div class="movie-container">
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/06d44be9-fab1-4954-b4db-e7204a22bc86.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3><a href="play.html">Movie Title</a></h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/39f2cb49-629d-481e-9cb7-b7a3d45ff778.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/63506633-9c3e-47ca-849c-be6e590edf5c.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/Anime wallpaper.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/b48a9268-37b2-4bf9-9947-0352fc3d938a.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/d8d3bb68-eb55-4c68-bb3d-788a8dc62733.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/DESIGN WALLPAPER ANIME _3.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/e8fda043-12a9-415e-a896-ab117261be90.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/f4aad09b-3e87-40a8-af37-04e78042f8ff.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/Jinhsi Wallpaper [Wuthering Weaves].jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures01/Nilou Gfx.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/2077643.jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/ANIME-PICTURES.NET_-_834082-736x1308-yuan+long-gao+yao-single-long+hair-tall+image-looking+at+viewer.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/download (11).jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/Animated Character Design_ Tips for Creating Engaging Characters.jfif" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/download (12).jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/UI UX DESIGN IDEAS.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/WallpaperDog-17181503.jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/Naruto Design.jfif" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/Poco wallpaper.jfif" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/2077623.jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/2077727.jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/2077609.jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/download (7).jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/download (4).jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/download (10).jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/44741.jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/download (6).jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/download (5).jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/download (9).jpg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="poster">
+                    <img src="Pictures/1347028.jpeg" alt="Movie Poster">
+                </div>
+                <div class="details">
+                    <h3>Movie Title</h3>
+                    <p>Short description.</p>
+                </div>
+            </div>
+        </div>
+       
+            
+        </div>
+        
+        
+        </div>
+        
+        <div class="bottom-nav">
+            <button class="nav-button" id="prevBtn" disabled>Prev</button>
+            <span id="pageNumber">1</span>
+            <button class="nav-button" id="nextBtn">Next</button>
+        </div>
+    </section>
+    <br><section class="rec">
+        <div class="navi">
+            <a href="">A</a>
+            <a href="">B</a>
+            <a href="">C</a>
+            <a href="">D</a>
+            <a href="">E</a>
+            <a href="">F</a>
+            <a href="">G</a>
+            <a href="">H</a>
+            <a href="">I</a>
+            <a href="">J</a>
+            <a href="">K</a>
+            <a href="">L</a>
+            <a href="">M</a>
+            <a href="">N</a>
+            <a href="">O</a>
+            <a href="">P</a>
+            <a href="">Q</a>
+            <a href="">R</a>
+            <a href="">S</a>
+            <a href="">U</a>
+            <a href="">V</a>
+            <a href="">W</a>
+            <a href="">X</a>
+            <a href="">Y</a>
+            <a href="">Z</a>
+        </div>
+    </section>
+
+    <br><br><section class="tail">
+        <div class="cl1">
+          <br /><br /><a href="https://www.linkedin.com">Leave-a-reveiw</a>
+          <br /><br /><a href="https://www.facebook.com">Facebook</a>
+          <br /><br /><a href="https://www.instagram.com">Instagram</a>
+          <br /><br /><a href="https://www.pintrest.com">Pintrest</a>
+          <br /><br /><a href="https://www.tiktok.com">Tiktok</a>
+        </div>
+        <div class="cl2">
+            <br><br><a href="">News-update</a>
+           <br><br><a href="">Anime</a>
+            <br><br><a href="">Manhua</a>
+            <br><br><a href="">Manga</a>
+            <br><br><a href="">Comics</a>
+        </div>
+        <div class="cl3">
+            <br><br><a href="">General-info</a>
+            <br><br><a href="">About-Us</a>
+            <br><br><a href="">Contact</a>
+            <br><br><a href="">How-to-register</a>
+            <br><br><a href="">Other-similar-sites</a>
+        </div>
+        <div class="cl4">
+            <br><br><a href="">Top-trend</a>
+            <br><br><a href="">Vote</a>
+            <br><br><a href="">Comment</a>
+            <br><br><a href="">Like</a>
+            <br><br><a href="">Top-10's</a>
+        </div>
+    </section>
+
+    
+</body>
+<script>
+    
+
+
+  const toggleLink = document.getElementById("searchToggle");
+  const dropdown = document.getElementById("searchDropdown");
+  const searchInput = document.getElementById("searchInput");
+  const suggestionsList = document.getElementById("suggestionsList");
+  
+  // Example search data
+  const suggestions = [
+    "Kimi Ga Nozomu Eien (2003)",
+    "Rurouni Kenshin - Reminiscence (1999)",
+    "Fullmetal Alchemist (2003)",
+    "Elfen Lied (2004)",
+    "Full Moon wo Sagashite (2002) ",
+    "Berserk (1997)",
+    "Cowboy Bebop (1998) ",
+    "Hikaru no Go (2001) ",
+    "Fruits Basket (2001) ",
+    "Gundam SEED (2002) ",
+    "Hajime no Ippo (2000)",
+    "Last EXILE (2003) ",
+    "Scrapped Princess (2003)",
+    "Azumanga Daioh (2002) ",
+    "GunGrave (2003) ",
+    "Neon Genesis Evangelion (1995) ",
+    "Full Metal Panic? Fumoffu! (2003) ",
+    "Naruto (2002)",
+    "12 Kokuki (2002)",
+    "One Piece (1999)",
+    "Furi Kuri (2000)",
+    "Rahxephon (2002)",
+    "AIR TV (2005)",
+    "Shingetsutan Tsukihime (2003) ",
+    "Trigun (1998) ",
+    "Great Teacher Onizuka (2000)",
+    "Vision of Escaflowne (1996)",
+    "Monster (2004)",
+    "X TV (2001) ",
+    "Haibane Renmei (2002)",
+    "Ima, Sokoni Iru Boku (1999) ",
+    "Grave of the Fireflies (1988)",
+    "Cowboy Bebop - Knockin' on heaven's door (2001) ",
+    "Hunter X Hunter (1999) ",
+    "Rurouni Kenshin (1996) ",
+    "Samurai Champloo (2004) ",
+    "Onegai Teacher (2002) ",
+    "Spirited Away (2001) ",
+    "Bleach (2004) ",
+    "Full Metal Panic! (2002) ",
+    "BECK (2004) ",
+    "Kareshi Kanojo no Jijou (1998) ",
+    "Mai HiME (2004)",
+    "Chrno Crusade (2003) ",
+    "Planet ES (2003)",
+    "Chobits (2002) ",
+    "Gunslinger Girl (2003)",
+    "Full Metal Panic! The Second Raid (2005) ",
+    "Noir (2001)",
+    "GetBackers (2002) ",
+    "Love Hina (2000) ",
+    "Read or Die (2001) ",
+    "Uchuu no Stellvia (2003) ",
+    "R.O.D -THE TV- (2003) ",
+    "Inuyasha (2000) ",
+    "Kanon (2002) ",
+    "Hoshi no Koe (2002) ",
+    "Saikano (2002)",
+    "Kino no tabi ~the Beautiful World~ (2003) ",
+    "School Rumble (2004) ",
+    "Vampire Hunter D: Bloodlust (2001)",
+    "Ghost in the Shell Stand Alone Complex 1st GIG (2002)",
+    "Princess Mononoke (1997)",
+    "Wolf's Rain (2003) ",
+    "Scryed (2001) ",
+    "Serial Experiments Lain (1998) ",
+    "Ranma 1/2 (1989) ",
+    "Midori no Hibi (2004) ",
+    "Seikai no Monshou (1999) ",
+    "Gankutsuoh (2004) ",
+    "Infinite Ryvius (1999) ",
+    "Card Captor Sakura (1998) ",
+    "Hachimitsu to Clover (2005)",
+    "Boogiepop Phantom (2000) ",
+    "My Neighbor Totoro (1988) ",
+    "Ghost in the Shell (1995) ",
+    "Vandread 2 (2001) ",
+    "Nausicaa of the Valley of the Wind (1984)",
+    "Hellsing (2001) ",
+    "Jungle wa itsumo Hare nochi Guu (2001)",
+    "Kiddy Grade (2002) ",
+    "Rurouni Kenshin - Seisouhen (2001) ",
+    "Akira (1988) ",
+    "Ai Yori Aoshi (2002) ",
+    "Jin-Roh, The Wolf Brigade (2000) ",
+    "Koi Kaze (2004) ",
+    "AA! Megami Sama (1993)",
+    "Genshiken (2004) ",
+    "Witch Hunter Robin (2002)",
+    "Maison Ikkoku (1986) ",
+    "Kannazuki no Miko (2004) ",
+    "Paranoia Agent (2004) ",
+    "Initial D - First Stage (1998) ",
+    "Aishiteruze Baby (2004) ",
+    "hack//SIGN (2002)",
+    "Mahoromatic (2001)",
+    "Mahou Tsukai ni Taisetsu na Koto (2003)",
+    "Princess Tutu (2002) ",
+    "eikai no Senki (2000) ",
+    "Samurai 7 (2004) ",
+    "Vandread (2000)",
+    "Kidou Tenshi Angelic Layer (2001) ",
+    "Gunparade March - Arata Naru Ko Gunka (2003)",
+    "Gravitation TV (2000) ",
+    "Whisper of the heart (1995) ",
+    "Millennium Actress (2001) ",
+    "Kodomo no Omocha (1996)",
+    "Tennis no Ohjisama (2001) ",
+    "Laputa: Castle in the Sky (1986)",
+    "D.N Angel (2003)",
+    "Golden Boy (1995) ",
+    "Hana Yori Dango (1996)",
+    "Fushigi Yuugi (1995) ",
+    "D.C ~Da Capo~ (2003) ",
+    "Maria-sama ga Miteru (2004)",
+    "Ai Mai Mi ! Strawberry Egg (2001)",
+    "Basilisk ~ Koga Ninpo Cho ~ (2005) ",
+    "Seikai no Senki 2 (2001) ",
+    "Revolutionary Girl Utena (1997) ",
+    "Evangelion: End of Evangelion (1997) ",
+    "Slam Dunk (1993) ",
+    "Tenshi na Konamaiki (2002) ",
+    "Excel Saga (1999)",
+    "Ayashi no Ceres (2000)",
+    "Mahoromatic TV 2 (2002) ",
+    "Abenobashi Mahou Shotengai (2002) ",
+    "Ultra Maniac TV (2003) ",
+    "Outlaw Star (1998) ",
+    "Pita Ten (2002) ",
+    "Onegai Twins (2003) ",
+    "Love Hina Christmas Special (2001) ",
+    "Kumo no Muko, Yakusoku no basho (2004) ",
+    "Martian Successor Nadesico (1996) ",
+    "Slayers, The (1995)",
+    "TEXHNOLYZE (2003)",
+    "Macross Plus (1994)",
+    "Piano (2002) ",
+    "AA! Megami Sama: The Movie (2000) ",
+    "Boys Be (2000) ",
+    "Shaman King (2001)",
+    "Sokyu No Fafner (2004) ",
+    "Macross Zero (2002)",
+    "hack//Legend of Twilight Bracelet (2003)",
+    "Matantei Loki - Ragnarok (2003) ",
+    "GANTZ (2004) ",
+    "Kimagure Orange Road TV (1987) ",
+    "Maburaho (2003) ",
+    "Air Master (2003) ",
+    "Final Fantasy VII Advent Children (2005) ",
+    "Tokyo Underground (2002) ",
+    "Suzuka (2005)",
+    "Ninja Scroll (1993)",
+    "Legend of Condor Hero (2001) ",
+    "Kiki's Delivery Service (1989) ",
+    "Ai Yori Aoshi ~Enishi~ (2003) ",
+    "MADLAX (2004)",
+    "Yami no Matsuei (2000)",
+    "Metropolis (2001)",
+    "DearS (2004)",
+    "Spiral ~Bond of Inference~ (2002)",
+    "Video Girl Ai (1991)",
+    "Ghost in the Shell 2: Innocence (2004)",
+    "Gundam SEED Destiny (2004) ",
+    "Appleseed Movie (2004)",
+    "Perfect Blue (1997)",
+    "Tenjou Tenge (2004)",
+    "Record of Lodoss War OVA (1990) ",
+    "Blood: The Last Vampire (2000) ",
+    "NARUTARU (2003)",
+    "Escaflowne - The Movie (2000) ",
+    "Green Green TV (2003) ",
+    "Peace Maker Kurogane (2003)",
+    "Happy Lesson TV (2002) ",
+    "Tsubasa Chronicle (2005)",
+    "To Heart (1999)",
+    "Jubei-chan the Ninja Girl (1999)",
+    "Rozen Maiden (2004) ",
+    "Popotan (2003)",
+    "Gasaraki (1998)",
+    "Love Hina OVA (2002)",
+    "Ichigo 100% (2005) ",
+    "Gundam Wing (1995) ",
+    "Dual! Parallel Trouble Adventures TV (1999) ",
+    "Groove Adventure Rave (2001)",
+    "Love Hina Spring Special (2001) ",
+    "Maho Sensei Negima (2005) ",
+    "Alien Nine (2001) ",
+    "Angel Sanctuary (2000) ",
+    "Flame of Recca (1992) ",
+    "Dragon Ball (1986)",
+    "Prince of Darkness (1998) ",
+    "Battle Angel (1993) ",
+    "Rurouni Kenshin - Requiem for the Restoration Royalists (1997) ",
+    "Grenadier - Hohoemi no Senshi - (2004)",
+    "Bastard! Destroyer of Darkness (1992) ",
+    " Kite (1998) ",
+    " Mezzo - Danger Service Agency (2004) ",
+    "Dragon Ball Z (1989)",
+    "Samurai Deeper Kyo (2002) ",
+    "Ikkitousen (2003)",
+  ];
+  
+  // Toggle dropdown
+  toggleLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    dropdown.classList.toggle("show");
+  });
+  
+  // Close dropdown if clicked outside
+  document.addEventListener("click", function (e) {
+    if (!toggleLink.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.remove("show");
+    }
+  });
+  
+  // Search suggestion functionality
+  searchInput.addEventListener("input", function () {
+    const input = searchInput.value.toLowerCase();
+    suggestionsList.innerHTML = ""; // Clear old suggestions
+  
+    if (input) {
+      const filteredSuggestions = suggestions.filter((item) =>
+        item.toLowerCase().includes(input)
+      );
+  
+      filteredSuggestions.forEach(function (suggestion) {
+        const li = document.createElement("li");
+        li.textContent = suggestion;
+        li.addEventListener("click", function () {
+          searchInput.value = suggestion; // Fill input when clicked
+          suggestionsList.innerHTML = ""; // Clear suggestions
+        });
+        suggestionsList.appendChild(li);
+      });
+    }
+  });
+  
+
+
+
+    const pages = ["page-1.html", "page-2.html", "page-3.html", "page-4.html", "page-5.html"];
+let currentPage = pages.findIndex(page => window.location.pathname.includes(page)) + 1;
+
+const prevButton = document.getElementById('prevBtn');
+const nextButton = document.getElementById('nextBtn');
+const pageNumber = document.getElementById('pageNumber');
+
+prevButton.addEventListener('click', function() {
+    if (currentPage > 1) {
+        currentPage--;
+        window.location.href = pages[currentPage - 1];
+    }
+});
+
+nextButton.addEventListener('click', function() {
+    if (currentPage < pages.length) {
+        currentPage++;
+        window.location.href = pages[currentPage - 1];
+    }
+});
+
+function checkButtons() {
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage === pages.length;
+    pageNumber.textContent = currentPage;
+}
+
+checkButtons();
+
+</script>
+</html>
