@@ -1,0 +1,230 @@
+     <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Oxanium:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+ <style>
+        :root {
+        --primary-bg: #1a1a1a;
+        --card-bg: #ffffff;
+        --accent-color: #e50914; /* Cinema Red */
+        --txt-main: #fff4f4;
+        --txt-muted: #e7dbdb;
+      }
+
+           /* ---------- AESTHETIC BACKGROUND ORBS ---------- */
+      /* These blobs sit behind the glass card to highlight the blur effect */
+      .background-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        opacity: 0.6;
+        animation: float 10s infinite ease-in-out alternate;
+      }
+
+      .orb-1 {
+        top: 10%;
+        left: 20%;
+        width: 150px;
+        height: 150px;
+        background: #ffc371;
+      }
+
+      .orb-2 {
+        bottom: 10%;
+        right: 20%;
+        width: 125px;
+        height: 125px;
+        background: #ff8a65;
+        animation-delay: -5s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(30px, 50px);
+        }
+      }
+
+      section .random-card{
+         display: flex;
+        position: relative;
+       height: 250px;
+        background: var(--card-bg);
+        border-radius: none;
+        background: rgba(255, 255, 255, 0.05); /* Very subtle fill */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px); /* Heavy blur for glassmorphism */
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s ease;
+        border-bottom: 3px #ff8a65 solid;
+      }
+
+ /* Main contaitx 
+      .random-card {
+        display: flex;
+        position: relative;
+        width: 800px;
+        height: 250px;
+        background: var(--card-bg);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05); /* Very subtle fill 
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px); /* Heavy blur for glassmorphism *
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s ease;
+      }
+
+      /* Image Section */
+      .max-contaitx {
+        flex: 0 0 180px;
+        margin: 20px;
+        /*border: 4px solid #000;*/
+        overflow: hidden;
+        background: #eee;
+      }
+
+      .max-contaitx img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.5s ease;
+      }
+
+      /* Content Section */
+      .rancontentx {
+        flex: 1;
+        padding: 30px 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .tech {
+        font-family: "Oxanium", sans-serif;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        margin: 0 0 10px 0;
+        color: var(--txt-main);
+        letter-spacing: 1px;
+      }
+
+      .detaix {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--txt-muted);
+        font-family: "Oxanium", sans-serif;
+      }
+
+      .detaix span {
+        font-weight: 700;
+        color: var(--txt-main);
+      }
+
+      /* Interactive Triangle Button */
+      .press-me {
+        /* Position & Layout */
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        padding: 0.8rem 2.5rem; /* Adjusted for a sleeker profile */
+
+        /* Typography */
+        font-family: "Oxanium", sans-serif;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+
+        /* Visual Style (Matching .quest-btnx) */
+        background: transparent;
+        color: rgba(255, 255, 255, 0.6);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px; /* Kept slight rounding for the rectangular shape */
+
+        /* Interaction */
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .press-me:hover {
+        border-color: #ff8a65;
+        color: #ff8a65;
+        box-shadow: 0 0 15px rgba(255, 138, 101, 0.3);
+        transform: translateY(-2px); /* Subtle lift instead of scaling */
+      }
+
+      .btnx-txt {
+        color: white;
+        /* padding: 15px 20px;*/
+        font-weight: bold;
+        font-size: 1rem;
+        txt-transform: uppercase;
+        letter-spacing: 1px;
+        transform: rotate(-36.5deg);
+        margin-top: 15px;
+
+        /* pointer-events: none;
+        user-select: none;*/
+      }
+
+      .btnx-txt:hover {
+        color: #ff8a65;
+      }
+
+      /* Animation class */
+      .fade-out {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+
+<section class="random-card">
+  <div class="random-card">
+        <div class="background-orb orb-1"></div>
+    <div class="background-orb orb-2"></div>
+      <div class="max-contaitx">
+        <img
+          id="randommax"
+          src="Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg"
+          alt="max"
+        />
+      </div>
+
+      <div class="rancontentx">
+        <h1 class="tech" id="randomtech">The Last Stand</h1>
+        <div class="detaix">
+          <div id="randomGenres">Drama, Historic, War</div>
+          <div>Release Date: <span id="randomDate">06/12/1944</span></div>
+          <div id="randomSeason" style="font-weight: bold; margin-top: 5px">
+            Summer
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="press-me" onclick="generateRandom()">
+          Generate Random
+        </button>
+      </div>
+    </div>
+</section>
+  
+
+   

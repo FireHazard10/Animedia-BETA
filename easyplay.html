@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Enhanced Media Player</title>
+
+    <!-- Font Awesome (icons) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity=""
+      crossorigin="anonymous"
+    />
+
+    <style>
+      :root {
+        --bg: rgba(255, 255, 255, 0.06);
+        --card-radius: 12px;
+        --accent: #ff8a65;
+        --glow: rgba(255, 138, 101, 0.35);
+        --text: #fff;
+        --muted: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Theme variations */
+      .theme-neon {
+        --accent: #00f5ff;
+        --glow: rgba(0, 245, 255, 0.25);
+      }
+      .theme-glass {
+        --accent: #7aa2ff;
+        --glow: rgba(122, 162, 255, 0.12);
+        --bg: rgba(255, 255, 255, 0.04);
+      }
+      .theme-anime {
+        --accent: #ff5edb;
+        --glow: rgba(255, 94, 219, 0.2);
+      }
+      .theme-orange {
+        --accent: #ff8a65;
+        --glow: rgba(255, 138, 101, 0.35);
+      }
+
+      body {
+        background: linear-gradient(180deg, #071026 0%, #0b1220 100%);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .card {
+        width: 360px;
+        max-width: 96%;
+        border-bottom: 3px solid var(--accent);
+        /*overflow: hidden;*/
+        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+        background: var(--bg);
+        transition: transform 0.28s ease, box-shadow 0.28s ease;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: var(--card-radius);
+      }
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 40px var(--glow);
+      }
+
+      .poster {
+        width: 100%;
+        aspect-ratio: 16/9;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.15),
+          rgba(0, 0, 0, 0.45)
+        );
+      }
+
+      .poster img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.28, 1);
+      }
+      .poster:hover img {
+        transform: scale(1.06);
+      }
+
+      /* if video is active, show it on top */
+      .poster video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        background: #000;
+      }
+
+      .info {
+        padding: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      .top-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+      }
+
+      .song-title {
+        flex: 1;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-right: 8px;
+      }
+
+      .meta {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .progress-wrap {
+        margin-top: 12px;
+      }
+
+      .time-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 99px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .progress {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--accent), #ffd89b);
+        transition: width 0.08s linear;
+      }
+
+      .controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .left-controls,
+      .right-controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      button.icon-btn {
+        background: rgba(255, 255, 255, 0.06);
+        border: none;
+        color: var(--text);
+        padding: 8px;
+        border-radius: 8px;
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: transform 0.16s ease, box-shadow 0.16s ease,
+          background 0.16s;
+        border-bottom: 3px solid var(--accent);
+      }
+      button.icon-btn:hover {
+        transform: scale(1.06);
+        box-shadow: 0 6px 18px var(--glow);
+        background: rgba(255, 255, 255, 0.09);
+      }
+
+      .play-btn {
+        width: 66px;
+        height: 66px;
+        border-radius: 12px;
+        font-size: 18px;
+        background: rgba(0, 0, 0, 0.35);
+        border: 3px solid var(--accent);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 22px var(--glow);
+        display: grid;
+        place-items: center;
+      }
+      .play-btn i {
+        font-size: 20px;
+      }
+
+      /* volume + slider */
+      .vol-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 50px;
+      }
+      input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 6px;
+        background: transparent;
+      }
+      input[type="range"]::-webkit-slider-runnable-track {
+        height: 6px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--accent);
+        margin-top: -4px;
+        box-shadow: 0 0 10px var(--glow);
+      }
+
+      /* settings menu */
+      .settings {
+        position: relative;
+      }
+      .settings-panel {
+        position: absolute;
+        right: 0;
+        top: 46px;
+        background: rgba(2, 6, 23, 0.9);
+        padding: 12px;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        min-width: 200px;
+        z-index: 40;
+        display: none;
+      }
+      .settings-panel.open {
+        display: block;
+      }
+
+      .settings-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 8px 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .theme-picker {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .theme-swatch {
+        width: 28px;
+        height: 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        border: 2px solid rgba(255, 255, 255, 0.04);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+      }
+
+      /* small helpers */
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .flex {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      /* responsive */
+      @media (max-width: 420px) {
+        .card {
+          width: 100%;
+        }
+        .play-btn {
+          width: 58px;
+          height: 58px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Player root (themes applied here by JS) -->
+    <div id="player-root" class="card theme-orange">
+      <!-- Poster area (shows image; video element will be inserted here dynamically) -->
+      <div class="poster" id="poster">
+        <img
+          id="poster-img"
+          src="Pictures01/06d44be9-fab1-4954-b4db-e7204a22bc86.jpeg"
+          alt="poster image"
+        />
+        <!-- Video element goes here when active (created by JS) -->
+      </div>
+
+      <div class="info">
+        <div class="top-row">
+          <div
+            style="display: flex; flex-direction: column; flex: 1; min-width: 0"
+          >
+            <div class="song-title" id="song-title">Loading...</div>
+            <div class="meta" id="song-meta">—</div>
+          </div>
+
+          <div class="settings">
+            <button class="icon-btn" id="settings-btn" title="Settings">
+              <i class="fas fa-gear"></i>
+            </button>
+            <div class="settings-panel" id="settings-panel" aria-hidden="true">
+              <div class="settings-row">
+                <span>Playback rate</span>
+                <select id="playbackRate">
+                  <option value="0.5">0.5x</option>
+                  <option value="0.75">0.75x</option>
+                  <option value="1" selected>1x</option>
+                  <option value="1.25">1.25x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2">2x</option>
+                </select>
+              </div>
+
+              <div class="settings-row">
+                <span>Loop</span>
+                <label class="flex"
+                  ><input type="checkbox" id="loopToggle" />
+                  <span class="muted" style="font-size: 12px; margin-left: 6px"
+                    >Repeat</span
+                  ></label
+                >
+              </div>
+
+              <div class="settings-row">
+                <span>Shuffle</span>
+                <label class="flex"
+                  ><input type="checkbox" id="shuffleToggle" />
+                  <span class="muted" style="font-size: 12px; margin-left: 6px"
+                    >Random</span
+                  ></label
+                >
+              </div>
+
+              <div
+                style="margin-top: 8px; font-size: 13px; color: var(--muted)"
+              >
+                Theme
+              </div>
+              <div class="theme-picker">
+                <div
+                  class="theme-swatch"
+                  data-theme="theme-neon"
+                  title="Neon"
+                  style="background: linear-gradient(90deg, #00f5ff, #00ffa6)"
+                ></div>
+                <div
+                  class="theme-swatch"
+                  data-theme="theme-glass"
+                  title="Glass"
+                  style="background: linear-gradient(90deg, #90b9ff, #7aa2ff)"
+                ></div>
+                <div
+                  class="theme-swatch"
+                  data-theme="theme-anime"
+                  title="Anime"
+                  style="background: linear-gradient(90deg, #ff7ad9, #ff5edb)"
+                ></div>
+                <div
+                  class="theme-swatch"
+                  data-theme="theme-orange"
+                  title="Orange fire"
+                  style="background: linear-gradient(90deg, #ff8a65, #ffd89b)"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="time-row">
+            <div id="currentTime">0:00</div>
+            <div id="duration">0:00</div>
+          </div>
+
+          <div class="progress-bar" id="progressBar" title="Seek">
+            <div class="progress" id="progress"></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="left-controls">
+            <button class="icon-btn" id="prevBtn" title="Previous">
+              <i class="fas fa-backward"></i>
+            </button>
+            <button class="icon-btn" id="rewindBtn" title="-10s">
+              <i class="fas fa-rotate-left"></i>
+            </button>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px">
+            <button class="play-btn" id="playBtn" title="Play / Pause">
+              <i id="playIcon" class="fas fa-play"></i>
+            </button>
+          </div>
+
+          <div class="right-controls">
+            <button class="icon-btn" id="forwardBtn" title="+10s">
+              <i class="fas fa-rotate-right"></i>
+            </button>
+            <button class="icon-btn" id="nextBtn" title="Next">
+              <i class="fas fa-forward"></i>
+            </button>
+
+            <div class="vol-wrap" title="Volume">
+              <i class="fas fa-volume-up"></i>
+              <input
+                id="volumeSlider"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value="0.9"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden base media elements used as templates -->
+    <!-- We will create and manage either a <audio> or <video> element dynamically. -->
+
+    <script>
+      /* ---------- CONFIG & PLAYLIST ---------- */
+
+      /* Example playlist - replace with your actual file paths */
+      const songs = [
+        "Pictures/vinland-saga-season-2-episode.mp3",
+        "Pictures/bleach-dub-episode.mp4",
+        "MEmu Music/「AMV」-_Haunt(360p).mp4",
+        "MEmu Music/21_-「AMV」-_Anime_MV(360p).mp4",
+        "MEmu Music/Animal___AMV___Anime_Mix(360p).mp4",
+        "MEmu Music/Golden_Hour_-「AMV」-_Anime_MV(720p).mp4",
+        "MEmu Music/Perfect_10___AMV___Anime_Mix(360p).mp4",
+        "MEmu Music/Stay_-「AMV」-_Anime_MV(720p).mp4",
+      ];
+
+      /* ---------- STATE ---------- */
+      let currentIndex = 0;
+      let isPlaying = false;
+      let isShuffled = false;
+      let shuffleOrder = [];
+      let audioOrVideo = null; // reference to current <audio> or <video> element
+
+      /* ---------- SELECTORS ---------- */
+      const root = document.getElementById("player-root");
+      const posterImg = document.getElementById("poster-img");
+      const posterContainer = document.getElementById("poster");
+      const titleEl = document.getElementById("song-title");
+      const metaEl = document.getElementById("song-meta");
+      const progressEl = document.getElementById("progress");
+      const progressBar = document.getElementById("progressBar");
+      const currentTimeEl = document.getElementById("currentTime");
+      const durationEl = document.getElementById("duration");
+      const playBtn = document.getElementById("playBtn");
+      const playIcon = document.getElementById("playIcon");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const rewindBtn = document.getElementById("rewindBtn");
+      const forwardBtn = document.getElementById("forwardBtn");
+      const volumeSlider = document.getElementById("volumeSlider");
+      const settingsBtn = document.getElementById("settings-btn");
+      const settingsPanel = document.getElementById("settings-panel");
+      const playbackRateSelect = document.getElementById("playbackRate");
+      const loopToggle = document.getElementById("loopToggle");
+      const shuffleToggle = document.getElementById("shuffleToggle");
+
+      /* ---------- UTILS ---------- */
+      function formatTime(sec) {
+        if (!sec || isNaN(sec)) return "0:00";
+        const s = Math.floor(sec % 60)
+          .toString()
+          .padStart(2, "0");
+        const m = Math.floor(sec / 60);
+        return `${m}:${s}`;
+      }
+
+      function isVideoFile(path) {
+        return /\.(mp4|webm|ogg)$/i.test(path);
+      }
+
+      function tryPosterFromMedia(path) {
+        // attempt common image replacements (.jpg, .jpeg, .png)
+        const base = path.replace(/\.[^/.]+$/, "");
+        const candidates = [base + ".jpg", base + ".jpeg", base + ".png"];
+        // pick the first candidate (no network check here). If the image fails to load, posterImg.onError fallback will run.
+        return candidates[0];
+      }
+
+      /* ---------- PLAYER CORE ---------- */
+      function createMediaElement(src) {
+        // remove existing if any
+        if (audioOrVideo) {
+          audioOrVideo.pause();
+          audioOrVideo.removeEventListener("timeupdate", onTimeUpdate);
+          audioOrVideo.removeEventListener("ended", onEnded);
+          // remove node
+          audioOrVideo.remove();
+          audioOrVideo = null;
+        }
+
+        const videoMode = isVideoFile(src);
+        let el;
+        if (videoMode) {
+          el = document.createElement("video");
+          el.playsInline = true;
+          el.preload = "metadata";
+          el.muted = false;
+          el.controls = false;
+          el.style.display = "block";
+          // ensure keyboard / focus doesn't show native controls
+        } else {
+          el = document.createElement("audio");
+          el.preload = "metadata";
+        }
+
+        el.src = src;
+        el.volume = parseFloat(volumeSlider.value);
+        el.style.width = "100%";
+        el.style.height = "100%";
+        el.style.objectFit = "cover";
+        el.style.display = "none"; // hide until we decide where to place it (we'll show but overlay)
+        el.addEventListener("timeupdate", onTimeUpdate);
+        el.addEventListener("ended", onEnded);
+        el.addEventListener("loadedmetadata", () => {
+          durationEl.textContent = formatTime(el.duration);
+        });
+
+        // insert into poster area for video, or keep hidden for audio
+        if (videoMode) {
+          // remove poster image visually behind the video
+          // Insert video element at top of poster
+          posterContainer.appendChild(el);
+          el.style.display = "block";
+          posterImg.style.opacity = "0.25"; // dim poster when playing video
+        } else {
+          // ensure poster image is fully visible
+          posterImg.style.opacity = "1";
+          // place audio element off-DOM? We'll append but keep it hidden.
+          posterContainer.appendChild(el);
+          el.style.display = "none";
+        }
+
+        audioOrVideo = el;
+        // apply loop setting
+        audioOrVideo.loop = loopToggle.checked;
+        // playback rate
+        audioOrVideo.playbackRate = parseFloat(playbackRateSelect.value);
+        return el;
+      }
+
+      function loadIndex(idx) {
+        if (idx < 0 || idx >= songs.length) return;
+        currentIndex = idx;
+        const path = songs[currentIndex];
+        // update UI text
+        titleEl.textContent = path.split("/").pop();
+        metaEl.textContent = isVideoFile(path) ? "Video" : "Audio";
+        // poster try
+        posterImg.src = tryPosterFromMedia(path);
+        // create element and set source
+        createMediaElement(path);
+        // update shuffle state visuals
+        shuffleToggle.checked = isShuffled;
+        updatePlayIcon(false);
+      }
+
+      /* ---------- PLAY / PAUSE ---------- */
+      async function playCurrent() {
+        if (!audioOrVideo) return;
+        try {
+          // ensure displayed appropriately
+          if (audioOrVideo.tagName.toLowerCase() === "video") {
+            audioOrVideo.style.display = "block";
+            posterImg.style.opacity = "0.25";
+          } else {
+            posterImg.style.opacity = "1";
+            audioOrVideo.style.display = "none";
+          }
+
+          await audioOrVideo.play();
+          isPlaying = true;
+          updatePlayIcon(true);
+        } catch (err) {
+          console.warn("Play prevented:", err);
+        }
+      }
+
+      function pauseCurrent() {
+        if (!audioOrVideo) return;
+        audioOrVideo.pause();
+        isPlaying = false;
+        updatePlayIcon(false);
+      }
+
+      function togglePlayPause() {
+        if (!audioOrVideo) return;
+        if (isPlaying) pauseCurrent();
+        else playCurrent();
+      }
+
+      function updatePlayIcon(playing) {
+        playIcon.className = playing ? "fas fa-pause" : "fas fa-play";
+      }
+
+      /* ---------- TIMEUPDATES & SEEK ---------- */
+      function onTimeUpdate() {
+        if (!audioOrVideo || !audioOrVideo.duration) return;
+        const percent =
+          (audioOrVideo.currentTime / audioOrVideo.duration) * 100;
+        progressEl.style.width = percent + "%";
+        currentTimeEl.textContent = formatTime(audioOrVideo.currentTime);
+      }
+
+      function seekTo(percent) {
+        if (!audioOrVideo || !audioOrVideo.duration) return;
+        audioOrVideo.currentTime = (percent / 100) * audioOrVideo.duration;
+      }
+
+      /* ---------- NAVIGATION ---------- */
+      function prevTrack() {
+        if (isShuffled) {
+          // go to previous index in shuffleOrder (find current position)
+          const pos = shuffleOrder.indexOf(currentIndex);
+          const prevPos = (pos - 1 + shuffleOrder.length) % shuffleOrder.length;
+          loadIndex(shuffleOrder[prevPos]);
+        } else {
+          const nextIdx = (currentIndex - 1 + songs.length) % songs.length;
+          loadIndex(nextIdx);
+        }
+        playCurrent();
+      }
+
+      function nextTrack() {
+        if (isShuffled) {
+          const pos = shuffleOrder.indexOf(currentIndex);
+          const nextPos = (pos + 1) % shuffleOrder.length;
+          loadIndex(shuffleOrder[nextPos]);
+        } else {
+          const nextIdx = (currentIndex + 1) % songs.length;
+          loadIndex(nextIdx);
+        }
+        playCurrent();
+      }
+
+      /* ---------- REWIND / FORWARD ---------- */
+      function skipSeconds(sec) {
+        if (!audioOrVideo) return;
+        audioOrVideo.currentTime = Math.max(
+          0,
+          Math.min(
+            audioOrVideo.duration || Infinity,
+            audioOrVideo.currentTime + sec
+          )
+        );
+      }
+
+      /* ---------- LOOP & SHUFFLE ---------- */
+      function setLoop(val) {
+        if (audioOrVideo) audioOrVideo.loop = val;
+      }
+      function setShuffle(val) {
+        isShuffled = val;
+        if (isShuffled) {
+          // build shuffleOrder such that it starts at currentIndex then random order
+          shuffleOrder = Array.from(Array(songs.length).keys());
+          // Fisher-Yates
+          for (let i = shuffleOrder.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffleOrder[i], shuffleOrder[j]] = [
+              shuffleOrder[j],
+              shuffleOrder[i],
+            ];
+          }
+          // ensure first element is currentIndex (so nextTrack continues logically)
+          if (!shuffleOrder.includes(currentIndex)) {
+            shuffleOrder.unshift(currentIndex);
+          } else {
+            // move currentIndex to front
+            shuffleOrder = shuffleOrder.filter((i) => i !== currentIndex);
+            shuffleOrder.unshift(currentIndex);
+          }
+        } else {
+          shuffleOrder = [];
+        }
+      }
+
+      /* ---------- EVENTS ---------- */
+      // play / pause
+      playBtn.addEventListener("click", togglePlayPause);
+      // next / prev
+      prevBtn.addEventListener("click", () => {
+        prevTrack();
+      });
+      nextBtn.addEventListener("click", () => {
+        nextTrack();
+      });
+      // rewind / forward
+      rewindBtn.addEventListener("click", () => skipSeconds(-10));
+      forwardBtn.addEventListener("click", () => skipSeconds(10));
+
+      // progress click to seek
+      progressBar.addEventListener("click", (e) => {
+        const rect = progressBar.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const pct = (x / rect.width) * 100;
+        seekTo(pct);
+      });
+
+      // volume
+      volumeSlider.addEventListener("input", () => {
+        const v = parseFloat(volumeSlider.value);
+        if (audioOrVideo) audioOrVideo.volume = v;
+      });
+
+      // settings toggle
+      settingsBtn.addEventListener("click", (e) => {
+        settingsPanel.classList.toggle("open");
+        settingsPanel.setAttribute(
+          "aria-hidden",
+          !settingsPanel.classList.contains("open")
+        );
+      });
+
+      // playback rate change
+      playbackRateSelect.addEventListener("change", () => {
+        if (audioOrVideo)
+          audioOrVideo.playbackRate = parseFloat(playbackRateSelect.value);
+      });
+
+      // loop toggle
+      loopToggle.addEventListener("change", (e) => {
+        setLoop(e.target.checked);
+      });
+
+      // shuffle toggle
+      shuffleToggle.addEventListener("change", (e) => {
+        setShuffle(e.target.checked);
+      });
+
+      // theme picker
+      document.querySelectorAll(".theme-swatch").forEach((s) => {
+        s.addEventListener("click", () => {
+          const t = s.dataset.theme;
+          // clear theme classes then add
+          root.classList.remove(
+            "theme-neon",
+            "theme-glass",
+            "theme-anime",
+            "theme-orange"
+          );
+          root.classList.add(t);
+        });
+      });
+
+      // poster fallback: if image fails to load, don't show broken image
+      posterImg.addEventListener("error", () => {
+        posterImg.src =
+          'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450"><rect width="100%" height="100%" fill="%2309141a" /><text x="50%" y="50%" font-size="24" fill="%23ffffff" text-anchor="middle" dominant-baseline="middle">No thumbnail</text></svg>';
+      });
+
+      // keyboard shortcuts (space, left, right)
+      document.addEventListener("keydown", (e) => {
+        const tag = document.activeElement.tagName.toLowerCase();
+        if (tag === "input" || tag === "select" || tag === "textarea") return;
+        if (e.code === "Space") {
+          e.preventDefault();
+          togglePlayPause();
+        }
+        if (e.code === "ArrowRight") {
+          skipSeconds(10);
+        }
+        if (e.code === "ArrowLeft") {
+          skipSeconds(-10);
+        }
+      });
+
+      // when media ends
+      function onEnded() {
+        // if shuffle, go to next in shuffle order
+        if (loopToggle.checked) {
+          // browser will loop if media.loop = true (we also set it). If you want custom loop behaviour, handle here.
+          return;
+        }
+        nextTrack();
+      }
+
+      /* ---------- SHUFFLE ROUTINES ---------- */
+      function buildShuffleOrder() {
+        shuffleOrder = Array.from(Array(songs.length).keys());
+        for (let i = shuffleOrder.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffleOrder[i], shuffleOrder[j]] = [
+            shuffleOrder[j],
+            shuffleOrder[i],
+          ];
+        }
+        // move currentIndex to front so "next" goes to a new item
+        shuffleOrder = shuffleOrder.filter((i) => i !== currentIndex);
+        shuffleOrder.unshift(currentIndex);
+      }
+
+      /* ---------- INIT ---------- */
+      function init() {
+        // initial shuffleOrder empty
+        shuffleOrder = [];
+        // load the first track
+        loadIndex(currentIndex);
+        // try to autoplay (may be blocked by browser)
+        // add click on poster to toggle play/pause (for video)
+        posterContainer.addEventListener("click", () => {
+          if (audioOrVideo && audioOrVideo.tagName === "VIDEO")
+            togglePlayPause();
+        });
+        // hide settings panel on outside click
+        document.addEventListener("click", (e) => {
+          if (
+            !settingsPanel.contains(e.target) &&
+            !settingsBtn.contains(e.target)
+          ) {
+            settingsPanel.classList.remove("open");
+            settingsPanel.setAttribute("aria-hidden", "true");
+          }
+        });
+      }
+
+      // expose some helpers for console debugging (optional)
+      window.playerAPI = {
+        loadIndex,
+        nextTrack,
+        prevTrack,
+        togglePlayPause,
+        setShuffle,
+      };
+
+      init();
+    </script>
+  </body>
+</html>

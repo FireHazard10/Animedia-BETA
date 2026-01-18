@@ -1,0 +1,159 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+<style>
+  body {
+    background: #000;
+  }
+
+  /* Share Panel (Glass UI) */
+  .share-panel {
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    gap: 18px;
+    padding: 12px 20px;
+
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+
+    border-left: 3px solid #ff8a65;
+    border-right: 3px solid #ff8a65;
+
+    /*border-top-right-radius: 40px;
+    border-bottom-left-radius: 40px;
+
+    box-shadow: 0 4px 20px rgba(255, 138, 101, 0.25);*/
+    width: fit-content;
+    margin: 7px 0px 7px 0px;
+  }
+
+  /* Left Area */
+  .share-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ff8a65;
+  }
+
+  .share-icon {
+    font-size: 26px;
+  }
+
+  .share-text span {
+    display: block;
+    font-size: 12px;
+    line-height: 13px;
+    font-weight: 500;
+  }
+
+  /* Divider */
+  .share-divider {
+    width: 1px;
+    height: 35px;
+    background: #ff8a65;
+    opacity: 0.8;
+  }
+
+  /* Social Icons */
+  .share-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .share-icons a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    width: fit-content;
+    height: 35px;
+    padding: 6px 10px;
+
+    border-radius: 10px;
+    text-decoration: none;
+
+    color: #ff8a65;
+    font-size: 18px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    transition: 0.25s ease;
+  }
+
+  .share-icons a:hover {
+    background: #ff8a65;
+    color: #111;
+    transform: translateY(-3px) scale(1.07);
+    box-shadow: 0 6px 20px rgba(255, 138, 101, 0.45);
+  }
+  @media (max-width: 768px) {
+    .share-icons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .share-icons p {
+      text-indent: -9999px;
+    }
+  }
+</style>
+
+<div class="share-panel">
+  <div class="share-left">
+    <i class="fas fa-share-alt share-icon"></i>
+    <div class="share-text">
+      <span>Share</span>
+      <span>our site</span>
+    </div>
+  </div>
+
+  <div class="share-icons">
+    <a href="#"
+      ><i class="fab fa-facebook-f"></i>
+      <p>facebook.com</p></a
+    >
+    <div class="share-divider"></div>
+
+    <a href="#"
+      ><i class="fab fa-linkedin-in"></i>
+      <p>linkedin.org</p></a
+    >
+    <div class="share-divider"></div>
+
+    <a href="#"
+      ><i class="fab fa-twitter"></i>
+      <p>X.com</p></a
+    >
+    <div class="share-divider"></div>
+
+    <a href="#"
+      ><i class="fab fa-instagram"></i>
+      <p>instagram.com</p></a
+    >
+    <div class="share-divider"></div>
+
+    <a href="#"
+      ><i class="fab fa-youtube"></i>
+      <p>youtube.com</p></a
+    >
+    <div class="share-divider"></div>
+
+    <a href="#"
+      ><i class="fab fa-twitch"></i>
+      <p>twitch.com</p></a
+    >
+    <div class="share-divider"></div>
+
+    <a href="#"
+      ><i class="fab fa-discord"></i>
+      <p>discord.com</p></a
+    >
+  </div>
+</div>
