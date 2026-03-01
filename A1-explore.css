@@ -1,0 +1,514 @@
+/* ---------- Modern Reset ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #050505; /* Deeper black for premium feel */
+  color: #fff;
+  overflow-x: hidden;
+}
+
+header {
+  position: absolute; /* Allows content to sit underneath */
+  /*top: 0;
+      left: 0;*/
+  width: 100%;
+  z-index: 100;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8) 0%,
+    transparent 100%
+  );
+  transition: background 0.3s ease;
+}
+
+.xeno {
+  /*max-width: 1200px;*/
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ffc371, #ff8a65);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo span {
+  background: none !important; /* remove inherited background */
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #fff !important; /* force solid white text */
+  color: #fff !important; /* fallback for non-webkit */
+}
+
+nav {
+  display: flex;
+  gap: 1.5rem;
+  font-weight: 600;
+}
+
+nav a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+}
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background: #ff8a65;
+  transition: width 0.3s ease;
+}
+
+nav a:hover {
+  color: #ff8a65;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+.cta {
+  background: linear-gradient(135deg, #ffc371, #ff8a65);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.cta:hover {
+  background: linear-gradient(135deg, #e91e63, #ff8a65);
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mobile-menu a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+
+.hero {
+  text-align: center;
+  padding: 5rem 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  color: var(--text);
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.hero p {
+  margin-top: 1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero a {
+  display: inline-block;
+  margin-top: 2rem;
+  background: #db2777;
+  padding: 0.75rem 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.hero a:hover {
+  background: #be185d;
+}
+
+/*.bg-image {
+    position: absolute;
+    inset: 0;
+    background-image: url(❤️X/anime-girl-kazari-genshin-impact-spring-mask-5k-3840x2160-7950.jpg);
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5;
+    z-index: -1;
+  }*/
+
+@media (max-width: 768px) {
+  nav,
+  .cta {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .mobile-menu .join {
+    background: linear-gradient(135deg, #ffc371, #ff8a65);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .mobile-menu.active {
+    display: flex;
+  }
+}
+
+/* ---------- Transparent Header ---------- */
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ---------- Hero Section ---------- */
+.movie-xero {
+  position: relative;
+  width: 100%;
+  height: 80vh; /* Taller hero */
+}
+
+.xero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.xero-overlay {
+  position: absolute;
+  inset: 0;
+  /* Darken bottom for smooth transition to content */
+  background: linear-gradient(to top, #050505 0%, transparent 50%);
+}
+
+/* ---------- Overlapping Detail Section ---------- */
+.movie-description {
+  position: relative;
+  padding: 0 2rem 4rem 2rem;
+  margin-top: -150px; /* This pulls the section UP into the image */
+  z-index: 10;
+}
+
+.movie-card {
+  display: flex;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* The Connecting Poster */
+.poster-wrap {
+  flex-shrink: 0;
+  transform: translateY(-50px); /* Lifts poster even higher */
+}
+
+.poster-wrap img {
+  width: 260px;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+}
+
+/* Info Section */
+.movie-info {
+  margin-top: 60px; /* Aligns text with the bottom of the overlap */
+}
+
+.movie-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+}
+
+.meta {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  color: #bbb;
+  margin-bottom: 2rem;
+}
+
+.rating {
+  border: 1px solid #ff8a65;
+  color: #ff8a65;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.synopsis {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2.5rem;
+  max-width: 700px;
+}
+
+/* ---------- Buttons ---------- */
+.actions {
+  display: flex;
+  gap: 15px;
+}
+
+.watch-me {
+  background: #ff8a65;
+  color: #fff;
+  border: none;
+  padding: 14px 32px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.watch-me:hover {
+  background: #fff;
+  color: #000;
+  transform: scale(1.05);
+}
+
+.add-btn {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* ---------- Content Grid ---------- */
+.movie-extra {
+  position: relative;
+  border-bottom: 3px #ff8a65 solid;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  /*border-radius: 15px;*/
+  margin: 0 5%;
+  padding: 2rem;
+}
+
+.cards {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  justify-content: center;
+  gap: 30px;
+}
+
+.card {
+  position: relative;
+  width: 250px;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(60%);
+  transition: 0.4s ease;
+}
+
+.card:hover img {
+  filter: brightness(80%);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.overlay button {
+  background: linear-gradient(135deg, #ffc371, #ff8a65);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.overlay button:hover {
+  background: white;
+  color: #ff8a65;
+}
+
+.watch-btn {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(90deg, #ff8a65, #ffc371);
+  border: none;
+  /*border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 0px;*/
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.watch-btn:hover {
+  transform: scale(1.1);
+}
+
+.watch-btn a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+}
+
+.section-label {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  border-left: 4px solid #ff8a65;
+  padding-left: 15px;
+}
+
+/* ---------- Responsive Adjustments ---------- */
+@media (max-width: 768px) {
+  .movie-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .movie-title {
+    font-size: 2.2rem;
+  }
+
+  .poster-wrap {
+    transform: translateY(-80px);
+  }
+
+  .movie-info {
+    margin-top: -60px;
+  }
+}
+
+footer {
+  /*background-color: #2c2c2c;*/
+  background-color: black;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.end {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #ffc371, #ff8a65);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.end span {
+  background: none !important; /* remove inherited background */
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #fff !important; /* force solid white text */
+  color: #fff !important; /* fallback for non-webkit */
+}
+
+footer hr {
+  border: none;
+  border-top: 1px solid #555;
+  margin: 10px auto 20px;
+  width: 80%;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.95rem;
+  background: none !important; /* remove inherited background */
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #ccc !important; /* force solid white text */
+  color: #ccc !important; /* fallback for non-webkit */
+}
+
+.footer-links p {
+  margin: 5px 0;
+}
+
+.footer-links p:hover {
+  cursor: pointer;
+  background: none !important; /* remove inherited background */
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #fff !important; /* force solid white text */
+  color: #fff !important; /* fallback for non-webkit */
+}
+
+@media (max-width: 600px) {
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+  }
+}

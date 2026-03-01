@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AniMedia - About Us</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Oxanium:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* ---------- RESET & BASICS ---------- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Oxanium", sans-serif;
+      }
+
+      /* ---------- CUSTOM SCROLLBAR (Chrome, Safari, Edge, Opera) ---------- */
+      ::-webkit-scrollbar {
+        width: 10px; /* Width of the vertical scrollbar */
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #0f0f0f; /* Very dark grey (almost black) background */
+        border-left: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border for separation */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+          180deg,
+          #ffc371,
+          #ff8a65
+        ); /* Matches your logo/buttons */
+        border-radius: 5px; /* Rounded corners */
+        border: 2px solid #0f0f0f; /* Creates a padding effect around the thumb */
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(
+          180deg,
+          #ff8a65,
+          #f472b6
+        ); /* Pinkish shift on hover */
+      }
+
+      /* ---------- CUSTOM SCROLLBAR (Firefox) ---------- */
+      html {
+        /* Firefox uses these properties instead of pseudo-elements */
+        scrollbar-width: thin; /* 'auto' or 'thin' */
+        scrollbar-color: #ff8a65 #0f0f0f; /* thumb color | track color */
+      }
+
+      /*  body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #050505; /* Deep black/grey *
+        color: white;
+      }*/
+
+      #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* This is the "magic" that makes it act like 'center/cover' */
+        z-index: -1; /* Pushes it behind your text */
+      }
+
+      body {
+        margin: 0;
+        font-family: "Oxanium", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* ---------- AESTHETIC BACKGROUND ORBS ---------- */
+      /* These blobs sit behind the glass card to highlight the blur effect */
+      .background-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        opacity: 0.6;
+        animation: float 10s infinite ease-in-out alternate;
+      }
+
+      .orb-1 {
+        top: 10%;
+        left: 20%;
+        width: 300px;
+        height: 300px;
+        background: #ffc371;
+      }
+
+      .orb-2 {
+        bottom: 10%;
+        right: 20%;
+        width: 250px;
+        height: 250px;
+        background: #ff8a65;
+        animation-delay: -5s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(30px, 50px);
+        }
+      }
+
+      /* ---------- HEADER ---------- */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.7); /* Slight tint for readability */
+        backdrop-filter: blur(5px);
+
+        /* Specific Request: Semi-transparent gray text & Bottom Border */
+        color: rgba(255, 255, 255, 0.5);
+        border-bottom: 3px solid #ff8a65;
+        margin-bottom: 10px;
+      }
+
+      .logo {
+        font-size: 1.8em;
+        font-weight: bold;
+        /* Brand gradient kept for logo specifically */
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        cursor: pointer;
+      }
+
+      .logo span {
+        /* "Media" text in white per reference */
+        -webkit-text-fill-color: #fff !important;
+      }
+
+      .nav-text {
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.9em;
+        letter-spacing: 1px;
+      }
+
+      .quest-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: transparent;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .quest-btn:hover {
+        border-color: #ff8a65;
+        color: #ff8a65;
+        box-shadow: 0 0 10px rgba(255, 138, 101, 0.4);
+      }
+
+      /*body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        font-family: "Oxanium", sans-serif;
+        padding: 20px;
+      }*/
+
+      .about-container {
+        background: rgb(38, 38, 38);
+        backdrop-filter: blur(12px);
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        max-width: 700px;
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+        margin-top: 150px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 2.2em;
+        margin-bottom: 15px;
+        color: #ff8a65;
+      }
+
+      h1 span {
+        color: #fff8f0;
+      }
+
+      p {
+        color: #ffffff;
+        font-size: 1.05em;
+        line-height: 1.6;
+        margin-bottom: 25px;
+      }
+
+      .section {
+        margin-bottom: 30px;
+      }
+
+      .section h2 {
+        font-size: 1.3em;
+        margin-bottom: 12px;
+        color: #ff8a65;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .section h2 i {
+        font-size: 1.2em;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1em;
+        color: #fff;
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      .btn:hover {
+        background: linear-gradient(135deg, #ff8a65, #ffc371);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!--<div class="background-orb orb-1"></div>
+    <div class="background-orb orb-2"></div>-->
+
+    <header>
+      <div class="logo">Ani<span>Media</span></div>
+      <div class="nav-text">ABOUT - US PORTAL</div>
+      <button class="quest-btn">?</button>
+    </header>
+
+    <video autoplay muted loop playsinline id="bg-video">
+      <source
+        src="❤️X/abandoned-train-station-moewalls-com.mp4"
+        type="video/mp4"
+      />
+    </video>
+
+    <div class="about-container">
+      <h1>About Ani<span>Media</span></h1>
+      <p>
+        AniMedia is your go-to platform for anime and animated series lovers. We
+        aim to bring fans closer to the stories and characters they love,
+        offering a smooth, immersive, and user-friendly experience.
+      </p>
+
+      <div class="section">
+        <h2><i class="bx bx-bullseye"></i> Our Mission</h2>
+        <p>
+          To create a vibrant hub where anime enthusiasts can explore, discover,
+          and enjoy their favorite shows while connecting with a passionate
+          community. Our mission is to combine design, technology, and
+          storytelling in one place.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2><i class="bx bx-group"></i> Our Team</h2>
+        <p>
+          We are a team of creators, developers, and anime fans dedicated to
+          building a platform that truly understands the anime community.
+          Together, we strive to deliver innovation and fun.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2><i class="bx bx-envelope"></i> Contact Us</h2>
+        <p>
+          Got questions or suggestions? Reach out to us anytime at
+          <strong>support@animedia.com</strong>.
+        </p>
+      </div>
+
+      <a href="aidox.html" class="btn">Back to Home</a>
+    </div>
+  </body>
+</html>

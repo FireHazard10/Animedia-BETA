@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium Dynamic Grid</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=M+PLUS+Rounded+1c:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="pages.css" />
+    <style>
+      :root {
+        --accent: #ffb700;
+        --accent-glow: rgba(255, 183, 0, 0.3);
+        --bg-dark: #0a0a0c;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --card-border: rgba(255, 255, 255, 0.1);
+        --text-main: #ffffff;
+        --text-muted: #a0a0a8;
+      }
+
+      body {
+        background-color: var(--bg-dark);
+        background-image:
+          radial-gradient(
+            at 0% 0%,
+            rgba(230, 149, 0, 0.15) 0px,
+            transparent 50%
+          ),
+          radial-gradient(at 100% 100%, rgba(0, 0, 0, 1) 0px, transparent 50%);
+        font-family: "Inter", sans-serif;
+        color: var(--text-main);
+        min-height: 100vh;
+      }
+
+      main {
+        padding: 60px 20px;
+        max-width: 1400px;
+        margin: auto;
+      }
+
+      /* --- Grid Configuration --- */
+      #alphcard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      /* --- Sleek Card Design --- */
+      .alphcard {
+        position: relative;
+        display: flex;
+        height: 85px; /* Compact height */
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .alphcard:hover {
+        transform: translateY(-5px) scale(1.02);
+        border-color: var(--accent);
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.5),
+          0 0 15px var(--accent-glow);
+      }
+
+      /* Image Section */
+      .alphcard-img {
+        width: 35%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        border-right: 1px solid var(--card-border);
+      }
+
+      .alphcard-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(20%);
+        transition: transform 0.6s ease;
+      }
+
+      .alphcard:hover img {
+        transform: scale(1.15);
+        filter: grayscale(0%);
+      }
+
+      /* Content Section */
+      .alphcard-info {
+        width: 65%;
+        padding: 10px 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.03) 0%,
+          transparent 100%
+        );
+      }
+
+      .alphcard-title {
+        font-family: "Inter", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--text-main);
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .alphcard-date {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* --- Enhanced Button Design --- */
+      .next-btn {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid transparent;
+        padding: 14px 40px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-radius: 50px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
+      }
+
+      /* Neon border effect */
+      .next-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50px;
+        padding: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--accent),
+          transparent
+        );
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0.7;
+        transition: opacity 0.4s ease;
+      }
+
+      /* Inner glow effect */
+      .next-btn::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          var(--accent-glow) 0%,
+          transparent 70%
+        );
+        transition:
+          width 0.5s ease,
+          height 0.5s ease;
+        z-index: -1;
+      }
+
+      /* Hover effects */
+      .next-btn:hover {
+        color: #000;
+        background: var(--accent);
+        box-shadow:
+          0 0 25px var(--accent-glow),
+          0 0 40px rgba(0, 217, 255, 0.3);
+        letter-spacing: 2.5px;
+        transform: translateY(-3px);
+      }
+
+      .next-btn:hover::before {
+        opacity: 1;
+        background: linear-gradient(
+          90deg,
+          var(--accent),
+          #00f7ff,
+          var(--accent)
+        );
+        animation: border-glow 2s linear infinite;
+      }
+
+      .next-btn:hover::after {
+        width: 150%;
+        height: 150%;
+      }
+
+      /* Pulsing animation */
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
+        }
+      }
+
+      @keyframes border-glow {
+        0% {
+          background-position: -100px 0;
+        }
+        100% {
+          background-position: 100px 0;
+        }
+      }
+
+      /* Icon animation */
+      .next-btn i {
+        margin-right: 8px;
+        transition: transform 0.4s ease;
+      }
+
+      .next-btn:hover i {
+        transform: translateX(3px) rotate(90deg);
+      }
+
+      /* Loading animation state */
+      .next-btn.loading {
+        pointer-events: none;
+        color: transparent;
+      }
+
+      .next-btn.loading::before {
+        animation: border-glow 1s linear infinite;
+      }
+
+      .next-btn.loading::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        border: 2px solid transparent;
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        transform: translate(-50%, -50%);
+        background: transparent;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      /* --- Futuristic Load More Button --- */
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 60px;
+      }
+
+      .alphcard {
+        animation: fadeInUp 0.6s ease backwards;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header"></div>
+
+    <main>
+      <div id="alphcard-grid"></div>
+
+      <div class="button-container">
+        <button class="next-btn" id="next-btn" style="margin-top: 15px">
+          <i class="fas fa-sync-alt"></i> Load More
+        </button>
+      </div>
+    </main>
+
+    <div id="footer"></div>
+    <script src="easypages.js"></script>
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("active");
+      }
+
+      const alphcardData = [
+        // ... (Keep your existing alphcardData array here)
+        {
+          title: "1 View",
+          date: "Year: 20xx",
+          img: "Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg",
+        },
+        {
+          title: "Ocean Sunset",
+          date: "Year: 20xx",
+          img: "Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg",
+        },
+        {
+          title: "Forest Trail",
+          date: "Year: 20xx",
+          img: "Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg",
+        },
+        {
+          title: "City Lights",
+          date: "Year: 20xx",
+          img: "Pictures01/39f2cb49-629d-481e-9cb7-b7a3d45ff778.jpeg",
+        },
+        {
+          title: "Desert Dunes",
+          date: "Year: 20xx",
+          img: "Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg",
+        },
+        {
+          title: "Arctic Ice",
+          date: "Year: 20xx",
+          img: "Pictures01/63506633-9c3e-47ca-849c-be6e590edf5c.jpeg",
+        },
+        {
+          title: "Zebra Crossing",
+          date: "Year: 20xx",
+          img: "Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg",
+        },
+        {
+          title: "Bear Life",
+          date: "Year: 20xx",
+          img: "Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg",
+        },
+        {
+          title: "Eagle Eye",
+          date: "Year: 20xx",
+          img: "Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg",
+        },
+        {
+          title: "River Flow",
+          date: "Year: 20xx",
+          img: "Pictures01/Anime wallpaper.jpeg",
+        },
+        {
+          title: "Alpine Lodge",
+          date: "Year: 20xx",
+          img: "Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg",
+        },
+        {
+          title: "Urban Exploration",
+          date: "Year: 20xx",
+          img: "Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg",
+        },
+        {
+          title: "Deep Space",
+          date: "Year: 20xx",
+          img: "Pictures01/Silent-Witch-Chinmoku-no-Majo-no-Kakushigoto.webp",
+        },
+        {
+          title: "Ancient Ruins",
+          date: "Year: 20xx",
+          img: "Pictures01/DESIGN WALLPAPER ANIME _3.jpeg",
+        },
+        {
+          title: "Mountain View",
+          date: "Year: 20xx",
+          img: "Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg",
+        },
+        {
+          title: "Ocean Sunset",
+          date: "Year: 20xx",
+          img: "Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg",
+        },
+        {
+          title: "Forest Trail",
+          date: "Year: 20xx",
+          img: "Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg",
+        },
+        {
+          title: "City Lights",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1019/200/200",
+        },
+        {
+          title: "Desert Dunes",
+          date: "Year: 20xx",
+          img: "Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg",
+        },
+        {
+          title: "Arctic Ice",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1021/200/200",
+        },
+        {
+          title: "Zebra Crossing",
+          date: "Year: 20xx",
+          img: "Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg",
+        },
+        {
+          title: "Bear Life",
+          date: "Year: 20xx",
+          img: "Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg",
+        },
+        {
+          title: "Eagle Eye",
+          date: "Year: 20xx",
+          img: "Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg",
+        },
+        {
+          title: "River Flow",
+          date: "Year: 20xx",
+          img: "Pictures01/Anime wallpaper.jpeg",
+        },
+        {
+          title: "Alpine Lodge",
+          date: "Year: 20xx",
+          img: "Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg",
+        },
+        {
+          title: "Urban Exploration",
+          date: "Year: 20xx",
+          img: "Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg",
+        },
+        {
+          title: "Deep Space",
+          date: "Year: 20xx",
+          img: "Pictures01/Silent-Witch-Chinmoku-no-Majo-no-Kakushigoto.webp",
+        },
+        {
+          title: "Ancient Ruins",
+          date: "Year: 20xx",
+          img: "Pictures01/DESIGN WALLPAPER ANIME _3.jpeg",
+        },
+        {
+          title: "Mountain View",
+          date: "Year: 20xx",
+          img: "Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg",
+        },
+        {
+          title: "Ocean Sunset",
+          date: "Year: 20xx",
+          img: "Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg",
+        },
+        {
+          title: "Forest Trail",
+          date: "Year: 20xx",
+          img: "Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg",
+        },
+        {
+          title: "City Lights",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1019/200/200",
+        },
+        {
+          title: "Desert Dunes",
+          date: "Year: 20xx",
+          img: "Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg",
+        },
+        {
+          title: "Arctic Ice",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1021/200/200",
+        },
+        {
+          title: "Zebra Crossing",
+          date: "Year: 20xx",
+          img: "Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg",
+        },
+        {
+          title: "Bear Life",
+          date: "Year: 20xx",
+          img: "Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg",
+        },
+        {
+          title: "Eagle Eye",
+          date: "Year: 20xx",
+          img: "Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg",
+        },
+        {
+          title: "River Flow",
+          date: "Year: 20xx",
+          img: "Pictures01/Anime wallpaper.jpeg",
+        },
+        {
+          title: "Alpine Lodge",
+          date: "Year: 20xx",
+          img: "Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg",
+        },
+        {
+          title: "Urban Exploration",
+          date: "Year: 20xx",
+          img: "Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg",
+        },
+        {
+          title: "Deep Space",
+          date: "Year: 20xx",
+          img: "Pictures01/Silent-Witch-Chinmoku-no-Majo-no-Kakushigoto.webp",
+        },
+        {
+          title: "Ancient Ruins",
+          date: "Year: 20xx",
+          img: "Pictures01/DESIGN WALLPAPER ANIME _3.jpeg",
+        },
+        {
+          title: "Mountain View",
+          date: "Year: 20xx",
+          img: "Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg",
+        },
+        {
+          title: "Ocean Sunset",
+          date: "Year: 20xx",
+          img: "Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg",
+        },
+        {
+          title: "Forest Trail",
+          date: "Year: 20xx",
+          img: "Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg",
+        },
+        {
+          title: "City Lights",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1019/200/200",
+        },
+        {
+          title: "Desert Dunes",
+          date: "Year: 20xx",
+          img: "Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg",
+        },
+        {
+          title: "Arctic Ice",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1021/200/200",
+        },
+        {
+          title: "Zebra Crossing",
+          date: "Year: 20xx",
+          img: "Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg",
+        },
+        {
+          title: "Bear Life",
+          date: "Year: 20xx",
+          img: "Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg",
+        },
+        {
+          title: "Eagle Eye",
+          date: "Year: 20xx",
+          img: "Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg",
+        },
+        {
+          title: "River Flow",
+          date: "Year: 20xx",
+          img: "Pictures01/Anime wallpaper.jpeg",
+        },
+        {
+          title: "Alpine Lodge",
+          date: "Year: 20xx",
+          img: "Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg",
+        },
+        {
+          title: "Urban Exploration",
+          date: "Year: 20xx",
+          img: "Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg",
+        },
+        {
+          title: "Deep Space",
+          date: "Year: 20xx",
+          img: "Pictures01/Silent-Witch-Chinmoku-no-Majo-no-Kakushigoto.webp",
+        },
+        {
+          title: "Ancient Ruins",
+          date: "Year: 20xx",
+          img: "Pictures01/DESIGN WALLPAPER ANIME _3.jpeg",
+        },
+        // ... include all other items from your original list
+      ];
+
+      const itemsPerPage = 20;
+      let currentIndex = 0;
+      const gridContainer = document.getElementById("alphcard-grid");
+      const nextBtn = document.getElementById("next-btn");
+
+      function sortData() {
+        alphcardData.sort((a, b) => a.title.localeCompare(b.title));
+      }
+
+      function loadalphcards() {
+        const nextBatch = alphcardData.slice(
+          currentIndex,
+          currentIndex + itemsPerPage,
+        );
+
+        nextBatch.forEach((item, index) => {
+          const alphcard = document.createElement("div");
+          alphcard.classList.add("alphcard");
+          // Staggered animation delay
+          alphcard.style.animationDelay = `${(index % itemsPerPage) * 0.05}s`;
+
+          alphcard.innerHTML = `
+            <div class="alphcard-img">
+              <img src="${item.img}" alt="${item.title}" loading="lazy">
+            </div>
+            <div class="alphcard-info">
+              <div class="alphcard-title">${item.title}</div>
+              <div class="alphcard-date">${item.date}</div>
+            </div>
+          `;
+
+          gridContainer.appendChild(alphcard);
+        });
+
+        currentIndex += itemsPerPage;
+        if (currentIndex >= alphcardData.length) {
+          nextBtn.style.display = "none";
+        }
+      }
+
+      sortData();
+      loadalphcards();
+      nextBtn.addEventListener("click", loadalphcards);
+
+      // Interactive button functionality
+      const enhancedBtn = document.getElementById("next-btn");
+      const nextbtn = document.getElementById("next-btn");
+
+      enhancedBtn.addEventListener("click", function () {
+        // Add a quick "click" effect
+        this.style.transform = "translateY(0px)";
+        setTimeout(() => {
+          this.style.transform = "translateY(-3px)";
+        }, 150);
+
+        // Simulate action
+        console.log("Enhanced button clicked - loading more content...");
+      });
+
+      next -
+        btn.addEventListener("click", function () {
+          // Toggle loading state
+          this.classList.toggle("loading");
+
+          if (this.classList.contains("loading")) {
+            setTimeout(() => {
+              this.classList.remove("loading");
+            }, 2000);
+          }
+        });
+
+      // Add a subtle pulse animation to the enhanced button
+      setInterval(() => {
+        if (!enhancedBtn.matches(":hover")) {
+          enhancedBtn.style.animation = "pulse 3s infinite";
+        } else {
+          enhancedBtn.style.animation = "none";
+        }
+      }, 100);
+    </script>
+  </body>
+</html>

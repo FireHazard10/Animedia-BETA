@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AniMedia - Logged Out</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Oxanium:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Boxicons CDN -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* ---------- RESET & BASICS ---------- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Oxanium", sans-serif;
+      }
+
+      #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* This is the "magic" that makes it act like 'center/cover' */
+        z-index: -1; /* Pushes it behind your text */
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        /*background: #050505; /* Deep black/grey *
+        color: white;
+        overflow: hidden;*/
+        margin: 0;
+        font-family: "Oxanium", sans-serif;
+      }
+
+      /* ---------- AESTHETIC BACKGROUND ORBS ---------- */
+      /* These blobs sit behind the glass card to highlight the blur effect */
+      .background-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        opacity: 0.6;
+        animation: float 10s infinite ease-in-out alternate;
+      }
+
+      .orb-1 {
+        top: 10%;
+        left: 20%;
+        width: 300px;
+        height: 300px;
+        background: #ffc371;
+      }
+
+      .orb-2 {
+        bottom: 10%;
+        right: 20%;
+        width: 250px;
+        height: 250px;
+        background: #ff8a65;
+        animation-delay: -5s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(30px, 50px);
+        }
+      }
+
+      /* ---------- HEADER ---------- */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.7); /* Slight tint for readability */
+        backdrop-filter: blur(5px);
+
+        /* Specific Request: Semi-transparent gray text & Bottom Border */
+        color: rgba(255, 255, 255, 0.5);
+        border-bottom: 3px solid #ff8a65;
+        margin-bottom: 10px;
+      }
+
+      .logo {
+        font-size: 1.8em;
+        font-weight: bold;
+        /* Brand gradient kept for logo specifically */
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        cursor: pointer;
+      }
+
+      .logo span {
+        /* "Media" text in white per reference */
+        -webkit-text-fill-color: #fff !important;
+      }
+
+      .nav-text {
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.9em;
+        letter-spacing: 1px;
+      }
+
+      .quest-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: transparent;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .quest-btn:hover {
+        border-color: #ff8a65;
+        color: #ff8a65;
+        box-shadow: 0 0 10px rgba(255, 138, 101, 0.4);
+      }
+
+      /*body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        font-family: "Oxanium", sans-serif;
+      }*/
+
+      .logout-box {
+        background: rgba(255, 255, 255, 0.05); /* Very subtle fill */
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 40px 30px;
+        border-radius: 20px;
+        text-align: center;
+        width: 320px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      .logout-box i {
+        font-size: 4em;
+        color: red;
+        margin-bottom: 20px;
+        animation: bounce 1.5s infinite;
+      }
+
+      h2 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.5em;
+        margin-bottom: 15px;
+        color: whitesmoke;
+      }
+
+      p {
+        font-size: 1em;
+        margin-bottom: 25px;
+        color: #ffc371;
+      }
+
+      p:hover {
+        color: #ff8a65;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1em;
+        color: #fff;
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      .btn:hover {
+        background: white;
+        color: #ff8a65;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!--<div class="background-orb orb-1"></div>
+    <div class="background-orb orb-2"></div>-->
+
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="❤️X/anime-girl-walking.3840x2160.mp4" type="video/mp4" />
+    </video>
+
+    <header>
+      <div class="logo">Ani<span>Media</span></div>
+      <div class="nav-text">LOG-OUT PORTAL</div>
+      <button class="quest-btn">?</button>
+    </header>
+
+    <div class="logout-box">
+      <i class="bx bx-log-out-circle"></i>
+      <h2>You’ve Logged Out</h2>
+      <p>Thank you for visiting AniMedia. See you again soon!</p>
+      <a href="Ailog-in.html" class="btn">Log In Again</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AniMedia - Portal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Oxanium:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* ---------- RESET & BASICS ---------- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Oxanium", sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #050505; /* Deep black/grey */
+        color: white;
+        overflow: hidden;
+      }
+
+      /* ---------- AESTHETIC BACKGROUND ORBS ---------- */
+      /* These blobs sit behind the glass card to highlight the blur effect */
+      .background-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        opacity: 0.6;
+        animation: float 10s infinite ease-in-out alternate;
+      }
+
+      .orb-1 {
+        top: 10%;
+        left: 20%;
+        width: 300px;
+        height: 300px;
+        background: #ffc371;
+      }
+
+      .orb-2 {
+        bottom: 10%;
+        right: 20%;
+        width: 250px;
+        height: 250px;
+        background: #ff8a65;
+        animation-delay: -5s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(30px, 50px);
+        }
+      }
+
+      /* ---------- HEADER ---------- */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.7); /* Slight tint for readability */
+        backdrop-filter: blur(5px);
+
+        /* Specific Request: Semi-transparent gray text & Bottom Border */
+        color: rgba(255, 255, 255, 0.5);
+        border-bottom: 3px solid #ff8a65;
+        margin-bottom: 10px;
+      }
+
+      .logo {
+        font-size: 1.8em;
+        font-weight: bold;
+        /* Brand gradient kept for logo specifically */
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        cursor: pointer;
+      }
+
+      .logo span {
+        /* "Media" text in white per reference */
+        -webkit-text-fill-color: #fff !important;
+      }
+
+      .nav-text {
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.9em;
+        letter-spacing: 1px;
+      }
+
+      .quest-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: transparent;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .quest-btn:hover {
+        border-color: #ff8a65;
+        color: #ff8a65;
+        box-shadow: 0 0 10px rgba(255, 138, 101, 0.4);
+      }
+
+      /* ---------- MAIN CARD CONTAINER ---------- */
+      .wrapper {
+        position: relative;
+        width: 400px;
+        height: 550px; /* Fixed height for consistent transition */
+        background: rgba(255, 255, 255, 0.05); /* Very subtle fill */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        backdrop-filter: blur(20px); /* Heavy blur for glassmorphism */
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        transition: height 0.4s ease;
+      }
+
+      .wrapper .form-box {
+        width: 100%;
+        padding: 40px;
+      }
+
+      /* Transitions for Toggling */
+      .wrapper .form-box.login {
+        position: absolute;
+        transition: transform 0.5s ease;
+        transform: translateX(0);
+      }
+
+      .wrapper .form-box.register {
+        position: absolute;
+        transition: transform 0.5s ease;
+        transform: translateX(450px); /* Hidden to the right */
+      }
+
+      /* Classes applied via JS to switch views */
+      .wrapper.active .form-box.login {
+        transform: translateX(-450px); /* Move login out to left */
+      }
+      .wrapper.active .form-box.register {
+        transform: translateX(0); /* Move register in from right */
+      }
+
+      /* Form Typography */
+      h2 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 2em;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 30px;
+        text-shadow: 0 0 5px rgba(255, 195, 113, 0.5);
+      }
+
+      /* ---------- INPUTS ---------- */
+      .input-box {
+        position: relative;
+        width: 100%;
+        height: 50px;
+        margin: 20px 0;
+      }
+
+      .input-box input {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        outline: none;
+        padding: 0 45px 0 15px;
+        font-size: 1em;
+        color: #fff;
+        transition: 0.3s;
+      }
+
+      .input-box input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* The requested shadow/glow on focus */
+      .input-box input:focus {
+        border-color: #ff8a65;
+        box-shadow: 0 0 10px rgba(244, 114, 182, 0.6); /* Pinkish shadow */
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .input-box i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2em;
+        color: #ffc371;
+      }
+
+      /* ---------- EXTRAS (Checkboxes/Links) ---------- */
+      .remember-forgot {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.7);
+        margin: -5px 0 20px;
+      }
+
+      .remember-forgot label input {
+        accent-color: #ff8a65;
+        margin-right: 5px;
+      }
+
+      .remember-forgot a {
+        color: #ffc371;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+      .remember-forgot a:hover {
+        text-decoration: underline;
+        color: #ff8a65;
+      }
+
+      /* ---------- BUTTONS ---------- */
+      .btn {
+        width: 100%;
+        height: 45px;
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        font-size: 1em;
+        color: #fff;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        background: #fff;
+        color: #ff8a65;
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px rgba(255, 138, 101, 0.6);
+      }
+
+      /* ---------- REGISTER LINK TOGGLE ---------- */
+      .login-register {
+        font-size: 0.9em;
+        text-align: center;
+        margin-top: 25px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .login-register p a {
+        color: #ffc371;
+        font-weight: 600;
+        text-decoration: none;
+        margin-left: 5px;
+        transition: 0.3s;
+      }
+
+      .login-register p a:hover {
+        text-decoration: underline;
+        color: #ff8a65;
+      }
+
+      /* Specific tweaks for Scrollable Register if many fields needed */
+      .scroll-container {
+        max-height: 380px;
+        overflow-y: auto;
+        padding-right: 5px;
+      }
+      /* Custom scrollbar for aesthetics */
+      .scroll-container::-webkit-scrollbar {
+        width: 5px;
+      }
+      .scroll-container::-webkit-scrollbar-thumb {
+        background: #ff8a65;
+        border-radius: 5px;
+      }
+      .scroll-container::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-orb orb-1"></div>
+    <div class="background-orb orb-2"></div>
+
+    <header>
+      <div class="logo">Ani<span>Media</span></div>
+      <div class="nav-text">ACCESS PORTAL</div>
+      <button class="quest-btn">?</button>
+    </header>
+
+    <div class="wrapper">
+      <div class="form-box login">
+        <h2>Login</h2>
+        <form action="#">
+          <div class="input-box">
+            <input type="text" placeholder="Username" required />
+            <i class="bx bxs-user"></i>
+          </div>
+          <div class="input-box">
+            <input type="password" placeholder="Password" required />
+            <i class="bx bxs-lock-alt"></i>
+          </div>
+          <div class="remember-forgot">
+            <label><input type="checkbox" /> Remember me</label>
+            <a href="#">Forgot Password?</a>
+          </div>
+          <button type="submit" class="btn">Login</button>
+          <div class="login-register">
+            <p>
+              Don't have an account?
+              <a href="Aisign-up.html" class="register-link">Register</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

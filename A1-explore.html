@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Description Page</title>
+    <link rel="stylesheet" href="A1-explore.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <link rel="stylesheet" href="A1-explore.css" />
+  <body>
+    <header>
+      <div class="bg-image"></div>
+      <div class="xeno">
+        <div class="logo">Ani<span>Media</span></div>
+
+        <nav>
+          <a href="aidox.html">Home</a>
+          <a href="page-1.html">Series</a>
+          <a href="A1-explore.html">Movies</a>
+          <a href="Ai-mordern-cte01.html">Genres</a>
+        </nav>
+
+        <a href="Aimiddle-page.html" class="cta">Join Now</a>
+
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="aidox.html">Home</a>
+        <a href="page-1.html">Series</a>
+        <a href="A1-explore.html">Movies</a>
+        <a href="Ai-mordern-cte01.html">Genres</a>
+        <a href="Aimiddle-page.html" class="join">Join Now</a>
+      </div>
+    </header>
+
+    <main class="movie-page">
+      <section class="movie-xero">
+        <img src="Pictures/happy-girl.jpg" alt="Backdrop" class="xero-img" />
+        <div class="xero-overlay"></div>
+      </section>
+
+      <section class="movie-description">
+        <div class="movie-card">
+          <div class="poster-wrap">
+            <img src="Pictures/WallpaperDog-17181503.jpg" alt="Movie Poster" />
+          </div>
+
+          <div class="movie-info">
+            <h1 class="movie-title">Movie Title Here</h1>
+
+            <div class="meta">
+              <span class="rating">HD</span>
+              <span>2024</span>
+              <span>2h 14m</span>
+              <span>Action / Fantasy</span>
+            </div>
+
+            <p class="synopsis">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+              accumsan, justo at ultricies dictum, libero nulla pretium odio, at
+              sollicitudin risus justo vel sem. This section is optimized for
+              long reading and cinematic immersion.
+            </p>
+
+            <div class="actions">
+              <button class="watch-me">▶ Watch Now</button>
+              <button class="add-btn">＋ Add to List</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: Blur Matte Overlay -->
+      <section class="movie-extra">
+        <h2 class="section-label">Episodes & Trailers</h2>
+        <div class="cards">
+          <div class="card">
+            <img src="Pictures/01 (3).jpg" alt="Trailer Thumbnail" />
+            <div class="overlay">
+              <h3>Trailer</h3>
+              <button>Watch</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="Pictures/01 (4).jpg" alt="Season 1 Thumbnail" />
+            <div class="overlay">
+              <h3>Season 1</h3>
+              <button>Watch</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="Pictures/01 (2).jfif" alt="Season 2 Thumbnail" />
+            <div class="overlay">
+              <h3>Season 2</h3>
+              <button>Watch</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="Pictures/01 (1).jpg" alt="Season 3 Thumbnail" />
+            <div class="overlay">
+              <h3>Season 3</h3>
+              <button>Watch</button>
+            </div>
+          </div>
+          <br /><br /><button class="watch-btn">
+            <a href="moviecard03.html">▶ Watch Now</a>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="easypages.js"></script>
+  </body>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.classList.toggle("active");
+    }
+  </script>
+</html>

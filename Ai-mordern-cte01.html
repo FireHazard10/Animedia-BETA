@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ANIMEDIA - CATEGORIES</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="pages.css" />
+
+    <style>
+      #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* This is the "magic" that makes it act like 'center/cover' */
+        z-index: -1; /* Pushes it behind your text */
+      }
+
+      body {
+        margin: 0;
+        font-family: "Oxanium", sans-serif;
+      }
+
+      /* --- Global and Body Styling (The "Player" Theme) --- *
+      body {
+        background-color: #121212; /* Deep, immersive dark background *
+        color: #e0e0e0; /* Light text for contrast */
+      /*font-family: "Poppins", sans-serif;*
+        line-height: 1.6;
+        padding-top: 0px; /* Add some space above the first element *
+      }*/
+
+      /* Base card styling for modern aesthetics */
+      .community-panel {
+        background: #1e1e1e; /* Slightly lighter dark background for the component */
+        border-radius: 12px;
+        overflow: hidden;
+        /* Removed backdrop-filter for performance and a cleaner look, unless strictly required */
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); /* Stronger, more dramatic shadow */
+        width: 94.5%;
+        max-width: 1200px; /* Limit max width for better readability */
+        margin: 15px auto;
+        border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+      }
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: #252525; /* Header color */
+      }
+
+      .panel-header h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ffffff; /* White text for header */
+      }
+
+      .panel-icons {
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      /* Icon buttons - now look like sleek player controls */
+      .panel-icons button {
+        background: none;
+        border: 1px solid #3a3a3a;
+        border-radius: 8px; /* Slightly square controls */
+        width: 38px;
+        height: 38px;
+        color: #e0e0e0;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+
+      /* Hover effect using the accent color */
+      .panel-icons button:hover {
+        background: #ff8a65; /* Accent color on hover */
+        color: #121212; /* Dark text on accent background */
+        border-color: #ff8a65;
+        transform: translateY(-2px);
+      }
+
+      .panel-icons a {
+        display: block; /* Ensure the link fills the button for a larger clickable area */
+      }
+
+      .panel-body {
+        /* Remove the background image for a cleaner panel and better text readability */
+        background: url("Pictures01/img5.jpg") center/cover no-repeat;
+        padding: 2.5rem;
+        /* text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); - Not needed on a dark background */
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #b0b0b0; /* Slightly muted text color */
+      }
+
+      /* --- Category Grid Styling --- */
+      .cate {
+        display: grid;
+        /* Use modern CSS functions for a flexible grid layout */
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 30px 40px;
+        /*max-width: 1200px;*/
+        margin: auto;
+      }
+
+      /* Responsive card - Simplified and modern look */
+      .lint {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        border-radius: 6px; /* Softened corners */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        /* Removed the complex clip-path for a cleaner card shape */
+        /* Removed the border for a borderless floating look */
+      }
+
+      /* Hover effect - lift and glow with accent color */
+      .lint:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 0 15px rgba(255, 138, 101, 0.6); /* Accent glow */
+      }
+
+      .lint img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.65); /* Slightly darker for text contrast */
+        transition: filter 0.3s ease;
+      }
+
+      .lint:hover img {
+        filter: brightness(0.8); /* Slight brightening on hover */
+      }
+
+      /* Overlay text and gradient */
+      .lint::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        /* Subtle linear gradient at the bottom for text readability */
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.8) 0%,
+          rgba(0, 0, 0, 0) 50%
+        );
+        backdrop-filter: none; /* Removed blur for performance */
+        z-index: 1;
+      }
+
+      .lint h3 {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        margin: 0;
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        z-index: 2;
+      }
+
+      /* --- Media Queries for Responsiveness --- */
+      @media (max-width: 900px) {
+        .cate {
+          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+          gap: 15px;
+          padding: 20px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .cate {
+          grid-template-columns: repeat(
+            2,
+            1fr
+          ); /* Two columns on small screens */
+          padding: 15px;
+        }
+
+        .panel-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .panel-header h3 {
+          margin-bottom: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header"></div>
+
+    <video autoplay muted loop playsinline id="bg-video">
+      <source
+        src="❤️X/torii-gate-sakura-blood-moonlight-moewalls-com.mp4"
+        type="video/mp4"
+      />
+    </video>
+
+    <div class="community-panel">
+      <div class="panel-header">
+        <h3>Discuss with the Community</h3>
+        <div class="panel-icons">
+          <button>
+            <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
+          </button>
+          <button>
+            <a href="#" title="Twitch"><i class="fab fa-twitch"></i></a>
+          </button>
+          <button>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+          </button>
+          <button>
+            <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+          </button>
+          <button>
+            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+          </button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <p>
+          Join ongoing discussions, share your thoughts about the latest movie
+          releases, or post your favorite film moments. Connect with fellow
+          movie lovers in real time!
+        </p>
+      </div>
+    </div>
+
+    <div class="cate">
+      <div class="lint">
+        <img
+          src="Pictures01/06d44be9-fab1-4954-b4db-e7204a22bc86.jpeg"
+          alt="Drama category image"
+        />
+        <h3>Drama</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg"
+          alt="Action category image"
+        />
+        <h3>Action</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg"
+          alt="Slice of life category image"
+        />
+        <h3>Slice of life</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg"
+          alt="Shonen category image"
+        />
+        <h3>Shonen</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/39f2cb49-629d-481e-9cb7-b7a3d45ff778.jpeg"
+          alt="Isekai category image"
+        />
+        <h3>Isekai</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg"
+          alt="Horror category image"
+        />
+        <h3>Horror</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/63506633-9c3e-47ca-849c-be6e590edf5c.jpeg"
+          alt="Thriller category image"
+        />
+        <h3>Thriller</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg"
+          alt="Camping category image"
+        />
+        <h3>Camping</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg"
+          alt="Fantasy category image"
+        />
+        <h3>Fantasy</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg"
+          alt="Gaming category image"
+        />
+        <h3>Gaming</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/Anime wallpaper.jpeg"
+          alt="Mystery category image"
+        />
+        <h3>Mystery</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/b48a9268-37b2-4bf9-9947-0352fc3d938a.jpeg"
+          alt="Romance category image"
+        />
+        <h3>Romance</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/b48a9268-37b2-4bf9-9947-0352fc3d938a.jpeg"
+          alt="Tragic Tales category image"
+        />
+        <h3>Tragic Tales</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg"
+          alt="Manhwa category image"
+        />
+        <h3>Manhwa</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg"
+          alt="Chinese category image"
+        />
+        <h3>Chinese</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/d8d3bb68-eb55-4c68-bb3d-788a8dc62733.jpeg"
+          alt="Sci-fi category image"
+        />
+        <h3>Sci-fi</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/DESIGN WALLPAPER ANIME _3.jpeg"
+          alt="Apocalypse category image"
+        />
+        <h3>Apocalypse</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/e8fda043-12a9-415e-a896-ab117261be90.jpeg"
+          alt="Alien category image"
+        />
+        <h3>Alien</h3>
+      </div>
+
+      <div class="lint">
+        <img
+          src="Pictures01/f4aad09b-3e87-40a8-af37-04e78042f8ff.jpeg"
+          alt="Millitary category image"
+        />
+        <h3>Millitary</h3>
+      </div>
+
+      <div class="lint">
+        <img src="Pictures01/img1.jpg" alt="Comedy category image" />
+        <h3>Comedy</h3>
+      </div>
+
+      <div class="lint">
+        <img src="Pictures01/img10.jpg" alt="Music category image" />
+        <h3>Music</h3>
+      </div>
+
+      <div class="lint">
+        <img src="Pictures01/img11.jpg" alt="War category image" />
+        <h3>War</h3>
+      </div>
+
+      <div class="lint">
+        <img src="Pictures01/img12.jpg" alt="Historical category image" />
+        <h3>Historical</h3>
+      </div>
+
+      <div class="lint">
+        <img src="Pictures01/img13.jpg" alt="Magic category image" />
+        <h3>Magic</h3>
+      </div>
+
+      <div class="lint">
+        <img src="Pictures01/img15.jpg" alt="Dance category image" />
+        <h3>Dance</h3>
+      </div>
+
+      <div class="lint">
+        <img src="Pictures01/img14.jpg" alt="Superhero category image" />
+        <h3>Superhero</h3>
+      </div>
+
+      <div class="lint">
+        <img src="Pictures01/img16.jpg" alt="3D category image" />
+        <h3>3D</h3>
+      </div>
+      <div class="lint">
+        <img src="Pictures01/img17.jpg" alt="Martil Art category image" />
+        <h3>Martial Art</h3>
+      </div>
+    </div>
+    <br />
+    <div id="rec"></div>
+    <div id="footer"></div>
+  </body>
+  <script src="easypages.js"></script>
+
+  <script>
+    /* Cleaned up and simplified JS functions */
+    function toggleMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.classList.toggle("active");
+    }
+    // Added a simple placeholder for interaction since links are currently '#'
+    document.querySelectorAll(".lint").forEach((card) => {
+      card.addEventListener("click", () => {
+        const categoryName = card.querySelector("h3").textContent;
+        console.log(`Navigating to category: ${categoryName}`);
+        // In a real application, you would change window.location.href here
+      });
+    });
+  </script>
+</html>

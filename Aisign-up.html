@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AniMedia - Sign Up</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Oxanium:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* ---------- RESET & CORE ---------- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ---------- CUSTOM SCROLLBAR (Chrome, Safari, Edge, Opera) ---------- */
+      ::-webkit-scrollbar {
+        width: 10px; /* Width of the vertical scrollbar */
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #0f0f0f; /* Very dark grey (almost black) background */
+        border-left: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border for separation */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+          180deg,
+          #ffc371,
+          #ff8a65
+        ); /* Matches your logo/buttons */
+        border-radius: 5px; /* Rounded corners */
+        border: 2px solid #0f0f0f; /* Creates a padding effect around the thumb */
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(
+          180deg,
+          #ff8a65,
+          #f472b6
+        ); /* Pinkish shift on hover */
+      }
+
+      /* ---------- CUSTOM SCROLLBAR (Firefox) ---------- */
+      html {
+        /* Firefox uses these properties instead of pseudo-elements */
+        scrollbar-width: thin; /* 'auto' or 'thin' */
+        scrollbar-color: #ff8a65 #0f0f0f; /* thumb color | track color */
+      }
+
+      body {
+        height: 100vh;
+        max-height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000; /* Deep black background */
+        font-family: "Oxanium", sans-serif;
+        color: white;
+      }
+
+      /* ---------- AESTHETIC BACKGROUND ORBS ---------- */
+      /* These blobs sit behind the glass card to highlight the blur effect */
+      .background-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        opacity: 0.6;
+        animation: float 10s infinite ease-in-out alternate;
+      }
+
+      .orb-1 {
+        top: 10%;
+        left: 20%;
+        width: 300px;
+        height: 300px;
+        background: #ffc371;
+      }
+
+      .orb-2 {
+        bottom: 10%;
+        right: 20%;
+        width: 250px;
+        height: 250px;
+        background: #ff8a65;
+        animation-delay: -5s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(30px, 50px);
+        }
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.7); /* Slight tint for readability */
+        backdrop-filter: blur(5px);
+
+        /* Specific Request: Semi-transparent gray text & Bottom Border */
+        color: rgba(255, 255, 255, 0.5);
+        border-bottom: 3px solid #ff8a65;
+        margin-bottom: 10px;
+      }
+
+      .logo {
+        font-size: 1.8em;
+        font-weight: bold;
+        /* Brand gradient kept for logo specifically */
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        cursor: pointer;
+      }
+
+      .logo span {
+        /* "Media" text in white per reference */
+        -webkit-text-fill-color: #fff !important;
+      }
+
+      .nav-text {
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.9em;
+        letter-spacing: 1px;
+      }
+
+      .quest-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: transparent;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1.2em;
+        font-family: "Oxanium", sans-serif;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .quest-btn:hover {
+        border-color: #ff8a65;
+        color: #ff8a65;
+        box-shadow: 0 0 10px rgba(255, 138, 101, 0.4);
+      }
+
+      /* ---------- SIGN UP CARD ---------- */
+      .signup-container {
+        position: relative;
+        width: 360px;
+        /* Fixed height with internal scroll like reference */
+        height: 580px;
+        background: rgba(255, 255, 255, 0.07); /* Semi-glass morphism */
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 20px;
+        backdrop-filter: blur(15px); /* Strong blur */
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        margin-top: 150px; /* Offset for header */
+      }
+
+      .signup-scroll {
+        overflow-y: auto;
+        padding: 40px 30px;
+        scrollbar-width: none; /* Firefox */
+      }
+      .signup-scroll::-webkit-scrollbar {
+        width: 0; /* Chrome/Safari hidden scroll */
+      }
+
+      h2 {
+        text-align: center;
+        font-family: "Orbitron", sans-serif;
+        margin-bottom: 25px;
+        font-size: 1.8em;
+        color: #fff;
+        text-shadow: 0 0 10px rgba(244, 114, 182, 0.4);
+      }
+
+      /* ---------- INPUTS ---------- */
+      .input-group {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.85em;
+        color: rgba(255, 255, 255, 0.7);
+        margin-left: 5px;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 12px 40px 12px 15px; /* Right padding for icon */
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        color: white;
+        font-size: 0.95em;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      /* Requested Glow Effect */
+      .input-group input:focus {
+        border-color: #ff8a65;
+        background: rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 12px rgba(244, 114, 182, 0.6); /* Pink/Rose glow */
+      }
+
+      .input-group i {
+        position: absolute;
+        right: 15px;
+        top: 38px; /* Adjusted based on label height */
+        color: #ffc371;
+        font-size: 1.2em;
+      }
+
+      /* ---------- CHECKBOX ---------- */
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        margin: 10px 0 25px;
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.8);
+        cursor: pointer;
+      }
+      .checkbox-group input {
+        accent-color: #ff8a65;
+        margin-right: 8px;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+
+      /* ---------- BUTTON ---------- */
+      .signup-btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #ffc371, #ff8a65); /* */
+        color: white;
+        font-size: 1em;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .signup-btn:hover {
+        background: white;
+        color: #ff8a65;
+        transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(255, 138, 101, 0.6);
+      }
+
+      /* ---------- FOOTER LINK ---------- */
+      .login-redirect {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .login-redirect a {
+        color: #ffc371;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+      .login-redirect a:hover {
+        color: #ff8a65;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-orb orb-1"></div>
+    <div class="background-orb orb-2"></div>
+
+    <header>
+      <div class="logo">Ani<span>Media</span></div>
+      <div class="nav-text">New Member Registration</div>
+      <button class="quest-btn">?</button>
+    </header>
+
+    <div class="signup-container">
+      <div class="signup-scroll">
+        <h2>Create Account</h2>
+        <form action="#">
+          <div class="input-group">
+            <label>First Name</label>
+            <input type="text" required placeholder="Enter first name" />
+            <i class="bx bxs-id-card"></i>
+          </div>
+
+          <div class="input-group">
+            <label>Last Name</label>
+            <input type="text" required placeholder="Enter last name" />
+            <i class="bx bxs-id-card"></i>
+          </div>
+
+          <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" required placeholder="example@email.com" />
+            <i class="bx bxs-envelope"></i>
+          </div>
+
+          <div class="input-group">
+            <label>Password</label>
+            <input type="password" required placeholder="Create password" />
+            <i class="bx bxs-lock-alt"></i>
+          </div>
+
+          <div class="input-group">
+            <label>Confirm Password</label>
+            <input type="password" required placeholder="Repeat password" />
+            <i class="bx bxs-lock-alt"></i>
+          </div>
+
+          <label class="checkbox-group">
+            <input type="checkbox" required />
+            I agree to the Terms & Conditions
+          </label>
+
+          <button type="submit" class="signup-btn">Sign Up</button>
+
+          <div class="login-redirect">
+            <p>Already have an account? <a href="Ailog-in.html">Login</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
