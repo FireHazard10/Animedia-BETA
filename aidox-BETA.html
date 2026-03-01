@@ -62,6 +62,9 @@
       </div>
     </header>
     
+    <video autoplay muted loop playsinline id="bg-video">
+    <source src="❤️X/medow.mp4" type="video/mp4">
+  </video>
     
        
     <br>
@@ -295,88 +298,102 @@
  <!--<h2>Popular Anime</h2>--> 
  <div class="custom-banner-wrapper">
   <style>
-    .custom-banner-wrapper {
-      --banner-color: #ff8a65;
-      --banner-skew: -25deg;
-      --banner-unskew: 25deg;
-      display: flex;
-      justify-content: left;
-      margin: 20px 0;
-      width: 100%; /* Ensures it can span the width of its parent */
-    }
+     :root {
+    
+    --bg-glass: rgba(255, 138, 101, 0.05);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
 
-    .pa-banner-box {
-      display: flex;
-      flex: 7;
-      align-items: center;
-      justify-content: space-between; /* Pushes content to the edges */
-      position: relative;
-      width: 80%; /* Adjust this percentage to control the width of the bar */
-      min-width: 300px;
-      padding: 12px 30px;
-      
-      border-top: 4px solid var(--banner-color);
-      border-bottom: 4px solid var(--banner-color);
-      border-left: 4px solid var(--banner-color);
-      border-right: 4px solid var(--banner-color);
-      transform: skewX(var(--banner-skew));
-      background: transparent;
-    }
+  .anime-header-container {
+    display: flex;
+    align-items: center;
+    margin: 40px 0;
+    position: relative;
+    /*max-width: 800px;*/
+  }
 
-    /* The outer "second" lines */
-    .pa-banner-box::before,
-    .pa-banner-box::after {
-      content: "";
-      position: absolute;
-      top: -4px;
-      bottom: -4px;
-      width: 4px;
-      background-color: var(--banner-color);
-    }
+  /* The Main Bar */
+  .anime-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 40px;
+    background: var(--bg-glass);
+    /* Creates the angled ends without messy skewing */
+   /* clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+    border-left: 5px solid #ff8a65;*/
+    transition: var(--transition);
+  }
 
-    .pa-banner-box::before { left: -12px; }
-    .pa-banner-box::after { right: -12px; }
+  .anime-bar:hover {
+    background: rgba(255, 138, 101, 0.12);
+    transform: translateX(10px);
+  }
 
-    /* Container for internal elements to fix the slant */
-    .pa-content-inner {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      align-items: center;
-      transform: skewX(var(--banner-unskew)); /* Corrects slant for both text and link */
-    }
+  /* Text Styling */
+  .anime-title {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #ff8a65;
+    text-transform: uppercase;
+    margin: 0;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.05);
+  }
 
-    .pa-banner-text {
-      font-family: "Arial Black", Gadget, sans-serif;
-      font-size: 24px;
-      font-weight: 900;
-      color: var(--banner-color);
-      text-transform: uppercase;
-      margin: 0;
-      line-height: 1;
-    }
+  /* View All Link */
+  .view-all-btn {
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ff8a65;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+  }
 
-    .pa-view-all {
-      font-family: Arial, sans-serif;
-      font-size: 16px;
-      font-weight: bold;
-      color: var(--banner-color);
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
+  .view-all-btn::after {
+    content: "→";
+    font-size: 18px;
+    transition: var(--transition);
+  }
 
-    .pa-view-all:hover {
-      opacity: 0.7;
-      text-decoration: underline;
-    }
+  .view-all-btn:hover {
+    letter-spacing: 2px;
+  }
+
+  .view-all-btn:hover::after {
+    transform: translateX(5px);
+  }
+
+  /* Decorative accent line behind the bar */
+  .anime-header-container::before {
+    content: "";
+    position: absolute;
+    left: -15px;
+    height: 100%;
+    width: 2px;
+    background: #ff8a65;
+    opacity: 0.4;
+  }
+
+  
+
   </style>
 
-  <div class="pa-banner-box">
-    <div class="pa-content-inner">
-      <h2 class="pa-banner-text">Popular Anime</h2>
-      <a href="page-1.html" class="pa-view-all">view-all >></a>
-    </div>
+ <div class="anime-header-container">
+  <div class="anime-bar">
+    <h2 class="anime-title">Popular Anime</h2>
+    <a href="page-1.html" class="view-all-btn">View All</a>
   </div>
+</div>
 </div>
     <div class="content-wrapper">
       <main>
