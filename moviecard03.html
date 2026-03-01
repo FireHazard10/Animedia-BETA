@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="pages.css">
+   
+    <style>
+        /* --- 1. RESET & VARIABLES --- */
+      :root {
+        --bg: rgba(255, 255, 255, 0.06);
+        --card-radius: 12px;
+        --accent: #ff8a65;
+        --glow: rgba(255, 138, 101, 0.35);
+        --text: #fff;
+        --muted: rgba(255, 255, 255, 0.6);
+        --dark-bg: #000;
+      }
+
+      /* Theme variations */
+      .theme-neon {
+        --accent: #00f5ff;
+        --glow: rgba(0, 245, 255, 0.25);
+      }
+      .theme-glass {
+        --accent: #7aa2ff;
+        --glow: rgba(122, 162, 255, 0.12);
+        --bg: rgba(255, 255, 255, 0.04);
+      }
+      .theme-anime {
+        --accent: #ff5edb;
+        --glow: rgba(255, 94, 219, 0.2);
+      }
+      .theme-orange {
+        --accent: #ff8a65;
+        --glow: rgba(255, 138, 101, 0.35);
+      }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This is the "magic" that makes it act like 'center/cover' */
+  z-index: -1; /* Pushes it behind your text */
+}
+
+body {
+  margin: 0;
+  font-family: "Oxanium", sans-serif;
+  color: white;
+}
+
+/*body {
+  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  background: black;
+  color: white;
+}*/
+
+header {
+  position: relative;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+  overflow: hidden;
+}
+
+.xeno {
+  /*max-width: 1200px;*/
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ffc371, #ff8a65);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo span {
+  background: none !important; /* remove inherited background */
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #fff !important; /* force solid white text */
+  color: #fff !important; /* fallback for non-webkit */
+}
+
+nav {
+  display: flex;
+  gap: 1.5rem;
+  font-weight: 600;
+}
+
+nav a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+}
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background: #ff8a65;
+  transition: width 0.3s ease;
+}
+
+nav a:hover {
+  color: #ff8a65;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+.cta {
+  background: linear-gradient(135deg, #ffc371, #ff8a65);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.cta:hover {
+  background: linear-gradient(135deg, #e91e63, #ff8a65);
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mobile-menu a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+
+.hero {
+  text-align: center;
+  padding: 5rem 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.hero p {
+  margin-top: 1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero a {
+  display: inline-block;
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #ffc371, #ff8a65);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  transition: background 0.3s ease-in;
+}
+
+.hero a:hover {
+  background: white;
+  color: #ff8a65;
+}
+
+.bg-image {
+  position: absolute;
+  inset: 0;
+  background-image: url("https://yourimageurl.com/anime-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+@media (max-width: 768px) {
+  nav,
+  .cta {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .mobile-menu.active {
+    display: flex;
+  }
+}
+
+h2 {
+  position: relative;
+  text-align: center;
+}
+      /* --- 3. LAYOUT GRID (Watch Area) --- */
+      .watch {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 20px;
+        max-width: 1400px;
+        margin: 20px auto;
+        padding: 0 10px;
+      }
+
+      .listof {
+        height: 100%;
+        overflow-y: auto;
+        max-height: 700px;
+        scrollbar-width: thin; 
+    /* The first color is the thumb, the second is the track */
+    scrollbar-color: var(--accent, #ff416c) var(--bg, #1a202c);
+      }
+      .listof h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-align: left;
+      }
+
+      .epic-list {
+        list-style: none;
+        display: grid;
+        gap: 2px;
+      }
+      .epic-list li a {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        font-weight: bold;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #ccc;
+        padding: 12px;
+        transition: 0.2s;
+      }
+      .epic-list li a:hover,
+      .epic-list li a.active {
+        background-color: var(--accent);
+        color: #000;
+      }
+
+      /* 1. Define the size and track of the scrollbar */
+.listof::-webkit-scrollbar {
+    width: 10px; /* Width of the vertical scrollbar */
+    height: 10px; /* Height of the horizontal scrollbar */
+}
+
+/* 2. Style the TRACK (the background of the scrollbar) */
+.listof::-webkit-scrollbar-track {
+    background: var(--bg, #1a202c); /* Use a dark background color or your CSS variable */
+    border-radius: 10px;
+}
+
+/* 3. Style the THUMB (the draggable part) */
+.listof::-webkit-scrollbar-thumb {
+    background-color: var(--accent, #ff416c); /* Use your accent color */
+    border-radius: 10px;
+    border: 2px solid var(--bg, #1a202c); /* Optional: Padding around the thumb */
+}
+
+/* 4. Optional: Hover state for the thumb */
+.listof::-webkit-scrollbar-thumb:hover {
+    background-color: #ff6a88; /* A slightly lighter shade of your accent */
+}
+
+/* 5. Optional: Style for the scrollbar corner (when both x and y scrollbars meet) */
+.listof::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+      /* --- 4. PLAYER CARD STYLES --- */
+      .card {
+        width: 100%;
+        border-bottom: 3px solid var(--accent);
+        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+        background: var(--bg);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: var(--card-radius);
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Target the .card element when it is in standard fullscreen mode */
+.card:fullscreen {
+    /* Remove the bottom border in fullscreen */
+    border-bottom: none !important; 
+    /* Remove the box shadow for a cleaner fullscreen experience */
+    box-shadow: none !important; 
+    /* Ensure the background and backdrop filter are smooth */
+    background: black !important; /* or a solid background color */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Add vendor prefixes for maximum browser compatibility */
+.card:-webkit-full-screen {
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+.card:-moz-full-screen {
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+.card:-ms-fullscreen {
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+/* --- NEW FULLSCREEN & CONTROL HIDING STYLES --- */
+
+/* 1. Fullscreen Overrides: Remove card-specific aesthetics */
+#player-root:fullscreen,
+#player-root:-webkit-full-screen,
+#player-root:-moz-full-screen,
+#player-root:-ms-fullscreen {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border-bottom: none !important; /* Fix for the border-bottom issue */
+    background: black !important;
+}
+
+/* 2. Control Container Styling for Auto-Hide */
+.ctrl {
+    /* Ensures the controls fill the width inside the .info block */
+    width: 100%;
+    
+    /* Add transition for smooth fading */
+    opacity: 1; /* Default visibility */
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* New class for when controls should be hidden */
+.ctrl.hidden-controls {
+    opacity: 0;
+    pointer-events: none; /* Prevents controls from being clickable when invisible */
+}
+
+/* Ensure the poster/video area takes up full space in fullscreen */
+#player-root:fullscreen .poster,
+#player-root:fullscreen .info {
+    width: 100%;
+    height: 100%;
+    /* Hide the entire .info block, except for the controls, when in full screen */
+    /* We'll use JS to make the controls visible/hidden */
+}
+/* You may need to adjust your main HTML structure, as currently the controls are inside the .info block.
+   For clean fullscreen, the .info block must be treated as the controls overlay. */
+
+
+/* --- Control Layout Adjustment (to accommodate download button) --- */
+.right-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+.right-most-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between download, fullscreen, and volume */
+    margin-left: 20px; /* Space between the transport controls and the utility group */
+}
+
+      .poster {
+        width: 100%;
+        aspect-ratio: 16/9;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+      }
+      .poster img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.3s;
+      }
+      .poster video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      /* Utility class to switch between video and poster */
+      .hidden {
+        display: none !important;
+      }
+
+      .info {
+        padding: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .top-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+      }
+      .song-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .meta {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      /* Progress Bar */
+      .progress-wrap {
+        margin-top: 12px;
+      }
+      .time-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 99px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .progress {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--accent), #ffd89b);
+      }
+
+ /* Controls */
+ .ctrl{
+  display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 14px;
+ }
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.left-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+/* Updated Right Controls to justify the content and create space */
+.right-controls {
+    display: flex;
+    align-items: center;
+    /* Use space-between to push 'right-most-controls' away from the next/forward buttons */
+    justify-content: space-between; 
+    gap: 10px; /* Default gap between adjacent elements/groups */
+}
+
+ .play-btn {
+        width: 66px;
+        height: 66px;
+        border-radius: 12px;
+        font-size: 18px;
+        background: rgba(0, 0, 0, 0.35);
+        border: 3px solid var(--accent);
+        color: white;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        box-shadow: 0 0 15px var(--glow);
+      }
+      .play-btn:hover {
+        transform: scale(1.05);
+      }
+/* NEW: Container to group fullscreen and volume and space them out */
+.right-most-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between the fullscreen button and volume wrapper */
+    margin-right: 0px; /* Add extra space to visually separate these controls */
+}
+
+button.icon-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: none;
+    color: var(--text);
+    padding: 8px;
+    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    border-bottom: 3px solid var(--accent);
+    transition: 0.2s;
+}
+.vol-wrap { display: flex; align-items: center; gap: 8px; width: 100%;}
+
+/* ... rest of your icon-btn, play-btn, and vol-wrap styles ... */
+      input[type="range"] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 6px;
+        background: transparent;
+      }
+      input[type="range"]::-webkit-slider-runnable-track {
+        height: 6px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.2);
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent);
+        margin-top: -3px;
+      }
+
+      /* Settings Panel */
+      .settings {
+        position: relative;
+      }
+      .settings-panel {
+        position: absolute;
+        right: 0;
+        bottom: 50px; /* Positioned upwards */
+        background: rgba(20, 20, 20, 0.95);
+        padding: 12px;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        min-width: 200px;
+        display: none;
+        z-index: 100;
+        border: 1px solid #333;
+      }
+      .settings-panel.open {
+        display: block;
+      }
+      .settings-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 8px 0;
+        font-size: 13px;
+        color: #ccc;
+      }
+      .theme-picker {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .theme-swatch {
+        width: 25px;
+        height: 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        border: 1px solid white;
+      }
+
+  
+ /* --- 5. DESCRIPTION & SLIDER --- */
+      .container {
+        display: grid;
+        grid-template-columns: 45% 54%; /* Better ratio */
+        gap: 0.2%;
+        max-width: 1400px;
+        margin: 40px auto;
+        padding: 0 10px;
+      }
+
+      .One-plus {
+        background: #222;
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #ddd;
+      }
+
+      .slider {
+        position: relative;
+        width: 100%;
+        height: 350px; /* Fixed height for consistency */
+        overflow: hidden;
+        border-radius: 10px;
+        border: 1px solid #333;
+      }
+      .slider .images {
+        display: flex;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+      }
+      .slider .image {
+        min-width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      .slider img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .slider .description {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        backdrop-filter: blur(4px);
+      }
+      .slider .slider-controls {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        pointer-events: none; /* Let clicks pass through except buttons */
+      }
+      .slider .slider-controls button {
+        pointer-events: auto;
+        background: rgba(248, 229, 229, 0.6);   
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        padding-right: 10px;
+        padding-left: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .slider .slider-controls button:hover {
+        background: var(--accent);
+      }
+
+      /* --- 6. MEDIA QUERIES --- */
+      @media (max-width: 1023px) {
+       .watch { 
+        grid-template-columns: 1fr; /* Stacks vertically */
+    }
+
+    /* FIX 2: Swap order for mobile view */
+    #player-root {
+        order: -1; /* Any number less than 0 will put it first */
+    }
+    .listof { 
+        order: 0; /* Any number greater than -1 will put it second */
+        max-height: 300px; 
+        margin-bottom: 20px; 
+    }
+      }
+
+      @media (max-width: 768px) {
+        nav,
+        .cta {
+          display: none;
+        }
+        .hamburger {
+          display: block;
+        }
+        .container {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .slider {
+          height: 250px;
+        }
+        .One-plus {
+          width: 100%;
+        }
+
+        .mobile-menu .join {
+      background: linear-gradient(135deg, #ffc371, #ff8a65);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+      }
+
+
+
+    </style>
+
+</head>
+<body>
+  <header>
+    <div class="bg-image"></div>
+    <div class="xeno">
+      <div class="logo">Ani<span>Media</span></div>
+
+      <nav>
+        <a href="aidox.html">Home</a>
+        <a href="page-1.html">Series</a>
+        <a href="A1-explore.html">Movies</a>
+        <a href="Ai-mordern-cte01.html">Genres</a>
+      </nav>
+
+      <a href="#" class="cta">Join Now</a>
+
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+    <a href="aidox.html">Home</a>
+    <a href="page-1.html">Series</a>
+    <a href="A1-explore.html">Movies</a>
+    <a href="Ai-mordern-cte01.html">Genres</a>
+    <a href="Aimiddle-page.html" class="join">Join Now</a>
+  </div>
+  </header>
+
+  <video autoplay muted loop playsinline id="bg-video">
+    <source src="❤️X/mount-fuji-autumn-moewalls-com.mp4" type="video/mp4">
+  </video>
+
+  <div class="watch">
+    <div class="listof">
+      <h1>Episodes</h1>
+      <ul class="epic-list" id="episodeList"></ul>
+    </div>
+
+    
+      <div id="player-root" class="card theme-orange">
+    <div class="poster" id="poster">
+      <img
+        id="poster-img"
+        src="Pictures/Paper-Rose.jpg"
+        alt="Poster"
+      />
+    </div>
+
+    <div class="info">
+      <div class="top-row">
+        <div style="flex: 1; min-width: 0">
+          <div class="song-title" id="song-title">Select an Episode</div>
+          <div class="meta" id="song-meta">AniMedia Player</div>
+        </div>
+
+        <div class="settings">
+          <button class="icon-btn" id="settings-btn" title="Settings">
+            <i class="fas fa-gear"></i>
+          </button>
+          <div class="settings-panel" id="settings-panel">
+            <div class="settings-row">
+              <span>Speed</span>
+              <select
+                id="playbackRate"
+                style="
+                  background: #333;
+                  color: #fff;
+                  border: none;
+                  padding: 2px;
+                "
+              >
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+              </select>
+            </div>
+            <div class="theme-picker">
+              <div
+                class="theme-swatch"
+                data-theme="theme-neon"
+                style="background: cyan"
+              ></div>
+              <div
+                class="theme-swatch"
+                data-theme="theme-glass"
+                style="background: #7aa2ff"
+              ></div>
+              <div
+                class="theme-swatch"
+                data-theme="theme-anime"
+                style="background: #ff5edb"
+              ></div>
+              <div
+                class="theme-swatch"
+                data-theme="theme-orange"
+                style="background: #ff8a65"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="time-row">
+          <div id="currentTime">0:00</div>
+          <div id="duration">0:00</div>
+        </div>
+        <div class="progress-bar" id="progressBar">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+      <div class="ctrl">
+        <div class="controls">
+          <div class="left-controls">
+            <button class="icon-btn" id="prevBtn">
+                <i class="fas fa-backward"></i>
+            </button>
+            <button class="icon-btn" id="rewindBtn">
+                <i class="fas fa-rotate-left"></i>
+            </button>
+          </div>
+          <button class="play-btn" id="playBtn">
+            <i id="playIcon" class="fas fa-play"></i>
+          </button>
+          <div class="right-controls">
+            <button class="icon-btn" id="forwardBtn">
+              <i class="fas fa-rotate-right"></i>
+            </button>
+            <button class="icon-btn" id="nextBtn">
+              <i class="fas fa-forward"></i>
+            </button>
+            
+            
+          </div>
+        </div>
+        <div class="right-most-controls">
+              <button class="icon-btn" id="downloadBtn">
+                <i class="fas fa-download"></i>
+              </button>
+              <button class="icon-btn" id="fullScreenBtn">
+                <i id="fullScreenIcon" class="fas fa-expand"></i>
+              </button>
+              <div class="vol-wrap">
+                <i class="fas fa-volume-up"></i>
+                <input
+                  id="volumeSlider"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value="1"
+                />
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+  </div>
+    <br>
+    <div id="followlong"></div>
+<div class="container">
+  <div class="One-plus">
+    <h2>Neon Requiem</h2>
+    <br />
+    <strong>Genre:</strong> Cyberpunk, Sci-Fi, Thriller<br />
+    <strong>Episodes:</strong> 12<br />
+    <strong>Studio:</strong> AetherEdge Animation<br /><br />
+    In the neon-drenched megacity of Elysion, rogue data-runner Kira Voss
+    uncovers a conspiracy buried deep within the city's neural network.
+    Hunted by the corporate elite and a ghost in the machine known as The
+    Architect, Kira must fight to reveal the truth before her signal fades
+    forever.
+  </div>
+
+  <div class="slider">
+    <div class="images" id="sliderImages">
+      
+      <div class="image">
+        <img src="Ai/my-hero-academia-3840x2160-21965.jpg" alt="Ai.to">
+        <div class="description">Kaiju-No.8</div>
+      </div>
+
+      <div class="image">
+        <img src="Ai/dandadan-key-art-3840x2160-19468.jpg" alt="UI UX DESIGN IDEAS">
+        <div class="description">UI UX DESIGN IDEAS</div>
+      </div>
+
+      <div class="image">
+        <img src="Ai/gachiakuta-2025-3840x2160-21929.png" alt="Ai.to">
+        <div class="description">Japanese Train Station</div>
+      </div>
+
+      <div class="image">
+        <img src="Ai/guts-artwork-3840x2160-21418.jpg" alt="Ai.to">
+        <div class="description">Good Morning World</div>
+      </div>
+
+      <div class="image">
+        <img src="Ai/my-hero-academia-3840x2160-10541 (1).jpg" alt="Ai.to">
+        <div class="description">A Relaxing Fishing Experience</div>
+      </div>
+
+      <div class="image">
+        <img src="Ai/my-hero-academia-3840x2160-22154.jpg" alt="Ai.to">
+        <div class="description">Your Name</div>
+      </div>
+
+      <div class="image">
+        <img src="Ai/my-hero-academia-3840x2160-22156.jpg" alt="Ai.to">
+        <div class="description">Xanshi Temple</div>
+      </div>
+
+      <div class="image">
+        <img src="Pictures01/img1.jpg" alt="Ai.to">
+        <div class="description">Cyber Girl</div>
+      </div>
+
+      <div class="image">
+        <img src="Pictures01/img2.jpg" alt="Ai.to">
+        <div class="description">SPY X FAMILY</div>
+      </div>
+
+      <div class="image">
+        <img src="Pictures01/img3.jpg" alt="Ai.to">
+        <div class="description">Time Paradox</div>
+      </div>
+
+      <div class="image">
+        <img src="Pictures01/img4.jpg" alt="Ai.to">
+        <div class="description">High School X</div>
+      </div>
+
+      <div class="image">
+        <img src="Pictures01/img5.jpg" alt="Ai.to">
+        <div class="description">Your lie In April</div>
+      </div>
+
+      <div class="image">
+        <img src="Pictures01/img6.jpg" alt="Ai.to">
+        <div class="description">Lost Memories</div>
+      </div>
+
+      <div class="image">
+        <img src="Pictures01/img7.jpg" alt="Ai.to">
+        <div class="description">Lost Memories</div>
+      </div>
+
+      <div class="image">
+        <img src="Pictures01/img20.jpg" alt="Ai.to">
+        <div class="description">Lost Memories</div>
+      </div>
+      
+    </div>
+
+    <div class="slider-controls">
+      <button id="sliderPrev">&#10094;</button>
+      <button id="sliderNext">&#10095;</button>
+    </div>
+  </div>
+</div>
+    
+  <br><br><br>
+    </div>
+    </section>
+ <br><div id="rec"></div>
+    <div id="footer"></div>
+
+    
+</body>
+<script>
+/* =========================================================================
+   1. CONSTANTS, VARIABLES & DOM SELECTIONS
+   ========================================================================= */
+
+// --- 1.1 EPISODE DATA ---
+const EPISODES = [
+    { title: "Episode 1 – The Beginning", url: "#", src: "MEmu Music/「AMV」-_Haunt(360p).mp4" },
+    { title: "Episode 2 – A New Path", url: "#", src: "MEmu Music/Animal___AMV___Anime_Mix(360p).mp4" },
+    { title: "Episode 3 – The Mystery", url: "#", src: "MEmu Music/Golden_Hour_-「AMV」-_Anime_MV(720p).mp4" },
+    { title: "Episode 4 – Darkness Rises", url: "#", src: "MEmu Music/My_Hero_Academia_Season_6_Opening_Full_-『Hitamuki』by_SUPER_BEAVER(720p).mp4" },
+    { title: "Episode 5 – Light Within", url: "#", src: "MEmu Music/SD's.mp4" },
+    { title: "Episode 6 – Conflict", url: "#", src: "MEmu Music/Perfect_10___AMV___Anime_Mix(360p).mp4" },
+    { title: "Episode 7 – Unveiled", url: "#", src: "MEmu Music/Stay_-「AMV」-_Anime_MV(720p).mp4" },
+    { title: "Episode 8 – Breaking Point", url: "#", src: "MEmu Music/The_Baddest___AMV___Anime_Mix(360p).mp4" },
+    { title: "Episode 9 – Reversal", url: "#", src: "MEmu Music/Tokyo_Majin_Opening_1(480p).mp4" },
+    { title: "Episode 10 – Turning Tide", url: "#", src: "MEmu Music/Happy.mp4" },
+    { title: "Episode 11 – My Hero", url: "#", src: "MEmu Music/AnimePahe_Boku_no_Hero_Academia_-_169_1080p_SubsPlease.mp4" },
+    { title: "Episode 12 – Kon-k", url: "#", src: "MEmu Music/AnimePahe_Kami_no_Tou_2nd_Season_Eng_Dub_-_26_1080p_Yameii.mp4" },
+    { title: "Episode 13 – Oni", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" },
+    { title: "Episode 14 – Finals", url: "#", src: "MEmu Music/AnimePahe_Long_Zu_II_-_Daowangzhe_Zhi_Tong_Chi_Dub_-_23_1080p_SubsPlease.mp4" },
+    { title: "Episode 15 – Oni", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" },
+    { title: "Episode 16 – Hero's Quest", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" },
+    { title: "Episode 17 – Lord of Goblins", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" },
+    { title: "Episode 18 – Invincible-x", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" },
+    { title: "Episode 19 – My Name", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" },
+    { title: "Episode 20 – Yugen-oh!", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" },
+    { title: "Episode 21 – Wish", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" },
+    { title: "Episode 22 – Star Born", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" },
+    { title: "Episode 23 – Encounter-x", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" },
+    { title: "Episode 24 – End-Sroll", url: "#", src: "MEmu Music/AnimePahe_Suki_demo_Kirai_na_Amanojaku_Eng_Dub_-_01_1080p_Netflix.mp4" }
+];
+
+// --- 1.2 DOM Elements ---
+const playerRoot = document.getElementById('player-root');
+const posterImg = document.getElementById('poster-img');
+const videoContainer = document.getElementById('poster');
+const ctrlContainer = document.querySelector('.ctrl'); // Main control wrapper
+
+// Player controls
+const playBtn = document.getElementById('playBtn');
+const playIcon = document.getElementById('playIcon');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+const forwardBtn = document.getElementById('forwardBtn');
+const rewindBtn = document.getElementById('rewindBtn');
+const fullScreenBtn = document.getElementById('fullScreenBtn');
+const fullScreenIcon = document.getElementById('fullScreenIcon');
+const downloadBtn = document.getElementById('downloadBtn');
+
+// Progress/Time
+const progressBarEl = document.getElementById('progressBar');
+const progress = document.getElementById('progress');
+const currentTimeEl = document.getElementById('currentTime');
+const durationEl = document.getElementById('duration');
+
+// Info/Settings
+const titleEl = document.getElementById('song-title');
+const volumeSlider = document.getElementById('volumeSlider');
+const settingsBtn = document.getElementById('settings-btn');
+const settingsPanel = document.getElementById('settings-panel');
+const playbackRateSelect = document.getElementById('playbackRate');
+
+
+// --- 1.3 State Variables ---
+let currentEpIndex = 0;
+let videoEl = null; // Reference to the dynamically created <video> element
+let isPlaying = false;
+let controlsTimeout; // For auto-hiding controls
+let isFullScreen = false; // For tracking fullscreen state
+
+
+/* =========================================================================
+   2. HELPER FUNCTIONS
+   ========================================================================= */
+
+// Format time from seconds to M:SS
+function formatTime(s) {
+    if (!s || isNaN(s)) return "0:00";
+    const min = Math.floor(s / 60);
+    const sec = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${min}:${sec}`;
+}
+
+// Fullscreen Control Auto-Hide Logic
+function showControls() {
+    ctrlContainer.classList.remove('hidden-controls');
+    clearTimeout(controlsTimeout);
+    
+    // Set a new timeout ONLY if we are in fullscreen and video is playing
+    if (isFullScreen && videoEl && !videoEl.paused) {
+        controlsTimeout = setTimeout(hideControls, 3000); // Hide after 3 seconds
+    }
+}
+
+function hideControls() {
+    if (isFullScreen && videoEl && !videoEl.paused) {
+        ctrlContainer.classList.add('hidden-controls');
+    }
+}
+
+// Seek based on click position
+function seek(e) {
+    if (!videoEl) return;
+    const rect = progressBarEl.getBoundingClientRect();
+    const pos = (e.clientX - rect.left) / rect.width;
+    videoEl.currentTime = pos * videoEl.duration;
+}
+
+
+/* =========================================================================
+   3. CORE PLAYER FUNCTIONS
+   ========================================================================= */
+
+function loadEpisode(index) {
+    // Wrap around logic
+    if (index < 0) index = EPISODES.length - 1;
+    if (index >= EPISODES.length) index = 0;
+    
+    currentEpIndex = index;
+    const ep = EPISODES[index];
+
+    // UI Updates
+    titleEl.textContent = ep.title;
+    // NOTE: Episode list elements (like .epic-list a) are assumed to be elsewhere.
+
+    // Cleanup old video element if it exists
+    if (videoEl) {
+        videoEl.pause();
+        videoEl.remove();
+        videoEl = null; // Clear reference
+    }
+
+    // Create new video element
+    videoEl = document.createElement('video');
+    videoEl.src = ep.src;
+    videoEl.volume = volumeSlider.value;
+    videoEl.playsInline = true;
+    
+    // Initial display state
+    videoEl.classList.add('hidden');
+    posterImg.classList.remove('hidden');
+    playIcon.className = "fas fa-play";
+    isPlaying = false;
+
+    // Attach core video listeners
+    videoEl.addEventListener('timeupdate', updateProgress);
+    videoEl.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(videoEl.duration);
+    });
+    // Autoplay next episode logic
+    videoEl.addEventListener('ended', () => {
+        loadEpisode(currentEpIndex + 1);
+        togglePlay(); 
+    });
+    
+    // Attach fullscreen control listeners
+    videoEl.addEventListener('play', showControls); // Start auto-hide timer
+    videoEl.addEventListener('pause', showControls); // Keep controls visible when paused
+
+    videoContainer.appendChild(videoEl);
+}
+
+function togglePlay() {
+    if (!videoEl) return;
+
+    if (videoEl.paused) {
+        posterImg.classList.add('hidden');
+        videoEl.classList.remove('hidden');
+        
+        videoEl.play().catch(e => console.error("Autoplay blocked:", e));
+        playIcon.className = "fas fa-pause";
+        isPlaying = true;
+    } else {
+        videoEl.pause();
+        playIcon.className = "fas fa-play";
+        isPlaying = false;
+    }
+}
+
+function updateProgress() {
+    if (!videoEl) return;
+    const percent = (videoEl.currentTime / videoEl.duration) * 100;
+    progress.style.width = `${percent}%`;
+    currentTimeEl.textContent = formatTime(videoEl.currentTime);
+}
+
+
+/* =========================================================================
+   4. EPISODE LIST BUILDER (Assumed functionality, list container missing in HTML)
+   ========================================================================= */
+// BUG FIX: Removed reliance on 'episodeList' element which is missing.
+// This function is kept for organizational purposes but will likely fail 
+// unless 'episodeList' is added to the page elsewhere.
+function buildEpisodeList() {
+    const listContainer = document.getElementById('episodeList');
+    if (!listContainer) return;
+
+    EPISODES.forEach((ep, i) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.id = `ep-link-${i}`;
+        a.innerHTML = `${ep.title} <i class="fas fa-play-circle"></i>`; 
+        a.onclick = () => {
+            loadEpisode(i);
+            togglePlay();
+        };
+        li.appendChild(a);
+        listContainer.appendChild(li);
+    });
+}
+
+
+/* =========================================================================
+   5. IMAGE SLIDER LOGIC (Removed/Commented out to prevent errors)
+   ========================================================================= */
+ const sliderImages = document.getElementById("sliderImages");
+      const sliderPrev = document.getElementById("sliderPrev");
+      const sliderNext = document.getElementById("sliderNext");
+      const totalSlides = document.querySelectorAll(".slider .image").length;
+      let currentSlide = 0;
+
+      function updateSlider() {
+        const translateX = -(currentSlide * 100);
+        sliderImages.style.transform = `translateX(${translateX}%)`;
+      }
+
+      sliderNext.addEventListener("click", () => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlider();
+      });
+
+      sliderPrev.addEventListener("click", () => {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlider();
+      });
+
+      // Auto-slide every 5 seconds
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlider();
+      }, 5000);
+
+  
+
+
+/* =========================================================================
+   6. CONTROL LISTENERS (Player, Volume, Fullscreen)
+   ========================================================================= */
+
+// --- Playback Controls ---
+playBtn.addEventListener('click', togglePlay);
+progressBarEl.addEventListener('click', seek);
+
+nextBtn.addEventListener('click', () => {
+    loadEpisode(currentEpIndex + 1);
+    togglePlay();
+});
+
+prevBtn.addEventListener('click', () => {
+    loadEpisode(currentEpIndex - 1);
+    togglePlay();
+});
+
+forwardBtn.addEventListener('click', () => {
+    if (videoEl) videoEl.currentTime += 10;
+});
+
+rewindBtn.addEventListener('click', () => {
+    if (videoEl) videoEl.currentTime -= 10;
+});
+
+// --- Volume Control ---
+volumeSlider.addEventListener('input', (e) => {
+    if (videoEl) videoEl.volume = e.target.value;
+});
+
+// --- Download Button ---
+downloadBtn.addEventListener('click', () => {
+    if (videoEl && videoEl.src) {
+        const a = document.createElement('a');
+        a.href = videoEl.src;
+        const filename = EPISODES[currentEpIndex].title || 'video_download';
+        a.download = `${filename}.mp4`; 
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+});
+
+// --- Fullscreen and Auto-Hide Logic ---
+
+fullScreenBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+        playerRoot.requestFullscreen().catch(e => console.error("Fullscreen failed:", e));
+    } else {
+        document.exitFullscreen();
+    }
+});
+
+document.addEventListener('fullscreenchange', () => {
+    isFullScreen = !!document.fullscreenElement;
+    
+    if (isFullScreen) {
+        fullScreenIcon.className = 'fas fa-compress'; // Exit icon
+        showControls(); // Start auto-hide timer if playing
+    } else {
+        fullScreenIcon.className = 'fas fa-expand'; // Enter icon
+        clearTimeout(controlsTimeout);
+        showControls(); // Always show controls in windowed mode
+    }
+});
+
+// Tap-to-Pause/Play in Fullscreen
+videoContainer.addEventListener('click', (e) => {
+    // Check if the click target is the video/poster and we are in fullscreen
+    if (isFullScreen && (e.target === videoEl || e.target === posterImg)) {
+        togglePlay();
+        showControls(); // Reset auto-hide timer
+    }
+});
+
+// Mouse activity listeners for auto-hide
+playerRoot.addEventListener('mousemove', showControls); 
+playerRoot.addEventListener('mouseleave', () => {
+    // Only attempt to hide if playing and in fullscreen
+    if (isFullScreen && videoEl && !videoEl.paused) {
+        clearTimeout(controlsTimeout);
+        controlsTimeout = setTimeout(hideControls, 500); // Quick hide after leaving
+    }
+});
+
+
+/* =========================================================================
+   7. SETTINGS LISTENERS
+   ========================================================================= */
+
+// Settings Panel Toggle
+settingsBtn.addEventListener('click', () => {
+    settingsPanel.classList.toggle('open');
+});
+
+// Theme Picker
+document.querySelectorAll('.theme-swatch').forEach(swatch => {
+    swatch.addEventListener('click', () => {
+        playerRoot.className = `card ${swatch.dataset.theme}`;
+    });
+});
+
+// Playback Rate
+playbackRateSelect.addEventListener('change', (e) => {
+    if (videoEl) videoEl.playbackRate = parseFloat(e.target.value);
+});
+
+
+/* =========================================================================
+   8. INITIALIZATION
+   ========================================================================= */
+function init() {
+    buildEpisodeList();
+    loadEpisode(0);
+}
+
+init();
+
+// Placeholder for external function calls (keep for compatibility)
+function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.toggle("active");
+}
+</script>
+<script src="easypages.js"></script>
+</html>

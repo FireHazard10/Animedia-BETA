@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+    href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=Poppins&display=swap"
+    rel="stylesheet"
+    />
+   <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="pages.css">
+
+
+</head>
+<body>
+    <div id="header"></div>
+    <div id="followlong"></div>
+    <main>
+          <section class="grid">
+
+
+      <article class="card">
+        <div class="poster">
+          <img alt="poster" src="Pictures/download (4).jpg" />
+        </div>
+        <div class="info">
+          <div class="title">
+            Example Title: The Long Series Name - Sx 
+          </div>
+          
+        
+        <div class="subtitle">
+          <span> EP: 1 / 24 </span>
+          <span> Year: 20xx </span>
+        </div>
+        <div class="badges">
+          <div class="badge actixe">SUB</div>
+          <div class="badge">DUB</div>
+        </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="poster">
+          <img alt="poster" src="Pictures/download (10).jpg" />
+        </div>
+        <div class="info">
+          <div class="title">
+            Example Title: The Long Series Name - Sx 
+          </div>
+          
+        
+        <div class="subtitle">
+          <span> EP: 1 / 24 </span>
+          <span> Year: 20xx </span>
+        </div>
+        <div class="badges">
+          <div class="badge actixe">SUB</div>
+          <div class="badge">DUB</div>
+        </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="poster">
+          <img alt="poster" src="Pictures/44741.jpg" />
+        </div>
+        <div class="info">
+          <div class="title">
+            Example Title: The Long Series Name - Sx 
+          </div>
+          
+        
+        <div class="subtitle">
+          <span> EP: 1 / 24 </span>
+          <span> Year: 20xx </span>
+        </div>
+        <div class="badges">
+          <div class="badge actixe">SUB</div>
+          <div class="badge">DUB</div>
+        </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="poster">
+          <img alt="poster" src="Pictures/download (6).jpg" />
+        </div>
+        <div class="info">
+          <div class="title">
+            Example Title: The Long Series Name - Sx 
+          </div>
+          
+        
+        <div class="subtitle">
+          <span> EP: 1 / 24 </span>
+          <span> Year: 20xx </span>
+        </div>
+        <div class="badges">
+          <div class="badge actixe">SUB</div>
+          <div class="badge">DUB</div>
+        </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="poster">
+          <img alt="poster" src="Pictures/download (5).jpg" />
+        </div>
+        <div class="info">
+          <div class="title">
+            Example Title: The Long Series Name - Sx 
+          </div>
+          
+        
+        <div class="subtitle">
+          <span> EP: 1 / 24 </span>
+          <span> Year: 20xx </span>
+        </div>
+        <div class="badges">
+          <div class="badge actixe">SUB</div>
+          <div class="badge">DUB</div>
+        </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="poster">
+          <img alt="poster" src="Pictures/download (9).jpg" />
+        </div>
+        <div class="info">
+          <div class="title">
+            Example Title: The Long Series Name - Sx 
+          </div>
+          
+        
+        <div class="subtitle">
+          <span> EP: 1 / 24 </span>
+          <span> Year: 20xx </span>
+        </div>
+        <div class="badges">
+          <div class="badge actixe">SUB</div>
+          <div class="badge">DUB</div>
+        </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="poster">
+          <img alt="poster" src="Pictures/1347028.jpeg" />
+        </div>
+        <div class="info">
+          <div class="title">
+            Example Title: The Long Series Name - Sx 
+          </div>
+          
+       
+        <div class="subtitle">
+          <span> EP: 1 / 24 </span>
+          <span> Year: 20xx </span>
+        </div>
+        <div class="badges">
+          <div class="badge actixe">SUB</div>
+          <div class="badge">DUB</div>
+        </div>
+         </div>
+      </article>
+
+      </section>
+    </main>
+
+         <div class="bottom-nav">
+            <button class="nav-button" id="previousBtn" disabled>Prev</button>
+            <span id="pageNumber">5</span>
+            <button class="nav-button" id="nexteraBtn">Next</button>
+        </div>
+    </section>
+    <br><div id="rec"></div>
+    <div id="footer"></div>
+</body>
+<script src="easypages.js"></script>
+<script src="Ai.js"></script>
+<script>
+   function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.toggle("active");
+  }
+
+  document.querySelectorAll(".badge").forEach((b) => {
+    b.addEventListener("click", () => b.classList.toggle("actixe"));
+  });
+  
+  let currentPage = 8; // page-1.html is current
+    const totalPages = 8;
+    const pages = [
+      "page-1.html",
+      "page-2.html",
+      "page-3.html",
+      "page-4.html",
+      "page-5.html",
+      "page-6.html",
+      "page-7.html",
+      "page-8.html",
+    ];
+
+    const prevButton = document.getElementById("previousBtn");
+    const nextButton = document.getElementById("nexteraBtn");
+    const pageNumber = document.getElementById("pageNumber");
+
+    prevButton.addEventListener("click", function () {
+      if (currentPage > 1) {
+        currentPage--;
+        window.location.href = pages[currentPage - 1];
+      }
+    });
+
+    nextButton.addEventListener("click", function () {
+      if (currentPage < totalPages) {
+        currentPage++;
+        window.location.href = pages[currentPage - 1];
+      }
+    });
+
+    function checkButtons() {
+      prevButton.disabled = currentPage === 1;
+      nextButton.disabled = currentPage === totalPages;
+      pageNumber.textContent = currentPage;
+    }
+
+    checkButtons();
+</script>
+</html>
