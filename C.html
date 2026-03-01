@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium Dynamic Grid</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=M+PLUS+Rounded+1c:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="pages.css" />
+    <style>
+      :root {
+        --accent: #ffb700;
+        --accent-glow: rgba(255, 183, 0, 0.3);
+        --bg-dark: #0a0a0c;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --card-border: rgba(255, 255, 255, 0.1);
+        --text-main: #ffffff;
+        --text-muted: #a0a0a8;
+      }
+
+      body {
+        background-color: var(--bg-dark);
+        background-image: radial-gradient(
+            at 0% 0%,
+            rgba(230, 149, 0, 0.15) 0px,
+            transparent 50%
+          ),
+          radial-gradient(at 100% 100%, rgba(0, 0, 0, 1) 0px, transparent 50%);
+        font-family: "Inter", sans-serif;
+        color: var(--text-main);
+        min-height: 100vh;
+      }
+
+      main {
+        padding: 60px 20px;
+        max-width: 1400px;
+        margin: auto;
+      }
+
+      /* --- Grid Configuration --- */
+      #alphcard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      /* --- Sleek Card Design --- */
+      .alphcard {
+        position: relative;
+        display: flex;
+        height: 85px; /* Compact height */
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .alphcard:hover {
+        transform: translateY(-5px) scale(1.02);
+        border-color: var(--accent);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-glow);
+      }
+
+      /* Image Section */
+      .alphcard-img {
+        width: 35%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        border-right: 1px solid var(--card-border);
+      }
+
+      .alphcard-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(20%);
+        transition: transform 0.6s ease;
+      }
+
+      .alphcard:hover img {
+        transform: scale(1.15);
+        filter: grayscale(0%);
+      }
+
+      /* Content Section */
+      .alphcard-info {
+        width: 65%;
+        padding: 10px 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.03) 0%,
+          transparent 100%
+        );
+      }
+
+      .alphcard-title {
+        font-family: "Inter", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--text-main);
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .alphcard-date {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* --- Futuristic Load More Button --- */
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 60px;
+      }
+
+      .next-btn {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        padding: 12px 36px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-radius: 50px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .next-btn:hover {
+        background: var(--accent);
+        color: #000;
+        box-shadow: 0 0 20px var(--accent-glow);
+      }
+
+      /* Animation for entry */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .alphcard {
+        animation: fadeInUp 0.6s ease backwards;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header"></div>
+
+    <main>
+      <div id="alphcard-grid"></div>
+
+      <div class="button-container">
+        <button id="next-btn" class="next-btn">Load More</button>
+      </div>
+    </main>
+
+    <div id="footer"></div>
+    <script src="easypages.js"></script>
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("active");
+      }
+
+      const alphcardData = [
+        // ... (Keep your existing alphcardData array here)
+        {
+          title: "1 View",
+          date: "Year: 20xx",
+          img: "Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg",
+        },
+        {
+          title: "Ocean Sunset",
+          date: "Year: 20xx",
+          img: "Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg",
+        },
+        {
+          title: "Forest Trail",
+          date: "Year: 20xx",
+          img: "Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg",
+        },
+        {
+          title: "City Lights",
+          date: "Year: 20xx",
+          img: "Pictures01/39f2cb49-629d-481e-9cb7-b7a3d45ff778.jpeg",
+        },
+        {
+          title: "Desert Dunes",
+          date: "Year: 20xx",
+          img: "Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg",
+        },
+        {
+          title: "Arctic Ice",
+          date: "Year: 20xx",
+          img: "Pictures01/63506633-9c3e-47ca-849c-be6e590edf5c.jpeg",
+        },
+        {
+          title: "Zebra Crossing",
+          date: "Year: 20xx",
+          img: "Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg",
+        },
+        {
+          title: "Bear Life",
+          date: "Year: 20xx",
+          img: "Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg",
+        },
+        {
+          title: "Eagle Eye",
+          date: "Year: 20xx",
+          img: "Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg",
+        },
+        {
+          title: "River Flow",
+          date: "Year: 20xx",
+          img: "Pictures01/Anime wallpaper.jpeg",
+        },
+        {
+          title: "Alpine Lodge",
+          date: "Year: 20xx",
+          img: "Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg",
+        },
+        {
+          title: "Urban Exploration",
+          date: "Year: 20xx",
+          img: "Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg",
+        },
+        {
+          title: "Deep Space",
+          date: "Year: 20xx",
+          img: "Pictures01/Silent-Witch-Chinmoku-no-Majo-no-Kakushigoto.webp",
+        },
+        {
+          title: "Ancient Ruins",
+          date: "Year: 20xx",
+          img: "Pictures01/DESIGN WALLPAPER ANIME _3.jpeg",
+        },
+        {
+          title: "Mountain View",
+          date: "Year: 20xx",
+          img: "Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg",
+        },
+        {
+          title: "Ocean Sunset",
+          date: "Year: 20xx",
+          img: "Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg",
+        },
+        {
+          title: "Forest Trail",
+          date: "Year: 20xx",
+          img: "Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg",
+        },
+        {
+          title: "City Lights",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1019/200/200",
+        },
+        {
+          title: "Desert Dunes",
+          date: "Year: 20xx",
+          img: "Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg",
+        },
+        {
+          title: "Arctic Ice",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1021/200/200",
+        },
+        {
+          title: "Zebra Crossing",
+          date: "Year: 20xx",
+          img: "Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg",
+        },
+        {
+          title: "Bear Life",
+          date: "Year: 20xx",
+          img: "Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg",
+        },
+        {
+          title: "Eagle Eye",
+          date: "Year: 20xx",
+          img: "Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg",
+        },
+        {
+          title: "River Flow",
+          date: "Year: 20xx",
+          img: "Pictures01/Anime wallpaper.jpeg",
+        },
+        {
+          title: "Alpine Lodge",
+          date: "Year: 20xx",
+          img: "Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg",
+        },
+        {
+          title: "Urban Exploration",
+          date: "Year: 20xx",
+          img: "Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg",
+        },
+        {
+          title: "Deep Space",
+          date: "Year: 20xx",
+          img: "Pictures01/Silent-Witch-Chinmoku-no-Majo-no-Kakushigoto.webp",
+        },
+        {
+          title: "Ancient Ruins",
+          date: "Year: 20xx",
+          img: "Pictures01/DESIGN WALLPAPER ANIME _3.jpeg",
+        },
+        {
+          title: "Mountain View",
+          date: "Year: 20xx",
+          img: "Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg",
+        },
+        {
+          title: "Ocean Sunset",
+          date: "Year: 20xx",
+          img: "Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg",
+        },
+        {
+          title: "Forest Trail",
+          date: "Year: 20xx",
+          img: "Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg",
+        },
+        {
+          title: "City Lights",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1019/200/200",
+        },
+        {
+          title: "Desert Dunes",
+          date: "Year: 20xx",
+          img: "Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg",
+        },
+        {
+          title: "Arctic Ice",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1021/200/200",
+        },
+        {
+          title: "Zebra Crossing",
+          date: "Year: 20xx",
+          img: "Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg",
+        },
+        {
+          title: "Bear Life",
+          date: "Year: 20xx",
+          img: "Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg",
+        },
+        {
+          title: "Eagle Eye",
+          date: "Year: 20xx",
+          img: "Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg",
+        },
+        {
+          title: "River Flow",
+          date: "Year: 20xx",
+          img: "Pictures01/Anime wallpaper.jpeg",
+        },
+        {
+          title: "Alpine Lodge",
+          date: "Year: 20xx",
+          img: "Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg",
+        },
+        {
+          title: "Urban Exploration",
+          date: "Year: 20xx",
+          img: "Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg",
+        },
+        {
+          title: "Deep Space",
+          date: "Year: 20xx",
+          img: "Pictures01/Silent-Witch-Chinmoku-no-Majo-no-Kakushigoto.webp",
+        },
+        {
+          title: "Ancient Ruins",
+          date: "Year: 20xx",
+          img: "Pictures01/DESIGN WALLPAPER ANIME _3.jpeg",
+        },
+        {
+          title: "Mountain View",
+          date: "Year: 20xx",
+          img: "Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg",
+        },
+        {
+          title: "Ocean Sunset",
+          date: "Year: 20xx",
+          img: "Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg",
+        },
+        {
+          title: "Forest Trail",
+          date: "Year: 20xx",
+          img: "Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg",
+        },
+        {
+          title: "City Lights",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1019/200/200",
+        },
+        {
+          title: "Desert Dunes",
+          date: "Year: 20xx",
+          img: "Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg",
+        },
+        {
+          title: "Arctic Ice",
+          date: "Year: 20xx",
+          img: "https://picsum.photos/id/1021/200/200",
+        },
+        {
+          title: "Zebra Crossing",
+          date: "Year: 20xx",
+          img: "Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg",
+        },
+        {
+          title: "Bear Life",
+          date: "Year: 20xx",
+          img: "Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg",
+        },
+        {
+          title: "Eagle Eye",
+          date: "Year: 20xx",
+          img: "Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg",
+        },
+        {
+          title: "River Flow",
+          date: "Year: 20xx",
+          img: "Pictures01/Anime wallpaper.jpeg",
+        },
+        {
+          title: "Alpine Lodge",
+          date: "Year: 20xx",
+          img: "Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg",
+        },
+        {
+          title: "Urban Exploration",
+          date: "Year: 20xx",
+          img: "Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg",
+        },
+        {
+          title: "Deep Space",
+          date: "Year: 20xx",
+          img: "Pictures01/Silent-Witch-Chinmoku-no-Majo-no-Kakushigoto.webp",
+        },
+        {
+          title: "Ancient Ruins",
+          date: "Year: 20xx",
+          img: "Pictures01/DESIGN WALLPAPER ANIME _3.jpeg",
+        },
+        // ... include all other items from your original list
+      ];
+
+      const itemsPerPage = 20;
+      let currentIndex = 0;
+      const gridContainer = document.getElementById("alphcard-grid");
+      const nextBtn = document.getElementById("next-btn");
+
+      function sortData() {
+        alphcardData.sort((a, b) => a.title.localeCompare(b.title));
+      }
+
+      function loadalphcards() {
+        const nextBatch = alphcardData.slice(
+          currentIndex,
+          currentIndex + itemsPerPage
+        );
+
+        nextBatch.forEach((item, index) => {
+          const alphcard = document.createElement("div");
+          alphcard.classList.add("alphcard");
+          // Staggered animation delay
+          alphcard.style.animationDelay = `${(index % itemsPerPage) * 0.05}s`;
+
+          alphcard.innerHTML = `
+            <div class="alphcard-img">
+              <img src="${item.img}" alt="${item.title}" loading="lazy">
+            </div>
+            <div class="alphcard-info">
+              <div class="alphcard-title">${item.title}</div>
+              <div class="alphcard-date">${item.date}</div>
+            </div>
+          `;
+
+          gridContainer.appendChild(alphcard);
+        });
+
+        currentIndex += itemsPerPage;
+        if (currentIndex >= alphcardData.length) {
+          nextBtn.style.display = "none";
+        }
+      }
+
+      sortData();
+      loadalphcards();
+      nextBtn.addEventListener("click", loadalphcards);
+    </script>
+  </body>
+</html>
