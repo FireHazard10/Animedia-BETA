@@ -17,23 +17,33 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Oxanium", sans-serif;
-  font-family: "Oxanium", sans-serif;
-  overflow-x: hidden;
-  background: var(--background);
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This is the "magic" that makes it act like 'center/cover' */
+  z-index: -1; /* Pushes it behind your text */
 }
 
-/*main {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 40px;
+body {
+  margin: 0;
+  font-family: "Oxanium", sans-serif;
 }
-*/
+
+/*body {
+  font-family: "Oxanium", sans-serif;
+  overflow-x: hidden;
+
+  /* Use a relative path and fixed attachment *
+  background: url("../Pictures01/img9.jpg") center/cover no-repeat fixed;
+
+  /* Ensure the body always fills the screen *
+  min-height: 100vh;
+  width: 100%;
+}*/
+
 header {
   position: relative;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
@@ -41,7 +51,6 @@ header {
 }
 
 .xeno {
-  /* max-width: 1200px;*/
   margin: 0 auto;
   padding: 1.5rem;
   display: flex;
@@ -59,10 +68,10 @@ header {
 }
 
 .logo span {
-  background: none !important; /* remove inherited background */
+  background: none !important;
   -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: #fff !important; /* force solid white text */
-  color: #fff !important; /* fallback for non-webkit */
+  -webkit-text-fill-color: #fff !important;
+  color: #fff !important;
 }
 
 nav {
@@ -77,6 +86,7 @@ nav a {
   transition: color 0.3s ease;
   position: relative;
 }
+
 nav a::after {
   content: "";
   position: absolute;
@@ -117,6 +127,7 @@ nav a:hover::after {
   border: none;
   color: white;
   font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .mobile-menu {
@@ -127,9 +138,14 @@ nav a:hover::after {
   background: rgba(0, 0, 0, 0.2);
 }
 
+.mobile-menu.active {
+  display: flex;
+}
+
 .mobile-menu a {
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
+  padding: 0.5rem 0;
 }
 
 .hero {
@@ -164,7 +180,6 @@ nav a:hover::after {
   padding: 0.75rem 2rem;
   border-radius: 7px;
   font-weight: 600;
-  color: white;
   text-decoration: none;
   transition: background 0.3s ease-in;
 }
@@ -180,23 +195,8 @@ nav a:hover::after {
   background-image: url(❤️X/anime-girl-kazari-genshin-impact-spring-mask-5k-3840x2160-7950.jpg);
   background-size: cover;
   background-position: center;
-  opacity: 0.5;
+  opacity: 1;
   z-index: -1;
-}
-
-@media (max-width: 768px) {
-  nav,
-  .cta {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .mobile-menu.active {
-    display: flex;
-  }
 }
 
 /* site container */
@@ -213,11 +213,13 @@ nav a:hover::after {
   overflow: hidden;
   border-radius: 12px;
 }
+
 .slidx {
   height: 100%;
   display: flex;
   transition: transform 0.6s ease;
 }
+
 .zero {
   min-width: 100%;
   height: 100%;
@@ -225,6 +227,7 @@ nav a:hover::after {
   background-size: cover;
   background-position: center;
 }
+
 /* dark gradient overlay */
 .overlay {
   position: absolute;
@@ -236,6 +239,7 @@ nav a:hover::after {
   );
   pointer-events: none;
 }
+
 /* hero content centered */
 .x-ero-content {
   position: absolute;
@@ -248,16 +252,19 @@ nav a:hover::after {
   padding: 32px;
   text-align: center;
 }
+
 .x-ero h1 {
   font-size: clamp(28px, 5vw, 48px);
   letter-spacing: 4px;
   margin: 0 0 8px;
 }
+
 .x-ero .sub {
   opacity: 0.9;
   font-size: 1rem;
   margin-bottom: 18px;
 }
+
 .x-ero.meta {
   background: rgba(255, 255, 255, 0.08);
   padding: 10px 16px;
@@ -274,6 +281,7 @@ nav a:hover::after {
   gap: 12px;
   align-items: center;
 }
+
 .container {
   position: relative;
   justify-self: center;
@@ -282,39 +290,26 @@ nav a:hover::after {
   grid-template-columns: repeat(1, 1fr);
 }
 
-@media screen and (max-width: 767px) {
-  .container {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
-
 .Theme h1 {
-  /* Matching the Quest/Explore button font */
   font-family: "Oxanium", sans-serif;
-  font-size: 3.5rem; /* Large and impactful */
+  font-size: 3.5rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 4px;
   text-align: center;
   margin-bottom: 20px;
-
-  /* Applying the "Animedia" signature gradient */
   background: linear-gradient(135deg, #ffc371, #ff8a65);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  /* Subtle glow instead of the pink text-shadow */
   filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.3));
   position: relative;
 }
 
 .Theme h1 span {
-  /* Making the 'Media' part stand out with a glass/white look */
   -webkit-text-fill-color: white;
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
-/* Optional: Adding a decorative line underneath to match the 'button' style */
 .Theme h1::after {
   content: "";
   display: block;
@@ -324,27 +319,7 @@ nav a:hover::after {
   margin: 10px auto 0;
   border-radius: 2px;
 }
-/*.Theme h1 {
-  font-family: "M PLUS Rounded 1c", sans-serif;
-  font-size: 48px;
-  color: #ff69b4;
-  text-shadow: 3px 3px #ffe4e1;
-  margin-bottom: 10px;
-  position: relative;
-  text-align: center;
-}
 
-.Theme h1 span {
-  color: white;
-}
-
-/*h2 {
-  position: relative;
-  text-align: center;
-  color: #f3f4f6;
-  margin-bottom: 10px;
-  font-family: "M PLUS Rounded 1c", sans-serif;
-}*/
 h2 {
   font-size: 1.8rem;
   font-weight: 700;
@@ -355,12 +330,12 @@ h2 {
 }
 
 .rec {
-  text-align: center; /* centers inline/inline-block elements like <a> */
+  text-align: center;
   padding: 1rem;
 }
 
 .boxli {
-  display: inline-block; /* allows centering with text-align */
+  display: inline-block;
 }
 
 .boxli a {
@@ -407,7 +382,7 @@ h2 {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 2rem 4%;
+  padding: 1rem 2%;
 }
 
 /* ---------- Layout: Grid + Sidebar ---------- */
@@ -434,7 +409,6 @@ aside {
 
 .card {
   background: rgba(255, 255, 255, 0.08);
-  /*border-radius: 15px;*/
   border-bottom: 3px #ff8a65 solid;
   overflow: hidden;
   transition:
@@ -483,6 +457,7 @@ aside {
 .badges {
   display: flex;
   gap: 0.4rem;
+  flex-wrap: wrap;
 }
 
 .badge {
@@ -501,110 +476,11 @@ aside {
   background: linear-gradient(135deg, #ff8a65, #ffc371);
 }
 
-/* ---------- Responsive ---------- */
-/* ============ 1000px BREAKPOINT ============ */
-@media (max-width: 1000px) {
-  .content-wrapper {
-    display: flex;
-    flex-direction: column; /* stack vertically */
-    gap: 1.5rem;
-  }
-
-  aside {
-    order: -1; /* move sidebar above */
-    margin-bottom: 1.5rem;
-    width: 100%; /* ensure full width */
-  }
-  main {
-    width: 100%;
-  }
-}
-
-/* ============ 600px BREAKPOINT ============ */
-@media (max-width: 600px) {
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
-    gap: 1rem;
-  }
-
-  .poster img {
-    width: 100%;
-    height: 220px; /* fixed small height */
-    object-fit: cover; /* prevents stretching */
-    border-radius: 10px;
-  }
-}
-
-.tail {
-  background-color: #ffc371;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 25px;
-  max-width: 1800px;
-  margin: 0 auto; /* centers the content */
-  padding: 40px 20px;
-  color: #2c2c2c;
-  text-align: left;
-}
-
-.tail a {
-  color: #2c2c2c;
-  text-decoration: none;
-  font-weight: 700;
-  transition: color 0.3s ease;
-}
-
-.tail a:hover {
-  color: #ffffff;
-}
-
-@media (max-width: 1024px) {
-}
-
-@media (max-width: 768px) {
-  .tail {
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    padding: 20px;
-  }
-
-  .navi {
-    text-align: center;
-    transform: none;
-  }
-
-  .navi a {
-    font-size: 1em;
-    margin: 5px;
-  }
-}
-
-@media (max-width: 480px) {
-  .tail {
-    grid-template-columns: 1fr;
-    padding: 15px;
-    font-size: 14px;
-  }
-
-  .tail a {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 600px) {
-  .poster img {
-    height: 180px;
-  }
-  h1 {
-    font-size: 1.5rem;
-  }
-}
-
 .updown {
   width: 93%;
   margin: auto;
 }
+
 .Update {
   display: flex;
   justify-content: space-between;
@@ -623,10 +499,10 @@ aside {
 }
 
 .Update .logix span {
-  background: none !important; /* remove inherited background */
+  background: none !important;
   -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: #fff !important; /* force solid white text */
-  color: #fff !important; /* fallback for non-webkit */
+  -webkit-text-fill-color: #fff !important;
+  color: #fff !important;
 }
 
 .clock {
@@ -678,6 +554,10 @@ aside {
   padding-bottom: 1rem;
 }
 
+.week-days::-webkit-scrollbar {
+  display: none;
+}
+
 .day-card {
   min-width: 200px;
   background: var(--day-x);
@@ -706,22 +586,30 @@ aside {
   color: #ffffff;
 }
 
-/* Hide scrollbar */
-.week-days::-webkit-scrollbar {
-  display: none;
+.tail {
+  background-color: #ffc371;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 25px;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #2c2c2c;
+  text-align: left;
 }
 
-@media (max-width: 600px) {
-  .updown {
-    width: 83%;
-  }
-  .day-card {
-    min-width: 160px;
-  }
+.tail a {
+  color: #2c2c2c;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.tail a:hover {
+  color: #ffffff;
 }
 
 footer {
-  /*background-color: #2c2c2c;*/
   background-color: black;
   padding: 40px 20px;
   text-align: center;
@@ -736,10 +624,10 @@ footer {
 }
 
 .end span {
-  background: none !important; /* remove inherited background */
+  background: none !important;
   -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: #fff !important; /* force solid white text */
-  color: #fff !important; /* fallback for non-webkit */
+  -webkit-text-fill-color: #fff !important;
+  color: #fff !important;
 }
 
 footer hr {
@@ -755,10 +643,7 @@ footer hr {
   justify-content: center;
   gap: 20px;
   font-size: 0.95rem;
-  background: none !important; /* remove inherited background */
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: #ccc !important; /* force solid white text */
-  color: #ccc !important; /* fallback for non-webkit */
+  color: #ccc !important;
 }
 
 .footer-links p {
@@ -767,15 +652,205 @@ footer hr {
 
 .footer-links p:hover {
   cursor: pointer;
-  background: none !important; /* remove inherited background */
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: #fff !important; /* force solid white text */
-  color: #fff !important; /* fallback for non-webkit */
+  color: #fff !important;
 }
 
+/* ============ RESPONSIVE BREAKPOINTS ============ */
+
+/* Tablet and below */
+@media (max-width: 1000px) {
+  .content-wrapper {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  aside {
+    order: -1;
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+
+  main {
+    width: 100%;
+  }
+
+  .navi a {
+    transform: translateX(0);
+    margin: 5px;
+  }
+}
+
+/* Mobile landscape and small tablets */
+@media (max-width: 768px) {
+  nav,
+  .cta {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .tail {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .navi {
+    text-align: center;
+  }
+
+  .navi a {
+    font-size: 1em;
+    margin: 5px;
+    transform: none;
+  }
+
+  .Theme h1 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Mobile portrait */
 @media (max-width: 600px) {
+  .xeno {
+    padding: 1rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 0 0.5rem;
+  }
+
+  .card {
+    border-bottom-width: 2px;
+  }
+
+  .poster img {
+    height: 180px;
+  }
+
+  .info {
+    padding: 0.7rem 0.7rem 1rem;
+  }
+
+  .title {
+    font-size: 0.9rem;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    margin-bottom: 0.3rem;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .badges {
+    gap: 0.25rem;
+    margin-top: 0.2rem;
+  }
+
+  .badge {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    border-radius: 4px;
+  }
+
+  .updown {
+    width: 83%;
+  }
+
+  .day-card {
+    min-width: 160px;
+  }
+
+  .Theme h1 {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+
+  .Theme h1::after {
+    width: 60px;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
   .footer-links {
     flex-direction: column;
     align-items: center;
+  }
+
+  .scroll-buttons {
+    display: none; /* Hide scroll buttons on mobile, use native scroll */
+  }
+
+  .card:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .tail {
+    grid-template-columns: 1fr;
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  .tail a {
+    font-size: 14px;
+  }
+
+  .Update {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .clock {
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+/* Extra small mobile */
+@media (max-width: 380px) {
+  .grid {
+    gap: 0.5rem;
+  }
+
+  .poster img {
+    height: 160px;
+  }
+
+  .title {
+    font-size: 0.8rem;
+  }
+
+  .Theme h1 {
+    font-size: 1.5rem;
   }
 }
