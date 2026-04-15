@@ -401,10 +401,97 @@ aside {
 }
 
 /* ---------- Anime Grid ---------- */
-.grid {
+.anime-header-container {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  position: relative;
+  /*max-width: 800px;*/
+}
+
+/* The Main Bar */
+.anime-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 15px 40px;
+  background: var(--bg-glass);
+  /* Creates the angled ends without messy skewing */
+  /* clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+    border-left: 5px solid #ff8a65;*/
+  transition: var(--transition);
+}
+
+/*.anime-bar:hover {
+  background: rgba(255, 138, 101, 0.12);
+  transform: translateX(10px);
+}*/
+
+/* Text Styling */
+.anime-title {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #fff !important;
+  color: #fff !important;
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.05);
+}
+
+/* View All Link */
+.view-all-btn {
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #fff !important;
+  color: #fff !important;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+/*.view-all-btn::after {
+  content: "→";
+  font-size: 18px;
+  transition: var(--transition);
+}
+
+.view-all-btn:hover {
+  letter-spacing: 2px;
+}
+
+.view-all-btn:hover::after {
+  transform: translateX(5px);
+}
+
+/* Decorative accent line behind the bar *
+.anime-header-container::before {
+  content: "";
+  position: absolute;
+  left: -15px;
+  height: 100%;
+  width: 2px;
+  background: #ff8a65;
+  opacity: 0.4;
+}
+*/
+.gridx {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1.5rem;
+  padding: 20px;
 }
 
 .card {
@@ -560,7 +647,9 @@ aside {
 
 .day-card {
   min-width: 200px;
-  background: var(--day-x);
+  background: var(--color-background-primary);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 1rem;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -610,7 +699,8 @@ aside {
 }
 
 footer {
-  background-color: black;
+  background: rgba(255, 255, 255, 0.08);
+
   padding: 40px 20px;
   text-align: center;
 }
@@ -632,7 +722,7 @@ footer {
 
 footer hr {
   border: none;
-  border-top: 1px solid #555;
+  border-top: 1px solid #ffffff;
   margin: 10px auto 20px;
   width: 80%;
 }
@@ -643,6 +733,9 @@ footer hr {
   justify-content: center;
   gap: 20px;
   font-size: 0.95rem;
+  background: none !important; /* remove inherited background */
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #ffffff !important; /* force solid white text */
   color: #ccc !important;
 }
 
@@ -722,7 +815,7 @@ footer hr {
     font-size: 1.5rem;
   }
 
-  .grid {
+  .gridx {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
     padding: 0 0.5rem;
@@ -838,7 +931,7 @@ footer hr {
 
 /* Extra small mobile */
 @media (max-width: 380px) {
-  .grid {
+  .gridx {
     gap: 0.5rem;
   }
 
