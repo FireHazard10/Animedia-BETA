@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AniMedia | Real-Time Library</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+      :root {
+        --primary: #ff8a65;
+        --primary-light: #ffc371;
+        --secondary: #6366f1;
+        --accent: #f43f5e;
+        --bg-dark: #0f172a;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --card-bg: rgba(255, 255, 255, 0.03);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* This is the "magic" that makes it act like 'center/cover' */
+        z-index: -1; /* Pushes it behind your text */
+      }
+
+      /* Background Layer */
+      .bg-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .bg-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.2) saturate(1.2) blur(20px);
+        transform: scale(1.1);
+      }
+
+      .bg-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          var(--bg-dark) 100%
+        );
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      header {
+        position: relative;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+        overflow: hidden;
+      }
+
+      .xeno {
+        margin: 0 auto;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 800;
+
+        text-decoration: none;
+        color: #fff;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo span {
+        background: linear-gradient(
+          to right,
+          var(--primary),
+          var(--primary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      nav {
+        display: flex;
+        gap: 1.5rem;
+        font-weight: 600;
+      }
+
+      nav a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        left: 0;
+        bottom: -4px;
+        background: #ff8a65;
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover {
+        color: #ff8a65;
+      }
+
+      nav a:hover::after {
+        width: 100%;
+      }
+
+      .cta {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.3s;
+      }
+
+      .cta:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(255, 138, 101, 0.4);
+      }
+
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      .mobile-menu.active {
+        display: flex;
+      }
+
+      .mobile-menu a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        padding: 0.5rem 0;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 5rem 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-dark);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--glass-border);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary);
+      }
+
+      /*Mal btn*/
+      .back-btn {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        color: #fff;
+        padding: 0.6rem 1.2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .back-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--primary);
+        transform: translateX(-5px);
+      }
+
+      /* Main Content */
+      main {
+        padding: 60px 2.5% 60px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .anime-hero {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 3rem;
+        margin-bottom: 4rem;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .anime-poster {
+        width: 100%;
+        aspect-ratio: 2/3;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      }
+
+      .anime-poster img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .anime-info h1 {
+        font-family: "Outfit", sans-serif;
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        line-height: 1.1;
+      }
+
+      .meta-tags {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .meta-tag {
+        padding: 0.4rem 1rem;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--primary-light);
+      }
+
+      .synopsis {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+      }
+
+      .action-btns {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .btn-watch {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        color: #fff;
+        padding: 1rem 2.5rem;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 10px 25px rgba(255, 138, 101, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .btn-watch:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(255, 138, 101, 0.4);
+      }
+
+      /* Tabs Section */
+      .tabs-container {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .tabs-header {
+        display: flex;
+        gap: 2rem;
+        border-bottom: 1px solid var(--glass-border);
+        margin-bottom: 2rem;
+      }
+
+      .tab-btn {
+        padding: 1rem 0.5rem;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        position: relative;
+        transition: color 0.3s ease;
+      }
+
+      .tab-btn.active {
+        color: var(--primary);
+      }
+      .tab-btn.active::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--primary);
+      }
+
+      .tab-pane {
+        display: none;
+      }
+      .tab-pane.active {
+        display: block;
+      }
+
+      /* Seasons & Episodes Grid */
+      .items-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .item-card {
+        background: var(--card-bg);
+        border: 1px solid var(--glass-border);
+        padding: 1.2rem;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .item-card:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .item-icon {
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 138, 101, 0.1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 1.2rem;
+      }
+
+      .item-info h4 {
+        font-size: 0.95rem;
+        margin-bottom: 0.2rem;
+      }
+      .item-info p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      /* Loading Spinner */
+      .loader {
+        text-align: center;
+        padding: 4rem;
+        color: var(--primary);
+        font-size: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .anime-hero {
+          grid-template-columns: 1fr;
+        }
+        .anime-poster {
+          max-width: 250px;
+          margin: 0 auto;
+        }
+        .anime-info h1 {
+          font-size: 2rem;
+          text-align: center;
+        }
+        .meta-tags {
+          justify-content: center;
+        }
+        .synopsis {
+          text-align: center;
+          font-size: 1rem;
+        }
+        .action-btns {
+          justify-content: center;
+        }
+      }
+
+      footer {
+        background: rgba(255, 255, 255, 0.08);
+
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .end {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .end span {
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: #fff !important;
+        color: #fff !important;
+      }
+
+      footer hr {
+        border: none;
+        border-top: 1px solid #ffffff;
+        margin: 10px auto 20px;
+        width: 80%;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        font-size: 0.95rem;
+        background: none !important; /* remove inherited background */
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: #ffffff !important; /* force solid white text */
+        color: #ccc !important;
+      }
+
+      .footer-links p {
+        margin: 5px 0;
+      }
+
+      .footer-links p:hover {
+        cursor: pointer;
+        color: #fff !important;
+      }
+
+      @media (max-width: 768px) {
+        nav,
+        .cta {
+          display: none;
+        }
+
+        .hamburger {
+          display: block;
+        }
+
+        .grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+          gap: 1rem;
+        }
+        .alpha-nav {
+          gap: 0.3rem;
+        }
+        .alpha-btn {
+          padding: 0.4rem 0.6rem;
+          font-size: 0.75rem;
+          min-width: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="xeno">
+        <div class="logo">Ani<span>Media</span></div>
+
+        <nav>
+          <a href="#">Home</a>
+          <a href="page-1-beta.html">Series</a>
+          <a href="A1-explore.html">Movies</a>
+          <a href="Ai-mordern-cte01.html">Genres</a>
+        </nav>
+
+        <a href="Aimiddle-page.html" class="cta">Join Now</a>
+
+        <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="#">Home</a>
+        <a href="page-1-beta.html">Series</a>
+        <a href="A1-explore.html">Movies</a>
+        <a href="Ai-mordern-cte01.html">Genres</a>
+        <a href="#" class="cta" style="width: fit-content">Join Now</a>
+      </div>
+    </header>
+
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="❤️X/horizon-sky-tree-moewalls-com.mp4" type="video/mp4" />
+    </video>
+
+    <div class="bg-container">
+      <img
+        id="bgImage"
+        src="assets/hero_bg.jpg"
+        alt="Background"
+        class="bg-image"
+      />
+      <div class="bg-overlay"></div>
+    </div>
+
+    <main id="detailsContent">
+      <div class="loader"><i class="fas fa-circle-notch fa-spin"></i></div>
+    </main>
+
+    <footer>
+      <div class="end">
+        Ani<span>Media</span>
+        <hr />
+        <div class="footer-links">
+          <p>All rights reserved</p>
+          <p>animedia@gmail.com</p>
+          <p>Terms and Conditions</p>
+          <p>Registered 2025</p>
+          <p>&copy; AniMedia</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="Ai.js"></script>
+
+    <script>
+      const API_BASE = "https://api.jikan.moe/v4";
+      const urlParams = new URLSearchParams(window.location.search);
+      const animeId = urlParams.get("id");
+
+      if (!animeId) window.location.href = "page-1-beta.html";
+
+      async function fetchDetails() {
+        try {
+          const [animeRes, episodesRes, relationsRes] = await Promise.all([
+            fetch(`${API_BASE}/anime/${animeId}/full`),
+            fetch(`${API_BASE}/anime/${animeId}/episodes`),
+            fetch(`${API_BASE}/anime/${animeId}/relations`),
+          ]);
+
+          const animeData = await animeRes.json();
+          const episodesData = await episodesRes.json();
+          const relationsData = await relationsRes.json();
+
+          renderDetails(animeData.data, episodesData.data, relationsData.data);
+        } catch (error) {
+          console.error("Error:", error);
+          document.getElementById("detailsContent").innerHTML =
+            '<div class="loader">Failed to load details.</div>';
+        }
+      }
+
+      function renderDetails(anime, episodes, relations) {
+        const container = document.getElementById("detailsContent");
+        document.getElementById("bgImage").src =
+          anime.images.webp.large_image_url;
+
+        // Filter relations for "Sequel" or "Prequel" to show seasons
+        const seasons = relations.flatMap((rel) =>
+          rel.entry.map((e) => ({ ...e, relation: rel.relation })),
+        );
+
+        container.innerHTML = `
+                <div class="anime-hero">
+                    <div class="anime-poster">
+                        <img src="${anime.images.webp.large_image_url}" alt="${anime.title}">
+                    </div>
+                    <div class="anime-info">
+                        <h1>${anime.title}</h1>
+                        <div class="meta-tags">
+                            <div class="meta-tag"><i class="fas fa-star"></i> ${anime.score || "N/A"}</div>
+                            <div class="meta-tag">${anime.type}</div>
+                            <div class="meta-tag">${anime.status}</div>
+                            <div class="meta-tag">${anime.episodes || "?"} Episodes</div>
+                            <div class="meta-tag">${anime.rating || "N/A"}</div>
+                        </div>
+                        <p class="synopsis">${anime.synopsis || "No description available."}</p>
+                        <div class="action-btns">
+                            <a href="#" class="btn-watch" onclick="getVideoFile(${anime.mal_id})">
+                                <i class="fas fa-play"></i> Get Video File
+                            </a>
+                            <a href="${anime.url}" target="_blank" class="back-btn">
+                                <i class="fas fa-external-link-alt"></i> MAL Page
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="switchTab('episodes')">Episodes</button>
+                        <button class="tab-btn" onclick="switchTab('related')">Related Seasons</button>
+                    </div>
+                    
+                    <div id="episodes" class="tab-pane active">
+                        <div class="items-grid">
+                            ${
+                              episodes.length > 0
+                                ? episodes
+                                    .map(
+                                      (ep) => `
+                                <div class="item-card">
+                                    <div class="item-icon"><i class="fas fa-play"></i></div>
+                                    <div class="item-info">
+                                        <h4>Episode ${ep.mal_id}</h4>
+                                        <p>${ep.title || "No Title"}</p>
+                                    </div>
+                                </div>
+                            `,
+                                    )
+                                    .join("")
+                                : "<p>No episodes found.</p>"
+                            }
+                        </div>
+                    </div>
+
+                    <div id="related" class="tab-pane">
+                        <div class="items-grid">
+                            ${
+                              seasons.length > 0
+                                ? seasons
+                                    .map(
+                                      (rel) => `
+                                <div class="item-card" onclick="window.location.href='ai-desc-beta.html?id=${rel.mal_id}'">
+                                    <div class="item-icon"><i class="fas fa-layer-group"></i></div>
+                                    <div class="item-info">
+                                        <h4>${rel.name}</h4>
+                                        <p>${rel.relation}</p>
+                                    </div>
+                                </div>
+                            `,
+                                    )
+                                    .join("")
+                                : "<p>No related content found.</p>"
+                            }
+                        </div>
+                    </div>
+                </div>
+            `;
+
+        gsap.to(".anime-hero", { opacity: 1, y: 0, duration: 1 });
+        gsap.to(".tabs-container", {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          delay: 0.3,
+        });
+      }
+
+      function switchTab(tabId) {
+        document
+          .querySelectorAll(".tab-pane")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById(tabId).classList.add("active");
+        event.target.classList.add("active");
+      }
+
+      async function getVideoFile(id) {
+        alert("Fetching video format from API...");
+        try {
+          const res = await fetch(`${API_BASE}/anime/${id}/videos`);
+          const data = await res.json();
+          if (data.data && data.data.promo && data.data.promo.length > 0) {
+            window.open(data.data.promo[0].video.url, "_blank");
+          } else {
+            alert("No direct video file found for this entry in the open API.");
+          }
+        } catch (e) {
+          alert("Error retrieving video data.");
+        }
+      }
+
+      window.onload = fetchDetails;
+    </script>
+  </body>
+</html>
