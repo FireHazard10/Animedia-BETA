@@ -3,20 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ANIMEDIA - CATEGORIES</title>
+    <title>AniMedia | Real-Time Library</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Font Awesome for Icons -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/alpinejs" defer></script>
-    <link rel="stylesheet" href="pages.css" />
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
+      :root {
+        --primary: #ff8a65;
+        --primary-light: #ffc371;
+        --secondary: #6366f1;
+        --accent: #f43f5e;
+        --bg-dark: #0f172a;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --card-bg: rgba(255, 255, 255, 0.03);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       #bg-video {
         position: fixed;
         top: 0;
@@ -28,18 +50,156 @@
       }
 
       body {
-        margin: 0;
-        font-family: "Oxanium", sans-serif;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        overflow-x: hidden;
+        min-height: 100vh;
       }
 
-      /* --- Global and Body Styling (The "Player" Theme) --- *
-      body {
-        background-color: #121212; /* Deep, immersive dark background *
-        color: #e0e0e0; /* Light text for contrast */
-      /*font-family: "Poppins", sans-serif;*
-        line-height: 1.6;
-        padding-top: 0px; /* Add some space above the first element *
-      }*/
+      header {
+        position: relative;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+        overflow: hidden;
+      }
+
+      .xeno {
+        margin: 0 auto;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 800;
+
+        text-decoration: none;
+        color: #fff;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo span {
+        background: linear-gradient(
+          to right,
+          var(--primary),
+          var(--primary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      nav {
+        display: flex;
+        gap: 1.5rem;
+        font-weight: 600;
+      }
+
+      nav a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        left: 0;
+        bottom: -4px;
+        background: #ff8a65;
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover {
+        color: #ff8a65;
+      }
+
+      nav a:hover::after {
+        width: 100%;
+      }
+
+      .cta {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.3s;
+      }
+
+      .cta:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(255, 138, 101, 0.4);
+      }
+
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      .mobile-menu.active {
+        display: flex;
+      }
+
+      .mobile-menu a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        padding: 0.5rem 0;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 5rem 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-dark);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--glass-border);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary);
+      }
+
+      /* Main Content - No Header as requested */
+      main {
+        /* padding: 5px 0.625% 7.5px;*/
+        max-width: 1400px;
+        margin: 0 auto;
+      }
 
       /* Base card styling for modern aesthetics */
       .community-panel {
@@ -85,6 +245,10 @@
         font-size: 1.1rem;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
+      }
+
+      .panel-icons button a {
+        color: #e0e0e0;
       }
 
       /* Hover effect using the accent color */
@@ -181,16 +345,107 @@
         z-index: 2;
       }
 
-      /* --- Media Queries for Responsiveness --- */
-      @media (max-width: 900px) {
-        .cate {
-          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-          gap: 15px;
-          padding: 20px;
-        }
+      /* Alphabetical Navigation */
+      .alpha-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 4rem auto 1.5rem;
+        max-width: 1000px;
+        opacity: 0;
+        transform: translateY(20px);
       }
 
-      @media (max-width: 600px) {
+      .alpha-btn {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        color: var(--text-muted);
+        padding: 0.5rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 35px;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .alpha-btn:hover,
+      .alpha-btn.active {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 138, 101, 0.3);
+      }
+
+      footer {
+        background: rgba(255, 255, 255, 0.08);
+
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .end {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .end span {
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: #fff !important;
+        color: #fff !important;
+      }
+
+      footer hr {
+        border: none;
+        border-top: 1px solid #ffffff;
+        margin: 10px auto 20px;
+        width: 80%;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        font-size: 0.95rem;
+        background: none !important; /* remove inherited background */
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: #ffffff !important; /* force solid white text */
+        color: #ccc !important;
+      }
+
+      .footer-links p {
+        margin: 5px 0;
+      }
+
+      .footer-links p:hover {
+        cursor: pointer;
+        color: #fff !important;
+      }
+
+      @media (max-width: 768px) {
+        nav,
+        .cta {
+          display: none;
+        }
+
+        .hamburger {
+          display: block;
+        }
+
+        .grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+          gap: 1rem;
+        }
+
         .cate {
           grid-template-columns: repeat(
             2,
@@ -207,265 +462,297 @@
         .panel-header h3 {
           margin-bottom: 0.5rem;
         }
+
+        .alpha-nav {
+          gap: 0.3rem;
+        }
+        .alpha-btn {
+          padding: 0.4rem 0.6rem;
+          font-size: 0.75rem;
+          min-width: 30px;
+        }
       }
     </style>
   </head>
   <body>
-    <div id="header"></div>
+    <header>
+      <div class="bg-image"></div>
+      <div class="xeno">
+        <div class="logo">Ani<span>Media</span></div>
+
+        <nav>
+          <a href="#">Home</a>
+          <a href="page-1.html">Series</a>
+          <a href="A1-explore.html">Movies</a>
+          <a href="Ai-mordern-cte01.html">Genres</a>
+        </nav>
+
+        <a href="Aimiddle-page.html" class="cta">Join Now</a>
+
+        <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="#">Home</a>
+        <a href="page-1.html">Series</a>
+        <a href="A1-explore.html">Movies</a>
+        <a href="Ai-mordern-cte01.html">Genres</a>
+        <a href="#" class="cta" style="width: fit-content">Join Now</a>
+      </div>
+    </header>
 
     <video autoplay muted loop playsinline id="bg-video">
-      <source
-        src="❤️X/torii-gate-sakura-blood-moonlight-moewalls-com.mp4"
-        type="video/mp4"
-      />
+      <source src="❤️X/horizon-sky-tree-moewalls-com.mp4" type="video/mp4" />
     </video>
 
-    <div class="community-panel">
-      <div class="panel-header">
-        <h3>Discuss with the Community</h3>
-        <div class="panel-icons">
-          <button>
-            <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
-          </button>
-          <button>
-            <a href="#" title="Twitch"><i class="fab fa-twitch"></i></a>
-          </button>
-          <button>
-            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-          </button>
-          <button>
-            <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
-          </button>
-          <button>
-            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-          </button>
+    <main>
+      <div class="community-panel">
+        <div class="panel-header">
+          <h3>Discuss with the Community</h3>
+          <div class="panel-icons">
+            <button>
+              <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
+            </button>
+            <button>
+              <a href="#" title="Twitch"><i class="fab fa-twitch"></i></a>
+            </button>
+            <button>
+              <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            </button>
+            <button>
+              <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+            </button>
+            <button>
+              <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+            </button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p>
+            Join ongoing discussions, share your thoughts about the latest movie
+            releases, or post your favorite film moments. Connect with fellow
+            movie lovers in real time!
+          </p>
         </div>
       </div>
-      <div class="panel-body">
-        <p>
-          Join ongoing discussions, share your thoughts about the latest movie
-          releases, or post your favorite film moments. Connect with fellow
-          movie lovers in real time!
-        </p>
-      </div>
-    </div>
 
-    <div class="cate">
-      <div class="lint">
-        <img
-          src="Pictures01/06d44be9-fab1-4954-b4db-e7204a22bc86.jpeg"
-          alt="Drama category image"
-        />
-        <h3>Drama</h3>
+      <div class="cate">
+        <div class="lint">
+          <img
+            src="Pictures01/06d44be9-fab1-4954-b4db-e7204a22bc86.jpeg"
+            alt="Drama category image"
+          />
+          <h3>Drama</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg"
+            alt="Action category image"
+          />
+          <h3>Action</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg"
+            alt="Slice of life category image"
+          />
+          <h3>Slice of life</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg"
+            alt="Shonen category image"
+          />
+          <h3>Shonen</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/39f2cb49-629d-481e-9cb7-b7a3d45ff778.jpeg"
+            alt="Isekai category image"
+          />
+          <h3>Isekai</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg"
+            alt="Horror category image"
+          />
+          <h3>Horror</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/63506633-9c3e-47ca-849c-be6e590edf5c.jpeg"
+            alt="Thriller category image"
+          />
+          <h3>Thriller</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg"
+            alt="Camping category image"
+          />
+          <h3>Camping</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg"
+            alt="Fantasy category image"
+          />
+          <h3>Fantasy</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg"
+            alt="Gaming category image"
+          />
+          <h3>Gaming</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/Anime wallpaper.jpeg"
+            alt="Mystery category image"
+          />
+          <h3>Mystery</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/b48a9268-37b2-4bf9-9947-0352fc3d938a.jpeg"
+            alt="Romance category image"
+          />
+          <h3>Romance</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/b48a9268-37b2-4bf9-9947-0352fc3d938a.jpeg"
+            alt="Tragic Tales category image"
+          />
+          <h3>Tragic Tales</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg"
+            alt="Manhwa category image"
+          />
+          <h3>Manhwa</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg"
+            alt="Chinese category image"
+          />
+          <h3>Chinese</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/d8d3bb68-eb55-4c68-bb3d-788a8dc62733.jpeg"
+            alt="Sci-fi category image"
+          />
+          <h3>Sci-fi</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/DESIGN WALLPAPER ANIME _3.jpeg"
+            alt="Apocalypse category image"
+          />
+          <h3>Apocalypse</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/e8fda043-12a9-415e-a896-ab117261be90.jpeg"
+            alt="Alien category image"
+          />
+          <h3>Alien</h3>
+        </div>
+
+        <div class="lint">
+          <img
+            src="Pictures01/f4aad09b-3e87-40a8-af37-04e78042f8ff.jpeg"
+            alt="Millitary category image"
+          />
+          <h3>Millitary</h3>
+        </div>
+
+        <div class="lint">
+          <img src="Pictures01/img1.jpg" alt="Comedy category image" />
+          <h3>Comedy</h3>
+        </div>
+
+        <div class="lint">
+          <img src="Pictures01/img10.jpg" alt="Music category image" />
+          <h3>Music</h3>
+        </div>
+
+        <div class="lint">
+          <img src="Pictures01/img11.jpg" alt="War category image" />
+          <h3>War</h3>
+        </div>
+
+        <div class="lint">
+          <img src="Pictures01/img12.jpg" alt="Historical category image" />
+          <h3>Historical</h3>
+        </div>
+
+        <div class="lint">
+          <img src="Pictures01/img13.jpg" alt="Magic category image" />
+          <h3>Magic</h3>
+        </div>
+
+        <div class="lint">
+          <img src="Pictures01/img15.jpg" alt="Dance category image" />
+          <h3>Dance</h3>
+        </div>
+
+        <div class="lint">
+          <img src="Pictures01/img14.jpg" alt="Superhero category image" />
+          <h3>Superhero</h3>
+        </div>
+
+        <div class="lint">
+          <img src="Pictures01/img16.jpg" alt="3D category image" />
+          <h3>3D</h3>
+        </div>
+        <div class="lint">
+          <img src="Pictures01/img17.jpg" alt="Martil Art category image" />
+          <h3>Martial Art</h3>
+        </div>
       </div>
 
-      <div class="lint">
-        <img
-          src="Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg"
-          alt="Action category image"
-        />
-        <h3>Action</h3>
+      <div class="alpha-nav" id="alphaNav">
+        <!-- Alphabet buttons will be injected here -->
       </div>
+    </main>
 
-      <div class="lint">
-        <img
-          src="Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg"
-          alt="Slice of life category image"
-        />
-        <h3>Slice of life</h3>
+    <footer>
+      <div class="end">
+        Ani<span>Media</span>
+        <hr />
+        <div class="footer-links">
+          <p>All rights reserved</p>
+          <p>animedia@gmail.com</p>
+          <p>Terms and Conditions</p>
+          <p>Registered 2025</p>
+          <p>&copy; AniMedia</p>
+        </div>
       </div>
+    </footer>
 
-      <div class="lint">
-        <img
-          src="Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg"
-          alt="Shonen category image"
-        />
-        <h3>Shonen</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/39f2cb49-629d-481e-9cb7-b7a3d45ff778.jpeg"
-          alt="Isekai category image"
-        />
-        <h3>Isekai</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg"
-          alt="Horror category image"
-        />
-        <h3>Horror</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/63506633-9c3e-47ca-849c-be6e590edf5c.jpeg"
-          alt="Thriller category image"
-        />
-        <h3>Thriller</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg"
-          alt="Camping category image"
-        />
-        <h3>Camping</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg"
-          alt="Fantasy category image"
-        />
-        <h3>Fantasy</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg"
-          alt="Gaming category image"
-        />
-        <h3>Gaming</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/Anime wallpaper.jpeg"
-          alt="Mystery category image"
-        />
-        <h3>Mystery</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/b48a9268-37b2-4bf9-9947-0352fc3d938a.jpeg"
-          alt="Romance category image"
-        />
-        <h3>Romance</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/b48a9268-37b2-4bf9-9947-0352fc3d938a.jpeg"
-          alt="Tragic Tales category image"
-        />
-        <h3>Tragic Tales</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg"
-          alt="Manhwa category image"
-        />
-        <h3>Manhwa</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg"
-          alt="Chinese category image"
-        />
-        <h3>Chinese</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/d8d3bb68-eb55-4c68-bb3d-788a8dc62733.jpeg"
-          alt="Sci-fi category image"
-        />
-        <h3>Sci-fi</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/DESIGN WALLPAPER ANIME _3.jpeg"
-          alt="Apocalypse category image"
-        />
-        <h3>Apocalypse</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/e8fda043-12a9-415e-a896-ab117261be90.jpeg"
-          alt="Alien category image"
-        />
-        <h3>Alien</h3>
-      </div>
-
-      <div class="lint">
-        <img
-          src="Pictures01/f4aad09b-3e87-40a8-af37-04e78042f8ff.jpeg"
-          alt="Millitary category image"
-        />
-        <h3>Millitary</h3>
-      </div>
-
-      <div class="lint">
-        <img src="Pictures01/img1.jpg" alt="Comedy category image" />
-        <h3>Comedy</h3>
-      </div>
-
-      <div class="lint">
-        <img src="Pictures01/img10.jpg" alt="Music category image" />
-        <h3>Music</h3>
-      </div>
-
-      <div class="lint">
-        <img src="Pictures01/img11.jpg" alt="War category image" />
-        <h3>War</h3>
-      </div>
-
-      <div class="lint">
-        <img src="Pictures01/img12.jpg" alt="Historical category image" />
-        <h3>Historical</h3>
-      </div>
-
-      <div class="lint">
-        <img src="Pictures01/img13.jpg" alt="Magic category image" />
-        <h3>Magic</h3>
-      </div>
-
-      <div class="lint">
-        <img src="Pictures01/img15.jpg" alt="Dance category image" />
-        <h3>Dance</h3>
-      </div>
-
-      <div class="lint">
-        <img src="Pictures01/img14.jpg" alt="Superhero category image" />
-        <h3>Superhero</h3>
-      </div>
-
-      <div class="lint">
-        <img src="Pictures01/img16.jpg" alt="3D category image" />
-        <h3>3D</h3>
-      </div>
-      <div class="lint">
-        <img src="Pictures01/img17.jpg" alt="Martil Art category image" />
-        <h3>Martial Art</h3>
-      </div>
-    </div>
-    <br />
-    <div id="rec"></div>
-    <div id="footer"></div>
+    <script src="Ai.js"></script>
   </body>
-  <script src="easypages.js"></script>
-
-  <script>
-    /* Cleaned up and simplified JS functions */
-    function toggleMenu() {
-      const menu = document.getElementById("mobileMenu");
-      menu.classList.toggle("active");
-    }
-    // Added a simple placeholder for interaction since links are currently '#'
-    document.querySelectorAll(".lint").forEach((card) => {
-      card.addEventListener("click", () => {
-        const categoryName = card.querySelector("h3").textContent;
-        console.log(`Navigating to category: ${categoryName}`);
-        // In a real application, you would change window.location.href here
-      });
-    });
-  </script>
 </html>
