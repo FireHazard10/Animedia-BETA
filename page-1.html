@@ -1,391 +1,856 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/alpinejs" defer></script>
-   
-   <link rel="stylesheet" href="pages.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AniMedia | Real-Time Library</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+      :root {
+        --primary: #ff8a65;
+        --primary-light: #ffc371;
+        --secondary: #6366f1;
+        --accent: #f43f5e;
+        --bg-dark: #0f172a;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --card-bg: rgba(255, 255, 255, 0.03);
+      }
 
-</head>
-<body>
-      <div id="header"></div>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-      <div id="followlong"></div>
-<main>
-    <section class="grid">
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/06d44be9-fab1-4954-b4db-e7204a22bc86.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">
-            Example Title: The Long Series Name - Sx - xx...
-          </div>
-          <div class="subtitle">
-            <span>EP: 1 / 24</span><span>Year: 20xx</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge">DUB</div>
-          </div>
-        </div>
-      </article>
+      #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* This is the "magic" that makes it act like 'center/cover' */
+        z-index: -1; /* Pushes it behind your text */
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/2ed8c165-2445-4ad2-8d52-857c851e42c0.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/31ccff0a-3c35-4a77-8f6e-581c9d349a91.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      header {
+        position: relative;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+        overflow: hidden;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/37f58d91-3a7b-4df0-9f73-a3237c29b7b3.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      .xeno {
+        margin: 0 auto;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/39f2cb49-629d-481e-9cb7-b7a3d45ff778.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      .logo {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 800;
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/59818a1b-626a-466e-9937-3ade1141a517.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+        text-decoration: none;
+        color: #fff;
+        display: flex;
+        align-items: center;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/63506633-9c3e-47ca-849c-be6e590edf5c.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      .logo span {
+        background: linear-gradient(
+          to right,
+          var(--primary),
+          var(--primary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/6a7b916c-c434-467b-a1a7-9f67e5ff05f5.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      nav {
+        display: flex;
+        gap: 1.5rem;
+        font-weight: 600;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/9ad3b05f-0fca-4a10-9392-67eb7a979e67.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      nav a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        position: relative;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/a8c68b34-2d2e-44fd-8c91-28d973b35d89.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      nav a::after {
+        content: "";
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        left: 0;
+        bottom: -4px;
+        background: #ff8a65;
+        transition: width 0.3s ease;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img src="Pictures01/Anime wallpaper.jpeg" alt="poster" />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      nav a:hover {
+        color: #ff8a65;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/b48a9268-37b2-4bf9-9947-0352fc3d938a.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      nav a:hover::after {
+        width: 100%;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/bac6b359-e4aa-4d95-ba03-161f6cbecca9.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      .cta {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.3s;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/c4de5292-1d44-49bc-a730-e7bf52c0d9ec.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      .cta:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(255, 138, 101, 0.4);
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img
-            src="Pictures01/d8d3bb68-eb55-4c68-bb3d-788a8dc62733.jpeg"
-            alt="poster"
-          />
-        </div>
-        <div class="info">
-          <div class="title">Another Anime Example Title</div>
-          <div class="subtitle">
-            <span>EP: 8 / 12</span><span>Year: 2025</span>
-          </div>
-          <div class="badges">
-            <div class="badge actixe">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
 
-      <article class="card">
-        <div class="poster">
-          <img src="Pictures01/DESIGN WALLPAPER ANIME _3.jpeg" alt="poster" />
-        </div>
-        <div class="info">
-          <div class="title">Fantasy Adventure</div>
-          <div class="subtitle">
-            <span>EP: 3 / 10</span><span>Year: 2023</span>
-          </div>
-          <div class="badges">
-            <div class="badge">SUB</div>
-            <div class="badge actixe">DUB</div>
-          </div>
-        </div>
-      </article>
-    </section>
-</main>
-          
-        
-        <div class="bottom-nav">
-            <button class="nav-button" id="previousBtn" disabled>Prev</button>
-            <span id="pageNumber">1</span>
-            <button class="nav-button" id="nexteraBtn">Next</button>
-        </div>
-    </section>
-    <br><div id="rec"></div>
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        background: rgba(0, 0, 0, 0.2);
+      }
 
-   <footer>
-      <div class="end">Ani<span>Media</span>
-      <hr />
-      <div class="footer-links">
-        <p>All rights reserved</p>
-        <p>animedia@gmail.com</p>
-        <p>Terms and Conditions</p>
-        <p>Registered 2025</p>
-        <p>&copy; AniMedia</p>
+      .mobile-menu.active {
+        display: flex;
+      }
+
+      .mobile-menu a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        padding: 0.5rem 0;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 5rem 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-dark);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--glass-border);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary);
+      }
+
+      /* Background Layer */
+      .bg-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .bg-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.2) saturate(1.2) blur(10px);
+        transform: scale(1.1);
+      }
+
+      .bg-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at center,
+          transparent 0%,
+          var(--bg-dark) 100%
+        );
+      }
+
+      /* Main Content - No Header as requested */
+      main {
+        padding: 20px 2.5% 30px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .page-header {
+        margin-bottom: 2.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .page-header h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        background: linear-gradient(to right, #fff, var(--text-muted));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .search-box {
+        position: relative;
+        width: 300px;
+      }
+
+      .search-box input {
+        width: 100%;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        padding: 0.8rem 1rem 0.8rem 2.5rem;
+        border-radius: 12px;
+        color: #fff;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .search-box input:focus {
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 15px rgba(255, 138, 101, 0.1);
+      }
+
+      .search-box i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+      }
+
+      /* Grid Layout */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fill,
+          minmax(180px, 1fr)
+        ); /* Smaller cards as requested */
+        gap: 1.5rem;
+      }
+
+      /* Card Design - Smaller Tier Grade */
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .poster {
+        position: relative;
+        aspect-ratio: 2/3;
+        overflow: hidden;
+      }
+
+      .poster img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+
+      .card:hover .poster img {
+        transform: scale(1.1);
+      }
+
+      .poster::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        background: linear-gradient(to top, rgba(15, 23, 42, 0.8), transparent);
+      }
+
+      .score-tag {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(5px);
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: var(--primary-light);
+        border: 1px solid rgba(255, 138, 101, 0.3);
+        z-index: 2;
+      }
+
+      .info {
+        padding: 1rem;
+      }
+
+      .title-link {
+        text-decoration: none;
+        color: #fff;
+        display: block;
+        margin-bottom: 0.4rem;
+      }
+
+      .title {
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: color 0.3s ease;
+      }
+
+      .card:hover .title {
+        color: var(--primary);
+      }
+
+      .subtitle {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-bottom: 0.8rem;
+      }
+
+      .badges {
+        display: flex;
+        gap: 0.4rem;
+      }
+
+      .badge {
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.6rem;
+        font-weight: 800;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        color: var(--text-muted);
+      }
+
+      .badge.active {
+        background: rgba(255, 138, 101, 0.1);
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      /* Loading State */
+      .loader {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 4rem;
+        color: var(--primary);
+        font-size: 2rem;
+      }
+
+      /* Alphabetical Navigation */
+      .alpha-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 4rem auto 1.5rem;
+        max-width: 1000px;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .alpha-btn {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        color: var(--text-muted);
+        padding: 0.5rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 35px;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .alpha-btn:hover,
+      .alpha-btn.active {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 138, 101, 0.3);
+      }
+
+      /* Pagination */
+      .bottom-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        padding: 1.5rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid var(--glass-border);
+        opacity: 0;
+        margin: 0 auto;
+        max-width: 400px;
+      }
+
+      .nav-button {
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .nav-button:disabled {
+        background: var(--glass-bg);
+        color: var(--text-muted);
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+
+      #pageNumber {
+        font-weight: 800;
+        color: var(--primary);
+      }
+
+      /* Custom Cursor */
+      .cursor {
+        width: 30px;
+        height: 30px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        transition:
+          transform 0.1s ease,
+          background 0.3s ease;
+        transform: translate(-50%, -50%);
+        display: none;
+      }
+
+      footer {
+        background: rgba(255, 255, 255, 0.08);
+
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .end {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #ffc371, #ff8a65);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .end span {
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: #fff !important;
+        color: #fff !important;
+      }
+
+      footer hr {
+        border: none;
+        border-top: 1px solid #ffffff;
+        margin: 10px auto 20px;
+        width: 80%;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        font-size: 0.95rem;
+        background: none !important; /* remove inherited background */
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: #ffffff !important; /* force solid white text */
+        color: #ccc !important;
+      }
+
+      .footer-links p {
+        margin: 5px 0;
+      }
+
+      .footer-links p:hover {
+        cursor: pointer;
+        color: #fff !important;
+      }
+
+      @media (pointer: fine) {
+        .cursor {
+          display: block;
+        }
+      }
+
+      @media (max-width: 768px) {
+        nav,
+        .cta {
+          display: none;
+        }
+
+        .hamburger {
+          display: block;
+        }
+
+        .page-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+        .search-box {
+          width: 100%;
+        }
+        .grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+          gap: 1rem;
+        }
+        .alpha-nav {
+          gap: 0.3rem;
+        }
+        .alpha-btn {
+          padding: 0.4rem 0.6rem;
+          font-size: 0.75rem;
+          min-width: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="bg-image"></div>
+      <div class="xeno">
+        <div class="logo">Ani<span>Media</span></div>
+
+        <nav>
+          <a href="#">Home</a>
+          <a href="page-1.html">Series</a>
+          <a href="A1-explore.html">Movies</a>
+          <a href="Ai-mordern-cte01.html">Genres</a>
+        </nav>
+
+        <a href="Aimiddle-page.html" class="cta">Join Now</a>
+
+        <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="#">Home</a>
+        <a href="page-1.html">Series</a>
+        <a href="A1-explore.html">Movies</a>
+        <a href="Ai-mordern-cte01.html">Genres</a>
+        <a href="#" class="cta" style="width: fit-content">Join Now</a>
+      </div>
+    </header>
+
+    <div class="cursor"></div>
+    <div id="header"></div>
+    <div class="bg-container">
+      <img src="assets/hero_bg.jpg" alt="Background" class="bg-image" />
+      <div class="bg-overlay"></div>
+    </div>
+
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="❤️X/horizon-sky-tree-moewalls-com.mp4" type="video/mp4" />
+    </video>
+
+    <main>
+      <div class="page-header">
+        <div>
+          <h2>Live Library</h2>
+        </div>
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search anime..." />
+        </div>
+      </div>
+
+      <section class="grid" id="animeGrid">
+        <!-- Cards will be dynamically injected here -->
+        <div class="loader"><i class="fas fa-circle-notch fa-spin"></i></div>
+      </section>
+
+      <div class="alpha-nav" id="alphaNav">
+        <!-- Alphabet buttons will be injected here -->
+      </div>
+
+      <div class="bottom-nav" id="pagination">
+        <button class="nav-button" id="prevBtn" disabled>Prev</button>
+        <span id="pageNumber">1</span>
+        <button class="nav-button" id="nextBtn">Next</button>
+      </div>
+    </main>
+
+    <footer>
+      <div class="end">
+        Ani<span>Media</span>
+        <hr />
+        <div class="footer-links">
+          <p>All rights reserved</p>
+          <p>animedia@gmail.com</p>
+          <p>Terms and Conditions</p>
+          <p>Registered 2025</p>
+          <p>&copy; AniMedia</p>
+        </div>
       </div>
     </footer>
-    
-</body>
-<script src="easypages.js"></script>
-<script>
-    function toggleMenu() {
-  const menu = document.getElementById("mobileMenu");
-  menu.classList.toggle("active");
-}
-let currentPage = 1; // page-1.html is current
-    const totalPages = 5;
-    const pages = [
-      "page-1.html",
-      "page-2.html",
-      "page-3.html",
-      "page-4.html",
-      "page-5.html",
-    ];
 
-    const prevButton = document.getElementById("previousBtn");
-    const nextButton = document.getElementById("nexteraBtn");
-    const pageNumber = document.getElementById("pageNumber");
+    <script src="Ai.js"></script>
+    <script>
+      const API_BASE = "https://api.jikan.moe/v4";
+      let currentPage = 1;
+      let searchQuery = "";
+      let currentLetter = "";
+      let isLoading = false;
 
-    prevButton.addEventListener("click", function () {
-      if (currentPage > 1) {
-        currentPage--;
-        window.location.href = pages[currentPage - 1];
-      }
-    });
+      const grid = document.getElementById("animeGrid");
+      const searchInput = document.getElementById("searchInput");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const pageNumDisplay = document.getElementById("pageNumber");
+      const pagination = document.getElementById("pagination");
+      const pageHeader = document.querySelector(".page-header");
+      const alphaNav = document.getElementById("alphaNav");
 
-    nextButton.addEventListener("click", function () {
-      if (currentPage < totalPages) {
-        currentPage++;
-        window.location.href = pages[currentPage - 1];
-      }
-    });
-
-    function checkButtons() {
-      prevButton.disabled = currentPage === 1;
-      nextButton.disabled = currentPage === totalPages;
-      pageNumber.textContent = currentPage;
-    }
-
-    checkButtons();
-
-
-      document.querySelectorAll(".badge").forEach((b) => {
-        b.addEventListener("click", () => b.classList.toggle("actixe"));
+      const cursor = document.querySelector(".cursor");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
       });
 
-</script>
+      // Initialize Alphabetical Navigation
+      function initAlphaNav() {
+        const letters = ["#", "0-9", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")];
+        alphaNav.innerHTML = letters
+          .map(
+            (char) => `
+                <button class="alpha-btn ${char === "#" && !currentLetter && !searchQuery ? "active" : ""}" 
+                        onclick="filterByLetter('${char}')">${char}</button>
+            `,
+          )
+          .join("");
+      }
+
+      async function filterByLetter(char) {
+        document
+          .querySelectorAll(".alpha-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        event.target.classList.add("active");
+
+        searchInput.value = "";
+        searchQuery = "";
+        currentPage = 1;
+
+        if (char === "#") {
+          currentLetter = "";
+        } else if (char === "0-9") {
+          currentLetter = "0-9"; // Special handling for Jikan might be needed, or just search for it
+        } else {
+          currentLetter = char;
+        }
+
+        fetchAnime(1);
+      }
+
+      async function fetchAnime(page = 1) {
+        if (isLoading) return;
+        isLoading = true;
+
+        let url = "";
+        if (searchQuery) {
+          url = `${API_BASE}/anime?q=${searchQuery}&page=${page}&limit=20`;
+        } else if (currentLetter) {
+          // Jikan API uses letter parameter for filtering by starting character
+          const letterParam =
+            currentLetter === "0-9" ? "" : `&letter=${currentLetter}`;
+          url = `${API_BASE}/anime?page=${page}&limit=20${letterParam}&order_by=title&sort=asc`;
+        } else {
+          url = `${API_BASE}/top/anime?page=${page}&limit=20`;
+        }
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          renderCards(data.data);
+          updatePagination(data.pagination);
+        } catch (error) {
+          console.error("Error fetching anime:", error);
+          grid.innerHTML =
+            '<div class="loader">Failed to load data. Please try again.</div>';
+        } finally {
+          isLoading = false;
+        }
+      }
+
+      function renderCards(animeList) {
+        grid.innerHTML = "";
+
+        if (!animeList || animeList.length === 0) {
+          grid.innerHTML = '<div class="loader">No results found.</div>';
+          return;
+        }
+
+        animeList.forEach((anime, index) => {
+          const card = document.createElement("article");
+          card.className = "card";
+          card.onclick = () =>
+            (window.location.href = `details.html?id=${anime.mal_id}`);
+
+          card.innerHTML = `
+                    <div class="poster">
+                        <div class="score-tag">${anime.score || "N/A"}</div>
+                        <img src="${anime.images.webp.large_image_url}" alt="${anime.title}" loading="lazy">
+                    </div>
+                    <div class="info">
+                        <a href="details.html?id=${anime.mal_id}" class="title-link">
+                            <div class="title" title="${anime.title}">${anime.title}</div>
+                        </a>
+                        <div class="subtitle">
+                            <span>${anime.type || "TV"}</span>
+                            <span>${anime.year || anime.status}</span>
+                        </div>
+                        <div class="badges">
+                            <div class="badge active">EP: ${anime.episodes || "?"}</div>
+                            <div class="badge">SUB</div>
+                        </div>
+                    </div>
+                `;
+
+          grid.appendChild(card);
+
+          gsap.to(card, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            delay: index * 0.05,
+            ease: "power2.out",
+          });
+        });
+
+        gsap.to(pageHeader, { opacity: 1, y: 0, duration: 1 });
+        gsap.to(alphaNav, { opacity: 1, y: 0, duration: 1, delay: 0.2 });
+        gsap.to(pagination, { opacity: 1, duration: 1, delay: 0.3 });
+      }
+
+      function updatePagination(pagin) {
+        currentPage = pagin.current_page;
+        pageNumDisplay.textContent = currentPage;
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = !pagin.has_next_page;
+      }
+
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          fetchAnime(currentPage);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+
+      nextBtn.addEventListener("click", () => {
+        currentPage++;
+        fetchAnime(currentPage);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      let searchTimeout;
+      searchInput.addEventListener("input", (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          searchQuery = e.target.value;
+          currentLetter = "";
+          document
+            .querySelectorAll(".alpha-btn")
+            .forEach((btn) => btn.classList.remove("active"));
+          currentPage = 1;
+          fetchAnime(currentPage, searchQuery);
+        }, 500);
+      });
+
+      window.onload = () => {
+        initAlphaNav();
+        fetchAnime();
+      };
+    </script>
+  </body>
 </html>
